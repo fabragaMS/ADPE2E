@@ -1,0 +1,2 @@
+%sql
+select count(*) from NYCTaxiDataTable

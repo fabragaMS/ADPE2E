@@ -1,0 +1,9 @@
+%sql
+
+select cast(tpep_pickup_datetime as date) as pickup_date
+  , tpep_dropoff_datetime
+  , passenger_count
+  , total_amount
+from NYCTaxiDataTable
+where cast(tpep_pickup_datetime as date) = '2018-04-07'
+  and passenger_count > 5
