@@ -64,7 +64,42 @@ In this section you are going to install Power BI Desktop and Azure Data Studio 
     <br>![](./Media/Lab1-Image06.png)
 
 ## Restore NYCDataSets database onto MDWSQLServer
-In this section you are going to connect to MDWSQLServer to restore the NYCDataSets database from backup stored in an Azure Storage Account.
+In this section you are going to connect to MDWSQLServer to restore the NYCDataSets database from backup stored in the MDWResources storage Account.
 
+![](./Media/Lab1-Image07.jpg)
 
+**IMPORTANT**|
+-------------|
+**Execute these steps inside the MDWDesktop remote desktop connection**|
+
+1.	Open Azure Data Studio and establish a new connection to MDWSQLServer using Windows Authentication
+
+![](./Media/Lab1-Image08.png)
+
+2.	Press Ctrl+G to expand the Servers panel
+3.	Right-click the MDWSQLServer server name on the SERVERS panel and select New Query
+
+![](./Media/Lab1-Image09.png)
+
+4.	On the Query Editor window, create a new credential named [https://mdwresources.blob.core.windows.net/nycdatasets] using a Shared Access Signature (SAS). Use this SQL command:
+
+```sql
+create credential [https://mdwresources.blob.core.windows.net/nycdatasets] 
+   with identity = 'SHARED ACCESS SIGNATURE',  
+   secret = 'sv=2018-03-28&ss=b&srt=sco&sp=rwl&se=2050-12-30T17:25:52Z&st=2019-04-05T09:25:52Z&spr=https&sig=4qrD8NmhaSmRFu2gKja67ayohfIDEQH3LdVMa2Utykc%3D'
+go
+```
+
+5.	Restore the NYCDataSets database from the backup file stored in the Azure Storage Account. The backup file name is NYCDataSets.Full.bak. The restore command should move the data file to the ‘F:\Data’ folder and the log file to the ‘F:\Log’ folder. Use this SQL command:
+
+```sql
+restore database NYCDataSets from url = 'https://mdwresources.blob.core.windows.net/nycdatasets/NYCDataSets.Full.bak'
+   with move 'NYCDataSets' to 'F:\Data\NYCDataSets.mdf'
+      , move 'NYCDataSets_log' to 'F:\Log\NYCDataSets_log.ldf'
+go
+```
+
+6.	The full solution script can be found ![here:](./Solution/Restore NYCDataSets.sql 'here:')
+
+[I'm a relative reference to a repository file](./Solution/Restore NYCDataSets.sql)
 
