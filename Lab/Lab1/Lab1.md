@@ -48,4 +48,23 @@ In this section you are going to install Power BI Desktop and Azure Data Studio 
 -------------|
 **Execute these steps inside the MDWDesktop remote desktop connection**|
 
+1.	Once the RDP file is downloaded, click on it to establish an RDP connection with MDWDesktop
+2.	User the following credentials to authenticate:
+    <br>- **User Name**: MDWAdmin
+    <br>- **Password**: P@ssw0rd123!
+3.	Once logged in, accept the default privacy settings.
+4.	Using the browser, download and install the latest version of following software. During the setup, accept all default settings:
+    <br>
+    <br>- **Azure Data Studio (User Installer)**
+    <br>https://docs.microsoft.com/en-us/sql/azure-data-studio/download
+    <br>![](./Media/Lab1-Image05.png)
+    <br>
+    <br>**Power BI Desktop (64-bit)**
+    <br>https://www.microsoft.com/en-us/download/details.aspx?id=45331
+    <br>![](./Media/Lab1-Image06.png)
+
+## Restore NYCDataSets database onto MDWSQLServer
+In this section you are going to connect to MDWSQLServer to restore the NYCDataSets database from backup stored in an Azure Storage Account.
+
+
 
