@@ -28,7 +28,7 @@ In this section you are going to establish a Remote Desktop Connection to MDWDes
 
 **IMPORTANT**|
 -------------|
- Execute these steps on your host computer |
+**Execute these steps on your host computer**|
 
 1.	In the Azure Portal, navigate to the MDW-Lab resource group and click the MDWDesktop virtual machine.
 2.	On the MDWDesktop blade, from the Overview menu, click the Connect button. 
@@ -38,3 +38,14 @@ In this section you are going to establish a Remote Desktop Connection to MDWDes
 3.	On the Connect to virtual machine blade, click Download RDP File. This will download a .rdp file that you can use to establish a Remote Desktop Connection with the virtual machine.
 
 ![](./Media/Lab1-Image03.png)
+
+## Install required software onto MDWDesktop
+In this section you are going to install Power BI Desktop and Azure Data Studio on MDWDesktop.
+
+![](./Media/Lab1-Image04.jpg)
+
+**IMPORTANT**|
+-------------|
+**Execute these steps inside the MDWDesktop remote desktop connection**|
+
+
