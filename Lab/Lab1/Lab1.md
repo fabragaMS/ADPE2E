@@ -11,6 +11,17 @@ Step     | Description
 ![4](./Media/Black4.png) | Load data to an Azure SQL Data Warehouse table using Polybase
 ![5](./Media/Black5.png) | Visualize data from Azure SQL Data Warehouse using Power BI
 
+**IMPORTANT**: Some of the Azure services provisioned by Lab0 require globally unique name and a “-suffix” has been added to their names to ensure this uniqueness. Please take note of the suffix generated as you will need it for the following resources:
+
+Name	                     |Type
+-----------------------------|--------------------
+mdwcosmosdb-*suffix*	     |Cosmos DB account
+MDWDataFactory-*suffix*	     |Data Factory (V2)
+mdwdatalake*suffix*	         |Storage Account
+MDWEventHubs-*suffix*	     |Event Hubs Namespace
+MDWKeyVault-*suffix*	     |Key vault
+mdwsqlvirtualserver-*suffix* |SQL server
+MDWStreamAnalytics-*suffix*	 |Stream Analytics job
 
 
 
