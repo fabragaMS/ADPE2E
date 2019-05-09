@@ -23,6 +23,18 @@ MDWKeyVault-*suffix*	     |Key vault
 mdwsqlvirtualserver-*suffix* |SQL server
 MDWStreamAnalytics-*suffix*	 |Stream Analytics job
 
+## Connect to MDWDesktop
+In this section you are going to establish a Remote Desktop Connection to MDWDesktop virtual machine.
 
+**IMPORTANT**|
+-------------|
+ Execute these steps on your host computer |
 
+1.	In the Azure Portal, navigate to the MDW-Lab resource group and click the MDWDesktop virtual machine.
+2.	On the MDWDesktop blade, from the Overview menu, click the Connect button. 
 
+![](./Media/Lab1-Image02.png)
+
+3.	On the Connect to virtual machine blade, click Download RDP File. This will download a .rdp file that you can use to establish a Remote Desktop Connection with the virtual machine.
+
+![](./Media/Lab1-Image03.png)
