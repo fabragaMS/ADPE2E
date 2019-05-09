@@ -1,44 +1,18 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
-    "parameters": {
-        "UniqueSuffix":
-        {
-            "defaultValue": "[uniqueString(resourceGroup().id)]",
-            "type": "string"
-        },
-        "SQLServerVMSize":
-        {
-            "defaultValue": "Standard_D4s_v3",
-            "type": "string"
-        },
-        "DataGatewayVMSize":
-        {
-            "defaultValue": "Standard_D4s_v3",
-            "type": "string"
-        },
-        "DesktopVMSize":
-        {
-            "defaultValue": "Standard_A4_v2",
-            "type": "string"
-        },
-        "AzureSQLDWSize":
-        {
-            "defaultValue": "DW200c",
-            "type": "string"
-        },
-        "MDWAdminUserName":
-        {
-            "defaultValue": "mdwadmin",
-            "type": "string"
-        },
-        "MDWAdminPassword":
-        {
-            "defaultValue": "P@ssw0rd123!",
-            "type": "string"
-        }
-    },
+    "parameters": { },
     "variables": {
+        "MDWAdminUserName":"mdwadmin",
+        "MDWAdminPassword":"P@ssw0rd123!",
+
+        "SQLServerVMSize":"Standard_D4s_v3",
+        "DataGatewayVMSize":"Standard_D4s_v3",
+        "DesktopVMSize":"Standard_A4_v2",
+        "AzureSQLDWSize":"DW200c",
+
+        "UniqueSuffix":"[uniqueString(resourceGroup().id)]",
+
         "MDWVirtualNetworkName": "MDWVirtualNetwork",
         "MDWVirtualNetworkIPAddressPrefix": "10.10.0.0/16",
         "MDWVirtualSubnetName": "default",
@@ -60,16 +34,16 @@
         "MDWDesktopOSDiskName":"[concat(variables('MDWDesktopName'),'_OsDisk')]",
         "MDWDesktopPublicIPName":"[concat(variables('MDWDesktopName'),'-publicip')]",
         
-        "MDWDataLakeStorageName":"[concat('mdwdatalake', substring(parameters('UniqueSuffix'),0,5))]",
+        "MDWDataLakeStorageName":"[concat('mdwdatalake', substring(variables('UniqueSuffix'),0,5))]",
 
-        "MDWSQLVirtualServerName": "[concat('mdwsqlvirtualserver-', substring(parameters('UniqueSuffix'),0,5))]",
+        "MDWSQLVirtualServerName": "[concat('mdwsqlvirtualserver-', substring(variables('UniqueSuffix'),0,5))]",
         "MDWAzureSQLDataWarehouseName":"MDWASQLDW",
         "MDWAzureSQLDataWarehouseCollation": "SQL_Latin1_General_CP1_CI_AS",
 
-        "MDWDataFactoryName": "[concat('MDWDataFactory-',substring(parameters('UniqueSuffix'),0,5))]",
+        "MDWDataFactoryName": "[concat('MDWDataFactory-',substring(variables('UniqueSuffix'),0,5))]",
         "MDWDataFactoryLocation": "[resourceGroup().location]",
 
-        "MDWDatabricksWorkspaceName":"[concat('MDWDatabricks-',substring(parameters('UniqueSuffix'),0,5))]",
+        "MDWDatabricksWorkspaceName":"[concat('MDWDatabricks-',substring(variables('UniqueSuffix'),0,5))]",
         "MDWDatabricksResourceGroupName": "[concat('Databricks-', resourceGroup().name)]", 
         "MDWDatabricksResourceGroupID": "[concat(subscription().id, '/resourceGroups/', variables('MDWDatabricksResourceGroupName'))]",
         "MDWDatabricksTier":"standard",
@@ -80,17 +54,17 @@
         "MDWComputerVisionName":"MDWComputerVision",
         "MDWComputerVisionSKU": "S1",
 
-        "MDWEventHubsName": "[concat('MDWEventHubs-', substring(parameters('UniqueSuffix'),0,5))]",
+        "MDWEventHubsName": "[concat('MDWEventHubs-', substring(variables('UniqueSuffix'),0,5))]",
         "MDWEventHubsSKU": "Standard",
         "MDWEventHubsThroughputUnits": 1,
 
-        "MDWStreamAnalyticsName": "[concat('MDWStreamAnalytics-',substring(parameters('UniqueSuffix'),0,5))]",
+        "MDWStreamAnalyticsName": "[concat('MDWStreamAnalytics-',substring(variables('UniqueSuffix'),0,5))]",
         "MDWStreamAnalyticsSKU": "Standard",
 
-        "MDWKeyVaultName": "[concat('MDWKeyVault-',substring(parameters('UniqueSuffix'),0,5))]",
+        "MDWKeyVaultName": "[concat('MDWKeyVault-',substring(variables('UniqueSuffix'),0,5))]",
 
         "MDWLogicAppName": "MDWLogicApp",
-        "MDWCosmosDBAccountName": "[concat('mdwcosmosdb-', substring(parameters('UniqueSuffix'),0,5))]"
+        "MDWCosmosDBAccountName": "[concat('mdwcosmosdb-', substring(variables('UniqueSuffix'),0,5))]"
 
     },
     "resources": [
@@ -102,7 +76,7 @@
             "scale": null,
             "properties": {
                 "hardwareProfile": {
-                    "vmSize": "[parameters('SQLServerVMSize')]"
+                    "vmSize": "[variables('SQLServerVMSize')]"
                 },
                 "storageProfile": {
                     "imageReference": {
@@ -136,8 +110,8 @@
                 },
                 "osProfile": {
                     "computerName": "[variables('MDWSQLServerName')]",
-                    "adminUsername": "[parameters('MDWAdminUserName')]",
-                    "adminPassword": "[parameters('MDWAdminPassword')]",
+                    "adminUsername": "[variables('MDWAdminUserName')]",
+                    "adminPassword": "[variables('MDWAdminPassword')]",
                     "windowsConfiguration": {
                         "provisionVMAgent": true,
                         "enableAutomaticUpdates": true
@@ -270,7 +244,7 @@
             "scale": null,
             "properties": {
                 "hardwareProfile": {
-                    "vmSize": "[parameters('DataGatewayVMSize')]"
+                    "vmSize": "[variables('DataGatewayVMSize')]"
                 },
                 "storageProfile": {
                     "imageReference": {
@@ -293,8 +267,8 @@
                 },
                 "osProfile": {
                     "computerName": "[variables('MDWDataGatewayName')]",
-                    "adminUsername": "[parameters('MDWAdminUserName')]",
-                    "adminPassword": "[parameters('MDWAdminPassword')]",
+                    "adminUsername": "[variables('MDWAdminUserName')]",
+                    "adminPassword": "[variables('MDWAdminPassword')]",
                     "windowsConfiguration": {
                         "provisionVMAgent": true,
                         "enableAutomaticUpdates": true
@@ -402,7 +376,7 @@
             "scale": null,
             "properties": {
                 "hardwareProfile": {
-                    "vmSize": "[parameters('DesktopVMSize')]"
+                    "vmSize": "[variables('DesktopVMSize')]"
                 },
                 "storageProfile": {
                     "imageReference": {
@@ -425,8 +399,8 @@
                 },
                 "osProfile": {
                     "computerName": "[variables('MDWDesktopName')]",
-                    "adminUsername": "[parameters('MDWAdminUserName')]",
-                    "adminPassword": "[parameters('MDWAdminPassword')]",
+                    "adminUsername": "[variables('MDWAdminUserName')]",
+                    "adminPassword": "[variables('MDWAdminPassword')]",
                     "windowsConfiguration": {
                         "provisionVMAgent": true,
                         "enableAutomaticUpdates": true
@@ -531,8 +505,8 @@
             "location": "[resourceGroup().location]",
             "scale": null,
             "properties": {
-                "administratorLogin": "[parameters('MDWAdminUserName')]",
-                "administratorLoginPassword": "[parameters('MDWAdminPassword')]",
+                "administratorLogin": "[variables('MDWAdminUserName')]",
+                "administratorLoginPassword": "[variables('MDWAdminPassword')]",
                 "version": "12.0"
             },
             "dependsOn": []
@@ -540,7 +514,7 @@
         {
             "type": "Microsoft.Sql/servers/databases",
             "sku": {
-                "name": "[parameters('AzureSQLDWSize')]",
+                "name": "[variables('AzureSQLDWSize')]",
                 "tier": "DataWarehouse"
             },
             "kind": "v12.0,user,datawarehouse,gen2",
