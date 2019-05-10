@@ -196,3 +196,176 @@ In this section you are going to install and configure required software onto MD
 
 ![](./Media/Lab1-Image16.png)
 
+7.	Type MDWDataGateway in the **Name** text box and give it a meaningful description such as the example here. Click **Next**.
+
+![](./Media/Lab1-Image17.png)
+
+8.	Copy any of the generated **Authentication Key** keys (Key 1 or Key 2) to Notepad. You are going to need it in the next step.
+9.	Click **Finish**.
+
+![](./Media/Lab1-Image18.png)
+
+## Connect to MDWDataGateway and register the Self Hosted Integration Runtime with Azure Data Factory
+In this section you are going to establish a Remote Desktop Connection to MDWDataGateway virtual machine.
+
+![](./Media/Lab1-Image19.png)
+
+**IMPORTANT**|
+-------------|
+**Execute these steps on your host computer**|
+
+1.	On the Azure Portal, navigate to the MDW-Lab resource group and locate the **MDWDataGateway** virtual machine.
+2.	On the **MDWDataGateway** blade, from the **Overview** menu, click the **Connect** button. 
+
+![](./Media/Lab1-Image20.png)
+
+3.	On the **Connect to virtual machine** blade, click **Download RDP File**. This will download a .rdp file that you can use to establish a Remote Desktop Connection with the virtual machine.
+
+![](./Media/Lab1-Image21.png)
+
+4.	Once the file is downloaded, click on file to establish the RDP connection with MDWDataGateway
+5.	User the following credentials to authenticate:
+    <br>- **User Name**: MDWAdmin
+    <br>- **Password**: P@ssw0rd123!
+
+**IMPORTANT**|
+-------------|
+**Execute these steps inside the MDWDataGateway remote desktop connection**|
+
+1.	Once logged in, on the **Server Manager**, select **Local Server** on the left-hand side menu. On the right-hand side panel, locate the **IE Enhanced Security Configuration** and click the **On** link.
+2.	Turn the setting **Off** for both **Administrators** and **Users**.
+3.	Close **Server Manager**.
+
+![](./Media/Lab1-Image22.png)
+
+4.	Open the browser and download and execute the latest version of the Azure Data Factory Integration Runtime.
+
+**Azure Data Factory Integration Runtime**
+https://www.microsoft.com/en-ie/download/details.aspx?id=39717
+
+5.	Accept all default options during the setup wizard. Once the setup if finished, the Microsoft Integration Runtime Configuration Manager will pop up asking you to enter a valid authentication key. 
+6.	Enter the authentication key generated in the previous exercise and click Register.
+7.	Once registration is confirmed, click Finish. 
+
+![](./Media/Lab1-Image23.png)
+
+## Create Staging Container on Azure Blob Storage
+In this section you create a staging container in your MDWDataLake that will be used as a staging environment for Polybase before data can be copied to Azure SQL Data Warehouse.
+
+![](./Media/Lab1-Image24.jpg)
+
+**IMPORTANT**|
+-------------|
+**Execute these steps on your host computer**|
+
+1.	In the Azure Portal, go to the lab resource group and locate the Azure Storage account **mdwdatalake*suffix***. 
+2.	On the **Overview** panel, click **Blobs**.
+
+![](./Media/Lab1-Image25.png)
+
+3.	On the **mdwdalalake*suffix* – Blobs** blade, click **+ Container**.
+
+![](./Media/Lab1-Image26.png)
+
+4.	On the **New container** blade, enter the following details:
+    <br>- **Name**: polybase
+    <br>- **Public access level**: Private (no anynymous access)
+5.	Click **OK** to create the new container.
+
+![](./Media/Lab1-Image27.png)
+
+## Create Azure Data Factory Pipeline to Copy Relational Data
+In this section you will build an Azure Data Factory pipeline to copy a table from MDWSQLServer to Azure SQL Data Warehouse.
+
+![](./Media/Lab1-Image28.jpg)
+
+### Create Linked Service connections
+
+**IMPORTANT**|
+-------------|
+**Execute these steps on your host computer**|
+
+1.	Open the **Azure Data Factory** portal and click the **Author *(pencil icon)*** option on the left-hand side panel. Under **Connections** tab, click **Linked Services** and then click **+ New** to create a new linked service connection.
+
+![](./Media/Lab1-Image29.png)
+
+2.	On the **New Linked Service** blade, type “SQL Server” in the search box to find the **SQL Server** linked service. Click **Continue**.
+
+![](./Media/Lab1-Image30.png)
+
+3.	On the **New Linked Service (SQL Server)** blade, enter the following details:
+    <br>- **Name**: MDWSQLServer_NYCDataSets
+    <br>- **Connect via integration runtime**: MDWDataGateway
+    <br>- **Server Name**: MDWSQLServer
+    <br>- **Database Name**: NYCDataSets
+    <br>- **Authentication Type**: Windows Authentication
+    <br>- **User Name**: MDWAdmin
+    <br>- **Password**: P@ssw0rd123!
+4.	Click **Test connection** to make sure you entered the correct connection details and then click **Finish**.
+
+![](./Media/Lab1-Image31.png)
+
+5.	Repeat the process to create an **Azure SQL Data Warehouse** linked service connection.
+
+![](./Media/Lab1-Image32.png)
+
+6.	On the New Linked Service (Azure SQL Data Warehouse) blade, enter the following details:
+    <br>- **Name**: MDWVirtualSQLServer_MDWASQLDW
+    <br>- **Connect via integration runtime**: AutoResolveIntegrationRuntime
+    <br>- **Account selection method**: From Azure subscription
+    <br>- **Azure subscription**: *<your subscription>*
+    <br>- **Server Name**: mdwsqlvirtualserver-*suffix*
+    <br>- **Database Name**: MDWASQLDW
+    <br>- **Authentication** Type: SQL Authentication 
+    <br>- **User** Name: MDWAdmin
+    <br>- **Password**: P@ssw0rd123!
+7.	Click **Test connection** to make sure you entered the correct connection details and then click **Finish**.
+
+![](./Media/Lab1-Image33.png)
+
+8.	Repeat the process once again to create an **Azure Blob Storage** linked service connection.
+
+![](./Media/Lab1-Image34.png)
+
+9.	On the **New Linked Service (Azure Blob Storage)** blade, enter the following details:
+    - <br>**Name**: MDWDataLake
+    - <br>**Connect via integration runtime**: AutoResolveIntegrationRuntime
+    - <br>**Authentication method**: Account key
+    - <br>**Account selection method**: From Azure subscription
+    - <br>**Azure subscription**: *<your subscription>*
+    - <br>**Storage account name**: mdwdatalake*suffix*
+10.	Click **Test connection** to make sure you entered the correct connection details and then click **Finish**.
+
+![](./Media/Lab1-Image35.png)
+
+11.	You should now see 3 linked services connections that will be used as source, destination and staging.
+
+![](./Media/Lab1-Image36.png)
+
+### Create Source and Destination Data Sets
+
+**IMPORTANT**|
+-------------|
+**Execute these steps on your host computer**|
+
+1.	Open the **Azure Data Factory** portal and click the **Author *(pencil icon)*** option on the left-hand side panel. Under **Factory Resources** tab, click the ellipsis **(…)** next to **Datasets** and then click **Add Dataset** to create a new dataset.
+
+![](./Media/Lab1-Image37.png)
+
+2.	Type SQL Server in the search box and select **SQL Server**. Click **Finish**.
+
+![](./Media/Lab1-Image38.png)
+
+3.	On the **New Data Set** tab, enter the following details:
+    <br>- **Name**: NYCDataSets_MotorVehicleCollisions
+    <br>- **Linked Service**: MDWSQLServer_NYCDataSets
+    <br>- **Table**: [NYC].[NYPD_MotorVehicleCollisions]
+4.	Leave remaining fields with default values and click **Continue**.
+
+![](./Media/Lab1-Image39.png)
+
+5.	Repeat the process to create a new **Azure SQL Data Warehouse** data set.
+
+![](./Media/Lab1-Image40.png)
+
+
