@@ -368,4 +368,78 @@ In this section you will build an Azure Data Factory pipeline to copy a table fr
 
 ![](./Media/Lab1-Image40.png)
 
+6.	On the **New Data Set** tab, enter the following details:
+    <br>- **Name**: MDWASQLDW_MotorVehicleCollisions
+    <br>- **Linked Service**: MDWSQLVirtualServer_MDWASQLDW
+    <br>- **Table**: [NYC].[NYPD_MotorVehicleCollisions]
+7.	Leave remaining fields with default values and click Continue.
 
+![](./Media/Lab1-Image41.png)
+
+8.	Publish your dataset changes by clicking the Publish All button on the top of the screen.
+
+![](./Media/Lab1-Image42.png)
+
+### Create and Execute Pipeline
+
+**IMPORTANT**|
+-------------|
+**Execute these steps on your host computer**|
+
+1.	Open the **Azure Data Factory** portal and click the **Author *(pencil icon)*** option on the left-hand side panel. Under **Factory Resources** tab, click the ellipsis **(…)** next to **Pipelines** and then click **Add Pipeline** to create a new pipeline.
+2.	On the **New Pipeline** tab, enter the following details:
+    <br>- **General > Name**: Copy Relational Data
+3.	Leave remaining fields with default values.
+
+![](./Media/Lab1-Image43.png)
+
+4.	From the **Activities** panel, type “Copy Data” in the search box. Drag the **Copy Data** activity on to the design surface.
+5.	Select the **Copy Data** activity and enter the following details:
+    <br>- **General > Name**: CopyMotorVehicleCollisions
+    <br>- **Source > Source dataset**: NYCDataSets_MotorVehicleCollisions
+    <br>- **Sink > Sink dataset**: MDWASQLDW_MotorVehicleCollisions
+    <br>- **Sink > Allow PolyBase**: Checked
+    <br>- **Settings > Enable staging**: Checked
+    <br>- **Settings > Staging account linked service**: MDWDataLake
+    <br>- **Settings > Storage Path**: polybase
+6.	Leave remaining fields with default values.
+
+![](./Media/Lab1-Image44.png)
+![](./Media/Lab1-Image45.png)
+![](./Media/Lab1-Image46.png)
+
+7.	Publish your pipeline changes by clicking the **Publish all** button.
+
+![](./Media/Lab1-Image47.png)
+
+8.	To execute the pipeline, click on **Add trigger** menu and then **Trigger Now**.
+9.	On the **Pipeline Run** blade, click **Finish**.
+
+![](./Media/Lab1-Image48.png)
+
+10.	To monitor the execution of your pipeline, click on the **Monitor** menu on the left-hand side panel.
+11.	You should be able to see the Status of your pipeline execution on the right-hand side panel.
+
+![](./Media/Lab1-Image49.png)
+
+## Visualize Data with Power BI
+In this section you are going to use Power BI to visualize data from Azure SQL Data Warehouse. The Power BI report will use an Import connection to query Azure SQL Data Warehouse and visualise Motor Vehicle Collision data from the table you loaded in the previous exercise.
+
+**IMPORTANT**|
+-------------|
+**Execute these steps inside the MDWDesktop remote desktop connection**|
+
+1.	On MDWDesktop, download the Power BI report from the link https://aka.ms/MDWLab1 and save it on the Desktop.
+2.	Open the file MDWLab1.pbit with Power BI Desktop. Optionally sign up for the Power BI tips and tricks email, or to dismiss this, click to sign in with an existing account, and then hit the escape key.
+3.	When prompted to enter the value of the **MDWSQLVirtualServer** parameter, type the full server name: mdwsqlvirtualserver-*suffix*.database.windows.net
+4.	Click Load, and then Run to acknowledge the Native Database Query message
+5.	When prompted, enter the **Database** credentials:
+    <br>- **User Name**: MDWAdmin
+    <br>- **Password**: P@ssw0rd123!
+
+![](./Media/Lab1-Image50.png)
+
+6.	Once the data is finished loading, interact with the report by changing the CollisionDate slicer and by clicking on the other visualisations.
+7.	Save your work and close Power BI Desktop.
+
+![](./Media/Lab1-Image51.png)
