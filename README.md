@@ -1,6 +1,5 @@
 # Azure Data Services in a Day
 
-## Overview
 In this workshop you will learn about the main concepts related to advanced analytics and Big Data processing and how Azure Data Services can be used to implement a modern data warehouse architecture. You will understand what Azure services you can leverage to establish a solid data platform to quickly ingest, process and visualise data from a large variety of data sources. The reference architecture you will build as part of this exercise has been proven to give you the flexibility and scalability to grow and handle large volumes of data and keep an optimal level of performance.
 In the exercises in this lab you will build data pipelines using data related to New York City. The workshop was designed to progressively implement an extended modern data platform architecture starting from a traditional relational data pipeline. Then we introduce big data scenarios with large files and distributed computing. We add non-structured data and AI into the mix and finish with real-time streaming analytics. You will have done all of that by the end of the day.
 
@@ -30,14 +29,14 @@ The following prerequisites must be completed before you start these labs:
     <br>- Lab 5 requires you to have a Twitter account. If you don’t have an account you can sign up for free following the instructions here: https://twitter.com/signup. 
     <br>- Lab 5 requires you to have a Power BI Pro account. If you don’t have an account you can sign up for a 60-day trial for free here: https://powerbi.microsoft.com/en-us/power-bi-pro/
 
-# Lab Guide
+## Lab Guide
 
 Throughout a series of 5 labs you will progressively implement the modern data platform architecture referenced below:
 
 ![](./Media/LabArchitecture.jpg)
 
 
-## Lab 1: Load Data into Azure SQL Data Warehouse using Azure Data Factory Pipelines ![](./Lab/Lab1/Lab1.md)
+### Lab 1: Load Data into Azure SQL Data Warehouse using Azure Data Factory Pipelines ![](./Lab/Lab1/Lab1.md)
 
 In this lab you will configure the Azure environment to allow relational data to be transferred from a SQL Server 2017 database to an Azure SQL Data Warehouse database using Azure Data Factory. The dataset you will use contains data about motor vehicle collisions that happened in New York City from 2012 to 2019. You will use Power BI to visualise collision data loaded from Azure SQL Data Warehouse.
 
@@ -51,7 +50,7 @@ Step     | Description
 ![4](./Media/Black4.png) | Load data to an Azure SQL Data Warehouse table using Polybase
 ![5](./Media/Black5.png) | Visualize data from Azure SQL Data Warehouse using Power BI
 
-## Lab 2: Transform Big Data using Azure Data Factory and Azure SQL Data Warehouse
+### Lab 2: Transform Big Data using Azure Data Factory and Azure SQL Data Warehouse
 In this lab you will use Azure Data Factory to download large data files into your data lake and use an Azure SQL Data Warehouse stored procedure to generate a summary dataset and store it in the final table. The dataset you will use contains detailed New York City Yellow Taxi rides for 2018. You will generate a daily aggregated summary of all rides and save the result in your data warehouse. You will then use Power BI to visualise summarised data. 
 
 The estimated time to complete this lab is: **45 minutes**.
@@ -64,7 +63,7 @@ Step     | Description
 ![](./Media/Green3.png) | Use Polybase to load data into staging tables in your Azure SQL Data Warehouse. Call a Stored Procedure to perform data aggregations and save results in the final table.
 ![](./Media/Green4.png) | Visualize data from your Azure SQL Data Warehouse using Power BI
 
-## Lab 3: Explore Big Data using Azure Databricks
+### Lab 3: Explore Big Data using Azure Databricks
 In this lab you will use Azure Databricks to explore the New York Taxi data files you saved in your data lake in Lab 2. Using a Databricks notebook you will connect to the data lake and query taxi ride details. 
 
 The estimated time to complete this lab is: **20 minutes**.
@@ -73,7 +72,7 @@ Step     | Description
 -------- | -----
 ![](./Media/Red1.png) |Build an Azure Databricks notebook to explore the data files you saved in your data lake in the previous exercise. You will use Python and SQL commands to open a connection to your data lake and query data from data files.
 
-## Lab 4: Add AI to your Big Data Pipeline with Cognitive Services
+### Lab 4: Add AI to your Big Data Pipeline with Cognitive Services
 In this lab you will use Azure Data Factory to download New York City images to your data lake. Then, as part of the same pipeline, you are going to use an Azure Databricks notebook to invoke Computer Vision Cognitive Service to generate metadata documents and save them in back in your data lake. The Azure Data Factory pipeline then finishes by saving all metadata information in a Cosmos DB collection. You will use Power BI to visualise NYC images and their AI-generated metadata.
 
 The estimated time to complete this lab is: **60 minutes**.
@@ -87,7 +86,7 @@ Step     | Description
 ![](./Media/Blue5.png) | Copy metadata JSON documents into your Cosmos DB database
 ![](./Media/Blue6.png) | Visualize images and associated metadata using Power BI
 
-## Lab 5: Ingest and Analyse real-time data with Event Hubs and Stream Analytics
+### Lab 5: Ingest and Analyse real-time data with Event Hubs and Stream Analytics
 In this lab you will use an Azure Logic App to connect to Twitter and generate a stream of messages using the hashtag #NYC. The logic app will invoke the Azure Text Analytics Cognitive service to score Tweet sentiment and send the messages to Event Hubs. You will use Stream Analytics to generate the average Tweet sentiment in the last 60 seconds and send the results to a real-time dataset in Power BI.
 
 The estimated time to complete this lab is: **60 minutes**.
