@@ -8,11 +8,11 @@ In the exercises in this lab you will build data pipelines using data related to
 ## Document Structure
 This document contains detailed step-by-step instructions on how to implement a Modern Data Platform architecture using Azure Data Services. It’s recommended you carefully read the detailed description contained in this document for a successful experience with all Azure services. 
 
-You will see the label IMPORTANT whenever a there is a critical step to the lab. Please pay close attention to the instructions given.
+You will see the label **<font color='red'>IMPORTANT</font>** whenever a there is a critical step to the lab. Please pay close attention to the instructions given.
 
-You will also see the label IMPORTANT at the beginning of each lab section. As some instructions need to be execute on your host computer while others need to be executed in a remote desktop connection (RDP), this IMPORTANT label states where you should execute the lab section. See example below:
+You will also see the label **<font color='red'>IMPORTANT</font>** at the beginning of each lab section. As some instructions need to be execute on your host computer while others need to be executed in a remote desktop connection (RDP), this **<font color='red'>IMPORTANT</font>** label states where you should execute the lab section. See example below:
 
-**IMPORTANT**|
+**<font color='red'>IMPORTANT</font>**|
 -------------|
 **Execute these steps on your host computer**|
 
