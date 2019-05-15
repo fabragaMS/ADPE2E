@@ -56,7 +56,11 @@ In this section you are going to create an Azure Databricks notebook that will b
     ![](./Media/Lab3-Image07.png)
     ![](./Media/Lab3-Image08.png)
 
-8.	On the **Cmd 1** cell, you will invoke the Spark API to establish a connection to your MDWDataLake storage account. For this you will need to retrieve the name and key of your MDWDataLake storage account from the Azure Portal. Use the Python code below:
+8.	On the **Cmd 1** cell, you will invoke the Spark API to establish a connection to your MDWDataLake storage account. For this you will need to retrieve the name and key of your MDWDataLake storage account from the Azure Portal. 
+
+    ![](./Media/Lab3-Image15.png)
+
+9.	Use the Python code below and replace *[your MDWDataLake storage account name]* with **mdwdatalake*suffix*** and to replace *[your MDWDataLake storage account key]* with the storage account key.
 
 ```python
 spark.conf.set(
@@ -64,7 +68,6 @@ spark.conf.set(
   "[your MDWDataLake storage account key]")
 
 ```
-9.	Remember to replace *[your MDWDataLake storage account name]* with **mdwdatalake*suffix*** and to replace *[your MDWDataLake storage account key]* with the storage account key.
 
 10.	Press **Shift + Enter** to execute and create a new notebook cell. 
 Set the title of the **Cmd 2** cell to “Define NYCTaxiData schema and load data into a Data Frame”
@@ -96,10 +99,10 @@ nycTaxiDataSchema = StructType([
   
 dfNYCTaxiData = spark.read.format('csv').options(header='true', schema=nycTaxiDataSchema).load('wasbs://nyctaxidata@[your MDWDataLake storage account name].blob.core.windows.net/')
 ```
-Your **Cmd 2** cell should look like this:
-    ![](./Media/Lab3-Image09.png)
 
-13.	Remember to replace *[your MDWDataLake storage account name]* with **mdwdatalake*suffix*** and to replace *[your MDWDataLake storage account key]* with the storage account key.
+13.	Remember to replace *[your MDWDataLake storage account name]* with **mdwdatalake*suffix*** and to replace *[your MDWDataLake storage account key]* with the storage account key. Your **Cmd 2** cell should look like this:
+
+    ![](./Media/Lab3-Image09.png)
 
 14.	Hit **Shift + Enter** to execute the command and create a new cell. 
 15.	Set the title of the **Cmd 3** cell to “Display Data Frame Content”.
@@ -134,3 +137,53 @@ select count(*) from NYCTaxiDataTable
 24.	Hit **Shift + Enter** to execute the command and create a new cell. You will see the total number of records in the data frame at the bottom of the cell.
 
     ![](./Media/Lab3-Image11.png)
+
+25.	Set the title of the **Cmd 6** cell to “Use SQL to filter NYC Taxi Data records”
+
+26.	In the **Cmd 6** cell, write a SQL query to filter taxi rides that happened on the Apr, 7th 2018 that had more than 5 passengers. Use the command below:
+
+```sql
+%sql
+
+select cast(tpep_pickup_datetime as date) as pickup_date
+  , tpep_dropoff_datetime
+  , passenger_count
+  , total_amount
+from NYCTaxiDataTable
+where cast(tpep_pickup_datetime as date) = '2018-04-07'
+  and passenger_count > 5
+```
+
+27.	Hit **Shift + Enter** to execute the command. You will see a grid showing the filtered result set.
+
+    ![](./Media/Lab3-Image12.png)
+
+28.	Set the title of the **Cmd 7** cell to “Use SQL to aggregate NYC Taxi Data records and visualize data”
+
+29.	In the **Cmd 7** cell, write a SQL query to aggregate records and return total number of rides by payment type. Use the command below:
+
+```sql
+%sql
+
+select case payment_type
+            when 1 then 'Credit card'
+            when 2 then 'Cash'
+            when 3 then 'No charge'
+            when 4 then 'Dispute'
+            when 5 then 'Unknown'
+            when 6 then 'Voided trip'
+        end as PaymentType
+  , count(*) as TotalRideCount
+from NYCTaxiDataTable
+group by payment_type
+order by TotalRideCount desc
+
+```
+
+30.	Hit **Ctrl + Enter** to execute the command. Results will be displayed in a grid in the cell.
+
+31.	Click the **Bar chart** button to see results as a bar chart.
+
+    ![](./Media/Lab3-Image13.png)
+    ![](./Media/Lab3-Image14.png)
+
