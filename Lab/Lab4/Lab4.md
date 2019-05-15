@@ -79,3 +79,20 @@ In this section you will create a CosmosDB database called NYC and a collection 
 In this section you will import a Databricks notebook to your workspace and fill out the missing details about your Computer Vision API and your Data Lake account. This notebook will be executed from an Azure Data Factory pipeline and it will invoke the Computer Vision API to generate metadata about the images and save the result back to your data lake.
 
 ![](./Media/Lab4-Image10.png)
+
+**IMPORTANT**|
+-------------|
+**Execute these steps on your host computer**|
+
+1.	On the Azure Databricks portal, click the **Workspace** button on the left-hand side menu. 
+2.	On the **Workspace** blade, click your username under the **Users** menu.
+3.	On the **Users** blade, click the arrow next to your user name and then **Import**.
+
+    ![](./Media/Lab4-Image11.png)
+
+4.	On the **Import Notebooks** pop up window, select **Import from: URL**. Copy and paste the URL below in the box:
+
+![Test](./NYCImageMetadata-Lab.dbc)
+
+click the browse link to import the notebook file C:\ADSIAD\Lab\Lab4\NYCImageMetadata-Lab.dbc
+5.	Click Import.
