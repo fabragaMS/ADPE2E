@@ -1,4 +1,4 @@
-#Lab 2: Transform Big Data using Azure Data Factory and Azure SQL Data Warehouse
+# Lab 2: Transform Big Data using Azure Data Factory and Azure SQL Data Warehouse
 In this lab you will use Azure Data Factory to download large data files to your data lake and use Azure SQL Data Warehouse to generate a summary dataset and store it. The dataset you will use contains detailed New York City Yellow Taxi rides for 2018. You will generate a daily aggregated summary of all rides and save the result in your data warehouse. You will use Power BI to visualise summarised taxi ride data.
 
 ## Lab Architecture
@@ -698,9 +698,14 @@ In this section you create a data factory pipeline to copy data in the follwng s
 21.	To execute the pipeline, click on **Add trigger** menu and then **Trigger Now**.
 22.	On the **Pipeline Run** blade, click **Finish**.
 
-![](./Media/Lab2-Image34.png)
+    ![](./Media/Lab2-Image34.png)
 
 23.	To monitor the execution of your pipeline, click on the **Monitor** menu on the left-hand side panel.
 24.	You should be able to see the Status of your pipeline execution on the right-hand side panel.
 
-![](./Media/Lab2-Image35.png)
+    ![](./Media/Lab2-Image35.png)
+
+25.	Click the **View Activity Runs** button for detailed information about each activity execution in the pipeline. The whole execution should last between 7-8 minutes.
+
+    ![](./Media/Lab2-Image36.png)
+    ![](./Media/Lab2-Image37.png)
