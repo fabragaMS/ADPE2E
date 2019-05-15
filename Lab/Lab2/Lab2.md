@@ -211,6 +211,7 @@ In this section you will create a linked service connection to a shared storage 
 
 ## Create Source and Destination Data Sets
 In this section you are going to create 5 datasets that will be used by your data pipeline:
+
 Dataset | Description
 --------|---------------
 **MDWResources_NYCTaxiData**| References MDWResources shared storage account container that contains source data files.
