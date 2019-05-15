@@ -710,3 +710,30 @@ In this section you create a data factory pipeline to copy data in the follwng s
 
     ![](./Media/Lab2-Image36.png)
     ![](./Media/Lab2-Image37.png)
+
+## Visualize Data with Power BI
+In this section you are going to use Power BI to visualize data from Azure SQL Data Warehouse. The Power BI report will use an Import connection to query Azure SQL Data Warehouse and visualise Motor Vehicle Collision data from the table you loaded in the previous exercise.
+
+**IMPORTANT**|
+-------------|
+**Execute these steps inside the MDWDesktop remote desktop connection**|
+
+1.	On MDWDesktop, download the Power BI report from the link https://aka.ms/MDWLab2 and save it in the Desktop.
+2.	Open the file MDWLab2.pbit with Power BI Desktop.
+3.	When prompted to enter the value of the MDWSQLVirtualServer parameter, type the full server name: **mdwsqlvirtualserver-*suffix*.database.windows.net**
+4.	Click **Load**.
+
+    ![](./Media/Lab2-Image38.png)
+
+5.	When prompted to enter credentials, select **Database** from the left-hand side panel and enter the following details:
+    <br>- **User name**: mdwadmin
+    <br>- **Password**: P@ssw0rd123!
+6.	Leave remaining fields with their default values.
+7.	Click **Connect**.
+
+    ![](./Media/Lab2-Image39.png)
+
+8.	Once data finish loading interact with the report by changing the PickUpDate slicer and by clicking on the other visualisations.
+9.	Save your work and close Power BI Desktop.
+
+    ![](./Media/Lab2-Image40.png)

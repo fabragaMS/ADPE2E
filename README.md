@@ -49,7 +49,7 @@ Step     | Description
 ![4](./Media/Black4.png) | Load data to an Azure SQL Data Warehouse table using Polybase
 ![5](./Media/Black5.png) | Visualize data from Azure SQL Data Warehouse using Power BI
 
-### Lab 2: Transform Big Data using Azure Data Factory and Azure SQL Data Warehouse
+### [Lab 2: Transform Big Data using Azure Data Factory and Azure SQL Data Warehouse](./Lab/Lab2/Lab2.md)
 In this lab you will use Azure Data Factory to download large data files into your data lake and use an Azure SQL Data Warehouse stored procedure to generate a summary dataset and store it in the final table. The dataset you will use contains detailed New York City Yellow Taxi rides for 2018. You will generate a daily aggregated summary of all rides and save the result in your data warehouse. You will then use Power BI to visualise summarised data. 
 
 The estimated time to complete this lab is: **45 minutes**.
