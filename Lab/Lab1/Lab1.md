@@ -1,5 +1,8 @@
 # Lab 1: Load Data into Azure SQL Data Warehouse using Azure Data Factory Pipelines
 In this lab you will configure the Azure environment to allow relational data to be transferred from a SQL Server 2017 database to an Azure SQL Data Warehouse database using Azure Data Factory. The dataset you will use contains data about motor vehicle collisions that happened in New Your City from 2012 to 2019. You will use Power BI to visualise collision data loaded from Azure SQL Data Warehouse.
+
+The estimated time to complete this lab is: **60 minutes**.
+
 ## Lab Architecture
 ![Lab Architecture](./Media/Lab1-Image01.png)
 
