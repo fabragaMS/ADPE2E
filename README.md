@@ -25,7 +25,6 @@ New York City data used in this lab was obtained from the New York City Open Dat
 The following prerequisites must be completed before you start these labs:
     <br>- You must be connected to the internet;
     <br>- You must have an Azure account with administrator- or controbutor-level access to your subscription. If you don’t have an account, you can sign up for free following the instructions here: https://azure.microsoft.com/en-au/free/
-    <br>- Download Lab files from <insert GitHub link here> and save them in the local folder C:\ADSIAD\LabFiles;
     <br>- Lab 5 requires you to have a Twitter account. If you don’t have an account you can sign up for free following the instructions here: https://twitter.com/signup. 
     <br>- Lab 5 requires you to have a Power BI Pro account. If you don’t have an account you can sign up for a 60-day trial for free here: https://powerbi.microsoft.com/en-us/power-bi-pro/
 
@@ -36,7 +35,7 @@ Throughout a series of 5 labs you will progressively implement the modern data p
 ![](./Media/LabArchitecture.jpg)
 
 
-### [Lab 1: Load Data into Azure SQL Data Warehouse using Azure Data Factory Pipelines ](./Lab/Lab1/Lab1.md)
+### [Lab 1: Load Data into Azure SQL Data Warehouse using Azure Data Factory Pipelines](./Lab/Lab1/Lab1.md)
 
 In this lab you will configure the Azure environment to allow relational data to be transferred from a SQL Server 2017 database to an Azure SQL Data Warehouse database using Azure Data Factory. The dataset you will use contains data about motor vehicle collisions that happened in New York City from 2012 to 2019. You will use Power BI to visualise collision data loaded from Azure SQL Data Warehouse.
 
