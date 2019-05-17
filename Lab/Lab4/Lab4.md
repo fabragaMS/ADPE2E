@@ -92,7 +92,54 @@ In this section you will import a Databricks notebook to your workspace and fill
 
 4.	On the **Import Notebooks** pop up window, select **Import from: URL**. Copy and paste the URL below in the box:
 
-![Test](./NYCImageMetadata-Lab.dbc)
+```url
+https://github.com/fabragaMS/ADPE2E/raw/master/Lab/Lab4/NYCImageMetadata-Lab.dbc
+```
 
-click the browse link to import the notebook file C:\ADSIAD\Lab\Lab4\NYCImageMetadata-Lab.dbc
-5.	Click Import.
+5.	Click **Import**.
+
+6.	On the NYCImageMetadata-Lab notebook, go to Cmd 2 cell **Define function to invoke Computer Vision API**. You will need to change the function code to include the Computer Vision API details.
+
+    ![](./Media/Lab4-Image12.png)
+
+7.	From the Azure Portal, retrieve the MDWComputerVision subscription key and base endpoint URL.
+
+    ![](./Media/Lab4-Image13.jpg)
+    ![](./Media/Lab4-Image14.png)
+
+8.	Copy and paste the Key and Endpoint values back in the Databricks notebook.
+
+    ![](./Media/Lab4-Image15.png)
+
+9.	On the NYCImageMetadata-Lab notebook, go to Cmd 3 cell **Define function to mount NYC Image Metadata Container**. You will need to change the function code to include your data lake storage account details.
+
+10.	In the **dataLakeaccountName** variable assignment replace *&lt;MDWDataLake storage account name&gt;* with **mdwdatalake*suffix***.
+
+    ![](./Media/Lab4-Image16.png)
+
+11.	From the Azure Portal, retrieve the **MDWDataLake*suffix*** access key.
+
+    ![](./Media/Lab4-Image17.jpg)
+
+12.	Copy and paste the Access Key Databricks notebook. Replace *&lt;MDWDataLake storage account key&gt;* with the Access Key you got from the previous step.
+
+    ![](./Media/Lab4-Image18.png)
+
+13.	Attach the notebook to your previously created **MDWDatabricksCluster** cluster.
+
+    ![](./Media/Lab4-Image19.png)
+
+14.	Review the notebook code.
+
+15.	If you want to test it, you can copy any publicly available image URL and paste it in the Image URL notebook parameter. You can use any of the following image URLs in the list as examples:
+
+Test Image URLs|
+---------------|
+https://petlifetoday.com/wp-content/uploads/2018/06/wireless-dog-fence.jpg|
+https://static.pexels.com/photos/4204/nature-lawn-blur-flower.jpg|
+https://image.redbull.com/rbcom/052/2017-05-22/89eef344-d24f-4520-8680-8b8f7508b264/0012/0/0/0/2428/3642/800/1/best-beginner-motocross-bikes-ktm-250-sx-f.jpg|
+http://www.kiplinger.com/slideshow/investing/T024-S001-the-best-emerging-markets-stocks-for-2019/images/intro.jpg|
+
+16.	Click Run All to execute the notebook.
+
+    ![](./Media/Lab4-Image20.png)

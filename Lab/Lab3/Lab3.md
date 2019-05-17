@@ -17,8 +17,8 @@ In this section you are going to create an Azure Databricks cluster that will be
 -------------|
 **Execute these steps on your host computer**|
 
-1.	In the Azure Portal, navigate to the MDW-Lab resource group and locate the Azure Databricks resource MDWDatabricks.
-2.	On the **MDWDatabricks** blade, click the **Launch Workspace** button. The Azure Databricks portal will open on a new browser tab.
+1.	In the Azure Portal, navigate to the MDW-Lab resource group and locate the Azure Databricks resource MDWDatabricks-*suffix*.
+2.	On the **MDWDatabricks-*suffix*** blade, click the **Launch Workspace** button. The Azure Databricks portal will open on a new browser tab.
 
     ![](./Media/Lab3-Image02.png)
 
