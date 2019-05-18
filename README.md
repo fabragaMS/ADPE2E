@@ -1,4 +1,4 @@
-# Azure Data Platform End-to-End
+# Azure Data Platform End2End
 
 In this workshop you will learn about the main concepts related to advanced analytics and Big Data processing and how Azure Data Services can be used to implement a modern data warehouse architecture. You will understand what Azure services you can leverage to establish a solid data platform to quickly ingest, process and visualise data from a large variety of data sources. The reference architecture you will build as part of this exercise has been proven to give you the flexibility and scalability to grow and handle large volumes of data and keep an optimal level of performance.
 In the exercises in this lab you will build data pipelines using data related to New York City. The workshop was designed to progressively implement an extended modern data platform architecture starting from a traditional relational data pipeline. Then we introduce big data scenarios with large files and distributed computing. We add non-structured data and AI into the mix and finish with real-time streaming analytics. You will have done all of that by the end of the day.
@@ -85,7 +85,7 @@ Step     | Description
 ![](./Media/Blue5.png) | Copy metadata JSON documents into your Cosmos DB database
 ![](./Media/Blue6.png) | Visualize images and associated metadata using Power BI
 
-### Lab 5: Ingest and Analyse real-time data with Event Hubs and Stream Analytics
+### [Lab 5: Ingest and Analyse real-time data with Event Hubs and Stream Analytics](./Lab/Lab5/Lab5.md)
 In this lab you will use an Azure Logic App to connect to Twitter and generate a stream of messages using the hashtag #NYC. The logic app will invoke the Azure Text Analytics Cognitive service to score Tweet sentiment and send the messages to Event Hubs. You will use Stream Analytics to generate the average Tweet sentiment in the last 60 seconds and send the results to a real-time dataset in Power BI.
 
 The estimated time to complete this lab is: **60 minutes**.
