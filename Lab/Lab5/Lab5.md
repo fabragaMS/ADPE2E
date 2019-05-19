@@ -61,7 +61,7 @@ In this section you will create a container in your MDWDataLake that will be use
 ## Create and Configure Event Hubs
 In this section you will prepare Event Hubs to ingest Twitter data collected by the Logic App and save incoming messages to your Data Lake storage account.
 
-    ![](./Media/Lab5-Image06.png)
+![](./Media/Lab5-Image06.png)
 
 **IMPORTANT**|
 -------------|
@@ -358,3 +358,71 @@ In this section you will log on to the Power BI portal to create a dashboard to 
 
     ![](./Media/Lab5-Image44.png)
 
+18.	Repeat the process to create another tile, this time to display the average sentiment score. Use the following details:
+    <br>- **Dataset**: NYCTweetStats
+    <br>- **Visualization Type**: Card
+    <br>- **Fields**: averagesentiment
+    <br>- **Data Label > Value decimal places**: 3
+    <br>- **Details > Display Title and Subtitle**: Checked
+    <br>- **Details > Title**: Average Sentiment Score
+    <br>- **Details > Subtitle**: in the last minute
+
+    ![](./Media/Lab5-Image45.png)
+
+19.	You should be able to see the values for both tiles changing every few seconds. 
+
+20.	Try logging on to Tweeter and posting different messages with the hashtag **#NYC**. Go back to your Power BI dashboard and see the effect your messages had on the average sentiment score.
+
+    ![](./Media/Lab5-Image46.png)
+
+# Create Power BI Report to Visualise Real-Time Data
+In this section you will log on to the Power BI portal to create a dashboard to visualize real-time Tweeter details data sent by Stream Analytics.
+
+**IMPORTANT**|
+-------------|
+**Execute these steps on your host computer**|
+
+1.	On the Power BI portal navigate to **My Workspace** and click on the **Datasets** tab again.
+
+2.	Click on the **Create Report** icon under **Actions** for the **NYCTweetDetails** dataset.
+
+    ![](./Media/Lab5-Image47.png)
+
+3.	On the report canvas add a **Table** visual and add the following dataset fields to the **Values** property:
+    <br>- createdat
+    <br>- tweettext
+    <br>- sentimentscore
+
+4.	Change the default aggregation function for **sentimentscore** to **Average**.
+
+    ![](./Media/Lab5-Image48.png)
+
+5.	On the report canvas add a **Line** chart visual and add the following dataset fields:
+    <br>- **Axis**: createdat
+    <br>- **Values**: sentimentscore
+
+6.	Change the default aggregation function for **sentimentscore** to **Average**.
+
+    ![](./Media/Lab5-Image49.png)
+
+7.	On the report canvas add a **Card** visual and add the following dataset fields to its **Fields** property:
+    <br>- tweettext
+
+8.	Change the default aggregation function for **tweettext** to **Count**.
+
+    ![](./Media/Lab5-Image50.png)
+
+9.	On the report canvas add a **Card** visual and add the following dataset fields to its **Fields** property:
+    <br>- sentimentscore
+
+10.	Change the default aggregation function for **sentimentscore** to **Average**.
+
+    ![](./Media/Lab5-Image51.png)
+
+11.	Place your visuals in a way you can see all of them.
+
+    ![](./Media/Lab5-Image52.png)
+
+12.	Click the Save button on the toolbar to save your report. 
+
+13.	Type “NYC Tweet Details” in the Report name field.
