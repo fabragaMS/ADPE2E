@@ -34,6 +34,7 @@ In this section you are going to establish a Remote Desktop Connection to MDWDes
 **Execute these steps on your host computer**|
 
 1.	In the Azure Portal, navigate to the **MDW-Lab** resource group and click the **MDWDesktop** virtual machine.
+
 2.	On the MDWDesktop blade, from the Overview menu, click the Connect button. 
 
     ![](./Media/Lab1-Image02.png)
@@ -52,10 +53,12 @@ In this section you are going to install Power BI Desktop and Azure Data Studio 
 **Execute these steps inside the MDWDesktop remote desktop connection**|
 
 1.	Once the RDP file is downloaded, click on it to establish an RDP connection with MDWDesktop
+
 2.	User the following credentials to authenticate:
     <br>- **User Name**: MDWAdmin
     <br>- **Password**: P@ssw0rd123!
 3.	Once logged in, accept the default privacy settings.
+
 4.	Using the browser, download and install the latest version of following software. During the setup, accept all default settings:
     <br>
     <br>- **Azure Data Studio (User Installer)**
@@ -80,6 +83,7 @@ In this section you are going to connect to MDWSQLServer to restore the NYCDataS
     ![](./Media/Lab1-Image08.png)
 
 2.	Press **Ctrl+G** to expand the Servers panel
+
 3.	Right-click the **MDWSQLServer** server name on the SERVERS panel and select **New Query**
 
     ![](./Media/Lab1-Image09.png)
@@ -101,6 +105,7 @@ restore database NYCDataSets from url = 'https://mdwresources.blob.core.windows.
       , move 'NYCDataSets_log' to 'F:\Log\NYCDataSets_log.ldf'
 go
 ```
+
 ## Create Azure SQL Data Warehouse database objects
 In this section you will connect to Azure SQL Data Warehouse to create the database objects used to host and process data.
 
@@ -120,7 +125,9 @@ In this section you will connect to Azure SQL Data Warehouse to create the datab
     <br>- **User Name**: mdwadmin
     <br>- **Password**: P@ssw0rd123!
     <br>- **Database**: MDWASQLDW
+
 3.	Click **Connect**.
+
 4.	Right-click the server name and click **New Query**.
 
     ![](./Media/Lab1-Image12.png)
@@ -182,11 +189,13 @@ In this section you are going to install and configure required software onto MD
 **Execute these steps on your host computer**|
 
 1.	In the Azure Portal, navigate to the MDW-Lab resource group and locate the Azure Data Factory **MDWDataFactory-*suffix***.
+
 2.	On the **MDWDataFactory-*suffix*** blade, click the **Author & Monitor** button. The Azure Data Factory portal will open on a new browser tab.
 
     ![](./Media/Lab1-Image13.png)
 
 3.	On the **Azure Data Factory** portal, click the **Author *(pencil icon)*** button on the left-hand side menu. On the **Connections** tab, click **Integration Runtimes**.
+
 4.	Click the **+ New** button to create a new Integration Runtime.
 
     ![](./Media/Lab1-Image14.png)
@@ -204,6 +213,7 @@ In this section you are going to install and configure required software onto MD
     ![](./Media/Lab1-Image17.png)
 
 8.	Copy any of the generated **Authentication Key** keys (Key 1 or Key 2) to Notepad. You are going to need it in the next step.
+
 9.	Click **Finish**.
 
     ![](./Media/Lab1-Image18.png)
@@ -218,6 +228,7 @@ In this section you are going to establish a Remote Desktop Connection to MDWDat
 **Execute these steps on your host computer**|
 
 1.	On the Azure Portal, navigate to the MDW-Lab resource group and locate the **MDWDataGateway** virtual machine.
+
 2.	On the **MDWDataGateway** blade, from the **Overview** menu, click the **Connect** button. 
 
     ![](./Media/Lab1-Image20.png)
@@ -227,6 +238,7 @@ In this section you are going to establish a Remote Desktop Connection to MDWDat
     ![](./Media/Lab1-Image21.png)
 
 4.	Once the file is downloaded, click on file to establish the RDP connection with MDWDataGateway
+
 5.	User the following credentials to authenticate:
     <br>- **User Name**: MDWAdmin
     <br>- **Password**: P@ssw0rd123!
@@ -236,7 +248,9 @@ In this section you are going to establish a Remote Desktop Connection to MDWDat
 **Execute these steps inside the MDWDataGateway remote desktop connection**|
 
 1.	Once logged in, on the **Server Manager**, select **Local Server** on the left-hand side menu. On the right-hand side panel, locate the **IE Enhanced Security Configuration** and click the **On** link.
+
 2.	Turn the setting **Off** for both **Administrators** and **Users**.
+
 3.	Close **Server Manager**.
 
     ![](./Media/Lab1-Image22.png)
@@ -246,8 +260,10 @@ In this section you are going to establish a Remote Desktop Connection to MDWDat
 **Azure Data Factory Integration Runtime**
 https://www.microsoft.com/en-ie/download/details.aspx?id=39717
 
-5.	Accept all default options during the setup wizard. Once the setup if finished, the Microsoft Integration Runtime Configuration Manager will pop up asking you to enter a valid authentication key. 
-6.	Enter the authentication key generated in the previous exercise and click Register.
+5.	Accept all default options during the setup wizard. Once the setup if finished, the Microsoft Integration Runtime Configuration Manager will pop up asking you to enter a valid authentication key.
+
+6.	Enter the authentication key generated in the previous exercise and click **Register**.
+
 7.	Once registration is confirmed, click Finish. 
 
     ![](./Media/Lab1-Image23.png)
@@ -262,6 +278,7 @@ In this section you create a staging container in your MDWDataLake that will be 
 **Execute these steps on your host computer**|
 
 1.	In the Azure Portal, go to the lab resource group and locate the Azure Storage account **mdwdatalake*suffix***. 
+
 2.	On the **Overview** panel, click **Blobs**.
 
     ![](./Media/Lab1-Image25.png)
@@ -273,6 +290,7 @@ In this section you create a staging container in your MDWDataLake that will be 
 4.	On the **New container** blade, enter the following details:
     <br>- **Name**: polybase
     <br>- **Public access level**: Private (no anynymous access)
+
 5.	Click **OK** to create the new container.
 
     ![](./Media/Lab1-Image27.png)
@@ -304,6 +322,7 @@ In this section you will build an Azure Data Factory pipeline to copy a table fr
     <br>- **Authentication Type**: Windows Authentication
     <br>- **User Name**: MDWAdmin
     <br>- **Password**: P@ssw0rd123!
+
 4.	Click **Test connection** to make sure you entered the correct connection details and then click **Finish**.
 
     ![](./Media/Lab1-Image31.png)
@@ -363,6 +382,26 @@ In this section you will build an Azure Data Factory pipeline to copy a table fr
     <br>- **Name**: NYCDataSets_MotorVehicleCollisions
     <br>- **Linked Service**: MDWSQLServer_NYCDataSets
     <br>- **Table**: [NYC].[NYPD_MotorVehicleCollisions]
+
+    Alternatively you can copy and paste the dataset JSON definition below:
+
+    ```json
+    {
+        "name": "NYCDataSets_MotorVehicleCollisions",
+        "properties": {
+            "linkedServiceName": {
+                "referenceName": "MDWSQLServer_NYCDataSets",
+                "type": "LinkedServiceReference"
+            },
+            "type": "SqlServerTable",
+            "typeProperties": {
+                "tableName": "[NYC].[NYPD_MotorVehicleCollisions]"
+            }
+        },
+        "type": "Microsoft.DataFactory/factories/datasets"
+    }
+    ```
+
 4.	Leave remaining fields with default values and click **Continue**.
 
     ![](./Media/Lab1-Image39.png)
@@ -375,11 +414,31 @@ In this section you will build an Azure Data Factory pipeline to copy a table fr
     <br>- **Name**: MDWASQLDW_MotorVehicleCollisions
     <br>- **Linked Service**: MDWSQLVirtualServer_MDWASQLDW
     <br>- **Table**: [NYC].[NYPD_MotorVehicleCollisions]
-7.	Leave remaining fields with default values and click Continue.
+
+    Alternatively you can copy and paste the dataset JSON definition below:
+
+    ```json
+    {
+        "name": "MDWASQLDW_MotorVehicleCollisions",
+        "properties": {
+            "linkedServiceName": {
+                "referenceName": "MDWSQLVirtualServer_MDWASQLDW",
+                "type": "LinkedServiceReference"
+            },
+            "type": "AzureSqlDWTable",
+            "typeProperties": {
+                "tableName": "[NYC].[NYPD_MotorVehicleCollisions]"
+            }
+        },
+        "type": "Microsoft.DataFactory/factories/datasets"
+    }
+    ```
+
+7.	Leave remaining fields with default values and click **Continue**.
 
     ![](./Media/Lab1-Image41.png)
 
-8.	Publish your dataset changes by clicking the Publish All button on the top of the screen.
+8.	Publish your dataset changes by clicking the **Publish All** button on the top of the screen.
 
     ![](./Media/Lab1-Image42.png)
 
