@@ -35,6 +35,34 @@ In this section you will use the Azure Portal to create a Resource Group that wi
 
     ![](./Media/Lab0-Image04.png)
 
+8.	In the Region drop down list, select one of the regions from the list below.
+
+    **IMPORTANT**: The ARM template you will use to deploy the lab components uses the Resource Group region as the default region for all services. To avoid deployment error when services are not available in the region selected, please use one of the recommended regions.
+
+    Recommended Regions|
+    -------------------|
+    US East |
+    US East 2| 
+    US Centra| 
+    US West 2 |
+    Europe West| 
+    Asia Southeast| 
+    Europe North |
+    US South Central| 
+    US West |
+    UK South |
+    Australia East| 
+    Canada Central |
+    Japan East |
+    Germany Central |
+    France Central |
+    India Central |
+    Brazil South |
+    Korea Central |
+    Korea South |
+
+9.	Proceed to create the resource group by clicking **Review + Create**, and then **Create**.
+
 --------------------------------------
 
 [![Deploy to Azure](https://azuredeploy.net/deploybutton.png)](https://azuredeploy.net/)
