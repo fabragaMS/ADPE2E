@@ -21,7 +21,7 @@ New York City data used in this lab was obtained from the New York City Open Dat
     <br>- NYPD Motor Vehicle Collisions: https://data.cityofnewyork.us/Public-Safety/NYPD-Motor-Vehicle-Collisions/h9gi-nx95
     <br>- TLC Yellow Taxi Trip Data: https://www1.nyc.gov/site/tlc/about/tlc-trip-record-data.page
 
-## Lab Prerequisites
+## Lab Prerequisites and Deployment
 The following prerequisites must be completed before you start these labs:
     <br>- You must be connected to the internet;
     <br>- You must have an Azure account with administrator- or controbutor-level access to your subscription. If you don’t have an account, you can sign up for free following the instructions here: https://azure.microsoft.com/en-au/free/
@@ -34,6 +34,9 @@ Throughout a series of 5 labs you will progressively implement the modern data p
 
 ![](./Media/LabArchitecture.jpg)
 
+### Lab Deployment
+
+Click [here](./Deploy/Deploy.md) and follow the instructions to deploy the Azure Data Services required by labs 1 through to 5.
 
 ### [Lab 1: Load Data into Azure SQL Data Warehouse using Azure Data Factory Pipelines](./Lab/Lab1/Lab1.md)
 
