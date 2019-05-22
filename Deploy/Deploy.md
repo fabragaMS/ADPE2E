@@ -43,7 +43,7 @@ In this section you will use the Azure Portal to create a Resource Group that wi
     -------------------|
     US East |
     US East 2| 
-    US Centra| 
+    US Central| 
     US West 2 |
     Europe West| 
     Asia Southeast| 
@@ -64,12 +64,32 @@ In this section you will use the Azure Portal to create a Resource Group that wi
 9.	Proceed to create the resource group by clicking **Review + Create**, and then **Create**.
 
 --------------------------------------
+## Deploy Azure Services
+In this section you will use automated deployment and ARM templates to automate the deployment of all Azure Data Services used in labs 1 through to 5.
 
-[![Deploy to Azure](https://azuredeploy.net/deploybutton.png)](https://azuredeploy.net/)
+1. You can deploy all Azure services required in each lab by clicking the **Deploy to Azure** button below. 
 
+    [![Deploy to Azure](https://azuredeploy.net/deploybutton.png)](https://azuredeploy.net/)
 
-You must deploy all Azure services required in each lab by clicking the **Deploy to Azure** button above. Follow the instructions on the screen and provide:
+2. On the **Deploy to Azure - Setup** page provide:
+    <br>- Your organisation directory
     <br>- The subscription you want to use
-    <br>- The resource group  
+    <br>- The resource group you created in the previous section
 
--	The ARM template used to automate the deployment of Azure services attempts to deploy all services required in the resource group default region. See more information on Lab 0.
+    ![](./Media/Lab0-Image06.png)
+
+3. Click **Next**
+
+4. On the **Deploy to Azure - Preview** just click **Deploy**
+
+    ![](./Media/Lab0-Image07.png)
+
+5. On the Azure Portal, navigate to your resource group.
+
+6. On the **Overview** panel, click on the **Deployments** link to follow the progress of your deployment. A successful deployment should last less than 10 minutes.
+
+    ![](./Media/Lab0-Image08.png)
+
+7. Once your deployment is complete you are ready to start your labs. Enjoy!
+
+    ![](./Media/Lab0-Image09.png)
