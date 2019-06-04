@@ -72,7 +72,7 @@ In this section you are going to install Power BI Desktop and Azure Data Studio 
 ## Restore NYCDataSets database onto MDWSQLServer
 In this section you are going to connect to MDWSQLServer to restore the NYCDataSets database from backup stored in the MDWResources storage Account.
 
-    ![](./Media/Lab1-Image07.jpg)
+![](./Media/Lab1-Image07.jpg)
 
 **IMPORTANT**|
 -------------|
