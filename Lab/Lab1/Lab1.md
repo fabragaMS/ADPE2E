@@ -46,7 +46,7 @@ In this section you are going to establish a Remote Desktop Connection to MDWDes
 ## Install required software onto MDWDesktop
 In this section you are going to install Power BI Desktop and Azure Data Studio on MDWDesktop.
 
-    ![](./Media/Lab1-Image04.jpg)
+![](./Media/Lab1-Image04.jpg)
 
 **IMPORTANT**|
 -------------|
@@ -72,7 +72,7 @@ In this section you are going to install Power BI Desktop and Azure Data Studio 
 ## Restore NYCDataSets database onto MDWSQLServer
 In this section you are going to connect to MDWSQLServer to restore the NYCDataSets database from backup stored in the MDWResources storage Account.
 
-![](./Media/Lab1-Image07.jpg)
+![](./Media/Lab1-Image08.jpg)
 
 **IMPORTANT**|
 -------------|
@@ -109,7 +109,7 @@ go
 ## Create Azure SQL Data Warehouse database objects
 In this section you will connect to Azure SQL Data Warehouse to create the database objects used to host and process data.
 
-    ![](./Media/Lab1-Image10.png)
+![](./Media/Lab1-Image10.png)
 
 **IMPORTANT**|
 -------------|
@@ -221,7 +221,7 @@ In this section you are going to install and configure required software onto MD
 ## Connect to MDWDataGateway and register the Self Hosted Integration Runtime with Azure Data Factory
 In this section you are going to establish a Remote Desktop Connection to MDWDataGateway virtual machine.
 
-    ![](./Media/Lab1-Image19.png)
+![](./Media/Lab1-Image19.png)
 
 **IMPORTANT**|
 -------------|
@@ -271,7 +271,7 @@ https://www.microsoft.com/en-ie/download/details.aspx?id=39717
 ## Create Staging Container on Azure Blob Storage
 In this section you create a staging container in your MDWDataLake that will be used as a staging environment for Polybase before data can be copied to Azure SQL Data Warehouse.
 
-    ![](./Media/Lab1-Image24.jpg)
+![](./Media/Lab1-Image24.jpg)
 
 **IMPORTANT**|
 -------------|
@@ -298,7 +298,7 @@ In this section you create a staging container in your MDWDataLake that will be 
 ## Create Azure Data Factory Pipeline to Copy Relational Data
 In this section you will build an Azure Data Factory pipeline to copy a table from MDWSQLServer to Azure SQL Data Warehouse.
 
-    ![](./Media/Lab1-Image28.jpg)
+![](./Media/Lab1-Image28.jpg)
 
 ### Create Linked Service connections
 
@@ -350,12 +350,12 @@ In this section you will build an Azure Data Factory pipeline to copy a table fr
     ![](./Media/Lab1-Image34.png)
 
 9.	On the **New Linked Service (Azure Blob Storage)** blade, enter the following details:
-    - <br>**Name**: MDWDataLake
-    - <br>**Connect via integration runtime**: AutoResolveIntegrationRuntime
-    - <br>**Authentication method**: Account key
-    - <br>**Account selection method**: From Azure subscription
-    - <br>**Azure subscription**: *<your subscription>*
-    - <br>**Storage account name**: mdwdatalake*suffix*
+    <br>- **Name**: MDWDataLake
+    <br>- **Connect via integration runtime**: AutoResolveIntegrationRuntime
+    <br>- **Authentication method**: Account key
+    <br>- **Account selection method**: From Azure subscription
+    <br>- **Azure subscription**: *<your subscription>*
+    <br>- **Storage account name**: mdwdatalake*suffix*
 10.	Click **Test connection** to make sure you entered the correct connection details and then click **Finish**.
 
     ![](./Media/Lab1-Image35.png)
