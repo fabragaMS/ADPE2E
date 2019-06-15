@@ -10,6 +10,13 @@ Step     | Description
 -------- | -----
 ![](./Media/Red1.png) |Build an Azure Databricks notebook to explore the data files you saved in your data lake in the previous exercise. You will use Python and SQL commands to open a connection to your data lake and query data from data files.
 
+**IMPORTANT**: Some of the Azure services provisioned require globally unique name and a “-suffix” has been added to their names to ensure this uniqueness. Please take note of the suffix generated as you will need it for the following resources:
+
+Name	                     |Type
+-----------------------------|--------------------
+mdwdatalake*suffix*	         |Storage Account
+MDWDatabricks-*suffix*	     |Databricks Workspace
+
 ## Create Azure Databricks Cluster 
 In this section you are going to create an Azure Databricks cluster that will be used to execute notebooks.
 

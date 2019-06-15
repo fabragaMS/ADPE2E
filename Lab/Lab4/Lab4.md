@@ -15,6 +15,15 @@ Step     | Description
 ![](./Media/Blue5.png) | Copy metadata JSON documents into your Cosmos DB database
 ![](./Media/Blue6.png) | Visualize images and associated metadata using Power BI
 
+**IMPORTANT**: Some of the Azure services provisioned require globally unique name and a “-suffix” has been added to their names to ensure this uniqueness. Please take note of the suffix generated as you will need it for the following resources:
+
+Name	                     |Type
+-----------------------------|--------------------
+mdwcosmosdb-*suffix*	     |Cosmos DB account
+MDWDataFactory-*suffix*	     |Data Factory (V2)
+mdwdatalake*suffix*	         |Storage Account
+MDWDatabricks-*suffix*	     |Databricks Workspace
+
 ## Create NYCImages and NYCImageMetadata Containers in Azure Blob Storage
 In this section you will create a container in your MDWDataLake that will be used as a repository for the NYC image files. You will copy 30 files from the MDWResources Storage Account into your NYCTaxiData container. 
 
