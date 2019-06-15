@@ -166,9 +166,11 @@ In this section you will create a Logic App to invoke the Twitter API and retrie
 
     ![](./Media/Lab5-Image20.png)
 
-23.	On the **Compose** properties, build a new JSON message using data elements returned by the previous tasks. Your JSON message should look like this.
+23.	On the **Compose** properties, use the **Inputs** field to build a new JSON message using data elements returned by the previous tasks. Type the JSON structure you see in the picture below and use the correct fields from the **Dynamic content** panel for element values. Your JSON message should look like this.
 
     ![](./Media/Lab5-Image21.png)
+
+    **IMPORTANT**: Please pay special attention to the correct JSON format described as it will impact future lab steps involving Event Hubs and Stream Analytics. Note the " *(double-quotes)* surrounding each JSON element name and also the **CreatedAt** and **TweetText** element values. **TweetID** and **SentimentScore** element values do not need " *(double-quotes)*.
 
 Alternatively you can copy and paste the JSON definition below:
 ```json
