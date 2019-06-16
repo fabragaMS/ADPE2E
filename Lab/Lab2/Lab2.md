@@ -20,7 +20,6 @@ Name	                     |Type
 MDWDataFactory-*suffix*	     |Data Factory (V2)
 mdwdatalake*suffix*	         |Storage Account
 mdwsqlvirtualserver-*suffix* |SQL server
-MDWStreamAnalytics-*suffix*	 |Stream Analytics job
 
 ## Create Azure SQL Data Warehouse database objects
 In this section you will connect to Azure SQL Data Warehouse to create the database objects used to host and process data.
