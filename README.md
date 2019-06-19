@@ -32,9 +32,10 @@ New York City data used in this lab was obtained from the New York City Open Dat
 ## Lab Prerequisites and Deployment
 The following prerequisites must be completed before you start these labs:
     <br>- You must be connected to the internet;
-    <br>- You must have an Azure account with administrator- or controbutor-level access to your subscription. If you don’t have an account, you can sign up for free following the instructions here: https://azure.microsoft.com/en-au/free/
+    <br>- You must have an Azure account with administrator- or contributor-level access to your subscription. If you don’t have an account, you can sign up for free following the instructions here: https://azure.microsoft.com/en-au/free/
     <br>- Lab 5 requires you to have a Twitter account. If you don’t have an account you can sign up for free following the instructions here: https://twitter.com/signup. 
     <br>- Lab 5 requires you to have a Power BI Pro account. If you don’t have an account you can sign up for a 60-day trial for free here: https://powerbi.microsoft.com/en-us/power-bi-pro/
+    <br>- The approximate cost to run the resources provisioned  for the estimated duration of this workshop (2 days) is around USD 150.00. You can minimise the costs by turning off MDWSQLServer and MDWDataGateway VMs and also the MDWASQLDW Azure SQL Data Warehouse after Lab 2 as they are no longer required for the remaining labs.
 
 ## Lab Guide
 

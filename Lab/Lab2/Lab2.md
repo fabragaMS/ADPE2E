@@ -603,7 +603,7 @@ In this section you create a data factory pipeline to copy data in the follwng s
                     "storedProcedureName": "[Staging].[spNYCLoadTaxiDataSummary]"
                 },
                 "linkedServiceName": {
-                    "referenceName": "MDWSQLVirtualServer_MDWASQLDW",
+                    "referenceName": "MDWVirtualSQLServer_MDWASQLDW",
                     "type": "LinkedServiceReference"
                 }
             }
