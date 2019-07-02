@@ -43,15 +43,17 @@ Throughout a series of 5 labs you will progressively implement the modern data p
 
 ![](./Media/LabArchitecture.jpg)
 
-### Lab Deployment
+### [Lab 0: Resource Deployment](./Deploy/Deploy.md)
 
-Click [here](./Deploy/Deploy.md) and follow the instructions to deploy the Azure Data Services required by labs 1 through to 5.
+In this section you will find the instructions to deploy the Azure Data Services required by labs 1 through to 5.
+
+The estimated time to complete this lab is: **30 minutes**.
 
 ### [Lab 1: Load Data into Azure SQL Data Warehouse using Azure Data Factory Pipelines](./Lab/Lab1/Lab1.md)
 
 In this lab you will configure the Azure environment to allow relational data to be transferred from a SQL Server 2017 database to an Azure SQL Data Warehouse database using Azure Data Factory. The dataset you will use contains data about motor vehicle collisions that happened in New York City from 2012 to 2019. You will use Power BI to visualise collision data loaded from Azure SQL Data Warehouse.
 
-The estimated time to complete this lab is: **60 minutes**.
+The estimated time to complete this lab is: **75 minutes**.
 
 Step     | Description
 -------- | -----
@@ -61,10 +63,12 @@ Step     | Description
 ![4](./Media/Black4.png) | Load data to an Azure SQL Data Warehouse table using Polybase
 ![5](./Media/Black5.png) | Visualize data from Azure SQL Data Warehouse using Power BI
 
+![](./Lab/Lab1/Media/Lab1-Image51.png)
+
 ### [Lab 2: Transform Big Data using Azure Data Factory and Azure SQL Data Warehouse](./Lab/Lab2/Lab2.md)
 In this lab you will use Azure Data Factory to download large data files into your data lake and use an Azure SQL Data Warehouse stored procedure to generate a summary dataset and store it in the final table. The dataset you will use contains detailed New York City Yellow Taxi rides for 2018. You will generate a daily aggregated summary of all rides and save the result in your data warehouse. You will then use Power BI to visualise summarised data. 
 
-The estimated time to complete this lab is: **45 minutes**.
+The estimated time to complete this lab is: **60 minutes**.
 
  
 Step     | Description
@@ -74,19 +78,23 @@ Step     | Description
 ![](./Media/Green3.png) | Use Polybase to load data into staging tables in your Azure SQL Data Warehouse. Call a Stored Procedure to perform data aggregations and save results in the final table.
 ![](./Media/Green4.png) | Visualize data from your Azure SQL Data Warehouse using Power BI
 
+![](./Lab/Lab2/Media/Lab2-Image40.png)
+
 ### [Lab 3: Explore Big Data using Azure Databricks](./Lab/Lab3/Lab3.md)
 In this lab you will use Azure Databricks to explore the New York Taxi data files you saved in your data lake in Lab 2. Using a Databricks notebook you will connect to the data lake and query taxi ride details. 
 
-The estimated time to complete this lab is: **20 minutes**.
+The estimated time to complete this lab is: **45 minutes**.
 
 Step     | Description
 -------- | -----
 ![](./Media/Red1.png) |Build an Azure Databricks notebook to explore the data files you saved in your data lake in the previous exercise. You will use Python and SQL commands to open a connection to your data lake and query data from data files.
 
+![](./Lab/Lab3/Media/Lab3-Image14.png)
+
 ### [Lab 4: Add AI to your Big Data Pipeline with Cognitive Services](./Lab/Lab4/Lab4.md)
 In this lab you will use Azure Data Factory to download New York City images to your data lake. Then, as part of the same pipeline, you are going to use an Azure Databricks notebook to invoke Computer Vision Cognitive Service to generate metadata documents and save them in back in your data lake. The Azure Data Factory pipeline then finishes by saving all metadata information in a Cosmos DB collection. You will use Power BI to visualise NYC images and their AI-generated metadata.
 
-The estimated time to complete this lab is: **60 minutes**.
+The estimated time to complete this lab is: **75 minutes**.
 
 Step     | Description
 -------- | -----
@@ -97,10 +105,12 @@ Step     | Description
 ![](./Media/Blue5.png) | Copy metadata JSON documents into your Cosmos DB database
 ![](./Media/Blue6.png) | Visualize images and associated metadata using Power BI
 
+![](./Lab/Lab4/Media/Lab4-Image70.png)
+
 ### [Lab 5: Ingest and Analyse real-time data with Event Hubs and Stream Analytics](./Lab/Lab5/Lab5.md)
 In this lab you will use an Azure Logic App to connect to Twitter and generate a stream of messages using the hashtag #NYC. The logic app will invoke the Azure Text Analytics Cognitive service to score Tweet sentiment and send the messages to Event Hubs. You will use Stream Analytics to generate the average Tweet sentiment in the last 60 seconds and send the results to a real-time dataset in Power BI.
 
-The estimated time to complete this lab is: **60 minutes**.
+The estimated time to complete this lab is: **75 minutes**.
 
 Step     | Description
 -------- | -----
@@ -111,29 +121,34 @@ Step     | Description
 ![](./Media/Orange5.png) | Send stream of Tweet messages to Stream Analytics for real-time analytics (hot path)
 ![](./Media/Orange6.png) | Visualize real-time data generated by Stream Analytics with Power BI
 
-## Workshop Agenda
+![](./Lab/Lab5/Media/Lab5-Image52.png)
+
+## Workshop Proposed Agenda
 
 The workshop content will be delivered over the course of two days with the following agenda:
 
 ### Day 1
 Activity | Duration
 -------- | ---------
-Workshop Overview |
-Modern Data Platform Concepts: Part I |
+Workshop Overview | 45 minutes
+Lab 0: Resource Deployment * | 30 minutes
+Modern Data Platform Concepts: Part I | 90 minutes
 **Modern Data Warehousing** |
-Lab 1: Load Data into Azure SQL Data Warehouse using Azure Data Factory Pipelines    | 60 minutes
-Modern Data Platform Concepts: Part II |
-Lab 2: Transform Big Data using Azure Data Factory and Azure SQL Data Warehouse    | 45 minutes
+Lab 1: Load Data into Azure SQL Data Warehouse using Azure Data Factory Pipelines    | 75 minutes
+Modern Data Platform Concepts: Part II | 90 minutes
+Lab 2: Transform Big Data using Azure Data Factory and Azure SQL Data Warehouse    | 60 minutes
+
+\* Lab 0: Resource Deployment preferable done before Day 1.
 
 ### Day 2
 
 Activity | Duration
 -------- | ---------
 **Advanced Analytics** |
-Modern Data Platform Concepts: Part III |
-Lab 3: Explore Big Data using Azure Databricks    | 30 minutes
-Modern Data Platform Concepts: Part IV |
-Lab 4: Add AI to your Big Data Pipeline with Cognitive Services    | 60 minutes
+Modern Data Platform Concepts: Part III | 60 minutes
+Lab 3: Explore Big Data using Azure Databricks    | 45 minutes
+Modern Data Platform Concepts: Part IV | 60 minutes
+Lab 4: Add AI to your Big Data Pipeline with Cognitive Services    | 75 minutes
 **Real-time Analytics** |
-Modern Data Platform Concepts: Part V |
-Lab 5: Ingest and Analyse real-time data with Event Hubs and Stream Analytics   | 60 minutes
+Modern Data Platform Concepts: Part V | 60 minutes
+Lab 5: Ingest and Analyse real-time data with Event Hubs and Stream Analytics   | 75 minutes

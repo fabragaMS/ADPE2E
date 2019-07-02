@@ -250,7 +250,7 @@ In this section you will configure Stream Analytics to perform analytic queries 
 7.	Once authenticated, enter the following details:
     <br>- **Output alias**: PBITweetDetails
     <br>- **Group Workspace**: My Workspace
-    <br>- **Dataset name**: NYCTweetStats
+    <br>- **Dataset name**: NYCTweetDetails
     <br>- **Table name**: TweetDetails
 
 8.	Leave remaining fields with their default values.
