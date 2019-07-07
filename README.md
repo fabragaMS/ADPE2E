@@ -43,11 +43,15 @@ Throughout a series of 5 labs you will progressively implement the modern data p
 
 ![](./Media/LabArchitecture.jpg)
 
-### [Lab 0: Resource Deployment](./Deploy/Deploy.md)
+### [Lab 0: Deploy Azure Data Platform End2End to your subscription](./Deploy/Deploy.md)
 
-In this section you will find the instructions to deploy the Azure Data Services required by labs 1 through to 5.
+In this section you will automatically provision all Azure resources required to complete labs 1 though to 5. We will use a pre-defined ARM template with the definition of all Azure services used to ingest, store, process and visualise data. 
 
 The estimated time to complete this lab is: **30 minutes**.
+
+**IMPORTANT**|
+-------------|
+**In order to avoid potential delays caused by issues found during the ARM template deployment it is recommended you execute Lab 0 prior to Day 1.**|
 
 ### [Lab 1: Load Data into Azure SQL Data Warehouse using Azure Data Factory Pipelines](./Lab/Lab1/Lab1.md)
 

@@ -324,7 +324,9 @@ In this section you will log on to the Power BI portal to create a dashboard to 
 
 6.	Type “NYC Tweet Stats” in the **Dashboard name** field and click **Create**.
 
-7.	Click **+ Add tile** button on the toolbar. 
+7.	Click on the *(elipsis)* **...** button from the toolbar and then click on the **+ Add tile** menu item. 
+
+![](./Media/Lab5-Image53.png)
 
 8.	On the **Add tile** blade, select **Custom Streaming Data** under the **Real-Time Data** section.
 
