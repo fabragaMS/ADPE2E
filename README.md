@@ -135,9 +135,31 @@ Step     | Description
 
 ## Workshop Proposed Agenda
 
+### **1-Day Format**
+
+Activity | Duration
+-------- | ---------
+Workshop Overview | 15 minutes
+Modern Data Platform Concepts: Part I | 15 minutes
+**Modern Data Warehousing** |
+Lab 1: Load Data into Azure SQL Data Warehouse using Azure Data Factory Pipelines    | 75 minutes
+Modern Data Platform Concepts: Part II | 15 minutes
+Lab 2: Transform Big Data using Azure Data Factory and Azure SQL Data Warehouse    | 60 minutes
+**Advanced Analytics** |
+Modern Data Platform Concepts: Part III | 15 minutes
+Lab 3: Explore Big Data using Azure Databricks    | 45 minutes
+Modern Data Platform Concepts: Part IV | 15 minutes
+Lab 4: Add AI to your Big Data Pipeline with Cognitive Services    | 75 minutes
+**Real-time Analytics** |
+Modern Data Platform Concepts: Part V | 15 minutes
+Lab 5: Ingest and Analyse real-time data with Event Hubs and Stream Analytics   | 75 minutes
+
+### **2-Day Format**
+
 The workshop content will be delivered over the course of two days with the following agenda:
 
-### Day 1
+### **Day 1**
+
 Activity | Duration
 -------- | ---------
 Workshop Overview | 45 minutes
@@ -148,9 +170,9 @@ Lab 1: Load Data into Azure SQL Data Warehouse using Azure Data Factory Pipeline
 Modern Data Platform Concepts: Part II | 90 minutes
 Lab 2: Transform Big Data using Azure Data Factory and Azure SQL Data Warehouse    | 60 minutes
 
-\* Lab 0: Resource Deployment preferable done before Day 1.
+\* Lab 0 preferable done before Day 1.
 
-### Day 2
+### **Day 2**
 
 Activity | Duration
 -------- | ---------
