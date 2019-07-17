@@ -5,7 +5,7 @@ In this lab you will use an Azure Logic App to connect to Twitter and generate a
 
 **IMPORTANT**: This lab requires you have a valid Power BI account. If you don’t have one you can register for a 60-day trial here: https://powerbi.microsoft.com/en-us/power-bi-pro/
 
-The estimated time to complete this lab is: **60 minutes**.
+The estimated time to complete this lab is: **75 minutes**.
 
 ## Lab Architecture
 ![Lab Architecture](./Media/Lab5-Image01.png)

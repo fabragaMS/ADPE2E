@@ -1,13 +1,13 @@
 # Azure Data Platform End2End
 
 In this workshop you will learn about the main concepts related to advanced analytics and Big Data processing and how Azure Data Services can be used to implement a modern data warehouse architecture. You will understand what Azure services you can leverage to establish a solid data platform to quickly ingest, process and visualise data from a large variety of data sources. The reference architecture you will build as part of this exercise has been proven to give you the flexibility and scalability to grow and handle large volumes of data and keep an optimal level of performance.
-In the exercises in this lab you will build data pipelines using data related to New York City. The workshop was designed to progressively implement an extended modern data platform architecture starting from a traditional relational data pipeline. Then we introduce big data scenarios with large files and distributed computing. We add non-structured data and AI into the mix and finish with real-time streaming analytics. You will have done all of that by the end of the day.
+In the exercises in this lab you will build data pipelines using data related to New York City. The workshop was designed to progressively implement an extended modern data platform architecture starting from a traditional relational data pipeline. Then we introduce big data scenarios with large files and distributed computing. We add non-structured data and AI into the mix and finish with real-time streaming analytics. You will have done all of that by the end of the workshop.
 
 **IMPORTANT**:
 
 * The reference architecture proposed in this workshop aims to explain just enough of the role of each of the Azure Data Services included in the overall modern data platform architecture. This workshop does not replace the need of in-depth training on each Azure service covered.
 
-* The services covered in this course are only a subset of a much larger family of Azure services. Similar outcomes can be achieved by leveraging other services and/or features not covered by this workshop.
+* The services covered in this course are only a subset of a much larger family of Azure services. Similar outcomes can be achieved by leveraging other services and/or features not covered by this workshop. Specific business requirements may also ask for the use of different services or features not included in this workshop.
 
 * Some concepts presented in this course can be quite complex and you may need to seek for more information from different sources.
 
@@ -39,7 +39,13 @@ The following prerequisites must be completed before you start these labs:
 
 ## Lab Guide
 
-Throughout a series of 5 labs you will progressively implement the modern data platform architecture referenced below:
+Throughout a series of 5 labs you will progressively implement a modern data platform architecture using datasets from New York City. 
+
+You will start ingesting relational data about traffic collisions in Manhattan hosted by SQL Server in your Azure SQL Data Warehouse. Then we will introduce the concepts of data lake and  big data challenges and you will put then to practice by ingesting and processing over 100 million yellow taxi ride records stored as large data files stored in your data lake.
+
+You will then have use Databricks and the power of Spark clusters to explore big data files. Then you will incorporate AI into your data pipeline by invoking Cognitive Services Computer Vision API to automatically generate metadata for New York City street photographies and store them in a Cosmos DB database. Finally, you will use the Twitter hashtag #NYC as a source of streaming events that you will capture, store and process in real time with Event Hubs, Stream Analytics and Power BI.
+
+By the end of the workshop you will have implementd the lab architecture referenced below:
 
 ![](./Media/LabArchitecture.jpg)
 
@@ -135,7 +141,7 @@ The workshop content will be delivered over the course of two days with the foll
 Activity | Duration
 -------- | ---------
 Workshop Overview | 45 minutes
-Lab 0: Resource Deployment * | 30 minutes
+Lab 0: Deploy Azure Data Platform End2End to your subscription * | 30 minutes
 Modern Data Platform Concepts: Part I | 90 minutes
 **Modern Data Warehousing** |
 Lab 1: Load Data into Azure SQL Data Warehouse using Azure Data Factory Pipelines    | 75 minutes

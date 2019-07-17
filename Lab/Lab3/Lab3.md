@@ -1,7 +1,7 @@
 # Lab 3: Explore Big Data using Azure Databricks
 In this lab you will use Azure Databricks to explore the New York Taxi data files you saved in your data lake in Lab 2. Using a Databricks notebook you will connect to the data lake and query taxi ride details. 
 
-The estimated time to complete this lab is: **20 minutes**.
+The estimated time to complete this lab is: **45 minutes**.
 
 ## Lab Architecture
 ![Lab Architecture](./Media/Lab3-Image01.png)
@@ -10,7 +10,7 @@ Step     | Description
 -------- | -----
 ![](./Media/Red1.png) |Build an Azure Databricks notebook to explore the data files you saved in your data lake in the previous exercise. You will use Python and SQL commands to open a connection to your data lake and query data from data files.
 
-**IMPORTANT**: Some of the Azure services provisioned require globally unique name and a “-suffix” has been added to their names to ensure this uniqueness. Please take note of the suffix generated as you will need it for the following resources:
+**IMPORTANT**: Some of the Azure services provisioned require globally unique name and a “-suffix” has been added to their names to ensure this uniqueness. Please take note of the suffix generated as you will need it for the following resources in this lab:
 
 Name	                     |Type
 -----------------------------|--------------------

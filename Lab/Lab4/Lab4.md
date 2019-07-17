@@ -1,7 +1,7 @@
 # Lab 4: Add AI to your Big Data Pipeline with Cognitive Services
 In this lab you will use Azure Data Factory to download New York City images to your data lake. Then, as part of the same pipeline, you are going to use an Azure Databricks notebook to invoke Computer Vision Cognitive Service to generate metadata documents and save them in back in your data lake. The Azure Data Factory pipeline then finishes by saving all metadata information in a Cosmos DB collection. You will use Power BI to visualise NYC images and their AI-generated metadata.
 
-The estimated time to complete this lab is: **60 minutes**.
+The estimated time to complete this lab is: **75 minutes**.
 
 ## Lab Architecture
 ![Lab Architecture](./Media/Lab4-Image01.png)
