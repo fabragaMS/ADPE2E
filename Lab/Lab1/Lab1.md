@@ -99,6 +99,7 @@ go
 restore database NYCDataSets from url = 'https://mdwresources.blob.core.windows.net/nycdatasets/NYCDataSets.Full.bak'
    with move 'NYCDataSets' to 'F:\Data\NYCDataSets.mdf'
       , move 'NYCDataSets_log' to 'F:\Log\NYCDataSets_log.ldf'
+      , stats = 5
 go
 ```
 

@@ -16,6 +16,9 @@ Name	                     |Type
 -----------------------------|--------------------
 mdwdatalake*suffix*	         |Storage Account
 MDWDatabricks-*suffix*	     |Databricks Workspace
+mdwsqlvirtualserver-*suffix* |SQL server
+
+**IMPORTANT**: The code snippets below illustrate the simplest and quickest way to establish connections between Databricks and other Azure services. They **ARE NOT** considered best practices as they expose secrets and passwords in plain text. For a secure implementation following the security best practices, please consider the use of Azure Key Vault in conjuntion with Databricks Secret Scopes (https://docs.azuredatabricks.net/user-guide/secrets/secret-scopes.html).
 
 ## Create Azure Databricks Cluster 
 In this section you are going to create an Azure Databricks cluster that will be used to execute notebooks.
@@ -34,7 +37,11 @@ In this section you are going to create an Azure Databricks cluster that will be
 
     ![](./Media/Lab3-Image03.png)
 
-5.	On the Create Cluster blade, type “MDWDatabricksCluster” in the **Cluster Name** field. Leave all other fields with their default values.
+5.	On the **Create Cluster** blade, enter the following connection details:
+    <br>- **Cluster Name**: MDWDatabricksCluster
+    <br>- **Max Workers**: 4
+Leave all other fields with their default values.
+
 6.	Click **Create Cluster**. It should take around 5 minutes for the cluster to be fully operational.
 
     ![](./Media/Lab3-Image04.png)
@@ -122,32 +129,44 @@ display(dfNYCTaxiData)
 
     ![](./Media/Lab3-Image10.png)
 
-18.	Set the title of the **Cmd 4** cell to “Create Temp View”
-19.	In the **Cmd 4** cell, call the **createOrReplaceTempView** method of the data frame object to create a temporary view of the data in memory. Use the Python code below:
+18. Set the title of the **Cmd 4** cell to “Use DataFrame Operations to Filter Data”
+
+19.	In the **Cmd 4** cell, call the **select()** method of the data frame object to select the columns "tpep_pickup_datetime", "passenger_count" and "total_amount". Then use the  **filter()** method to filter rows where "passenger_count > 6" and "total_amount > 50.0". Use the Python code below:
+
+```python
+display(dfNYCTaxiData.select("tpep_pickup_datetime", "passenger_count", "total_amount").filter("passenger_count > 6 and total_amount > 50.0"))
+```
+
+20.	Hit **Shift + Enter** to execute the command and create a new cell. 
+
+    ![](./Media/Lab3-Image16.png)
+
+21.	Set the title of the **Cmd 5** cell to “Create Temp View”
+22.	In the **Cmd 5** cell, call the **createOrReplaceTempView** method of the data frame object to create a temporary view of the data in memory. Use the Python code below:
 
 ```python
 dfNYCTaxiData.createOrReplaceTempView('NYCTaxiDataTable')
 ```
-20.	Hit **Shift + Enter** to execute the command and create a new cell. 
+23.	Hit **Shift + Enter** to execute the command and create a new cell. 
 
-21.	Set the title of the Cmd 5 cell to “Use SQL to count NYC Taxi Data records”
+24.	Set the title of the **Cmd 6** cell to “Use SQL to count NYC Taxi Data records”
 
-22.	In the **Cmd 5** cell, change the default language to SQL using the %sql command. 
+25.	In the **Cmd 6** cell, change the default language to SQL using the %sql command. 
 
-23.	Write a SQL query to retrieve the total number of records in the NYCTaxiDataTable view. Use the command below:
+26.	Write a SQL query to retrieve the total number of records in the NYCTaxiDataTable view. Use the command below:
 
 ```sql
 %sql
 select count(*) from NYCTaxiDataTable
 ```
 
-24.	Hit **Shift + Enter** to execute the command and create a new cell. You will see the total number of records in the data frame at the bottom of the cell.
+27.	Hit **Shift + Enter** to execute the command and create a new cell. You will see the total number of records in the data frame at the bottom of the cell.
 
     ![](./Media/Lab3-Image11.png)
 
-25.	Set the title of the **Cmd 6** cell to “Use SQL to filter NYC Taxi Data records”
+28.	Set the title of the **Cmd 7** cell to “Use SQL to filter NYC Taxi Data records”
 
-26.	In the **Cmd 6** cell, write a SQL query to filter taxi rides that happened on the Apr, 7th 2018 that had more than 5 passengers. Use the command below:
+29.	In the **Cmd 7** cell, write a SQL query to filter taxi rides that happened on the Apr, 7th 2018 that had more than 5 passengers. Use the command below:
 
 ```sql
 %sql
@@ -161,13 +180,13 @@ where cast(tpep_pickup_datetime as date) = '2018-04-07'
   and passenger_count > 5
 ```
 
-27.	Hit **Shift + Enter** to execute the command. You will see a grid showing the filtered result set.
+30.	Hit **Shift + Enter** to execute the command and create a new cell. You will see a grid showing the filtered result set.
 
     ![](./Media/Lab3-Image12.png)
 
-28.	Set the title of the **Cmd 7** cell to “Use SQL to aggregate NYC Taxi Data records and visualize data”
+31.	Set the title of the **Cmd 9** cell to “Use SQL to aggregate NYC Taxi Data records and visualize data”
 
-29.	In the **Cmd 7** cell, write a SQL query to aggregate records and return total number of rides by payment type. Use the command below:
+32.	In the **Cmd 9** cell, write a SQL query to aggregate records and return total number of rides by payment type. Use the command below:
 
 ```sql
 %sql
@@ -187,10 +206,62 @@ order by TotalRideCount desc
 
 ```
 
-30.	Hit **Ctrl + Enter** to execute the command. Results will be displayed in a grid in the cell.
+33.	Hit **Shift + Enter** to execute the command and create a new cell. Results will be displayed in a grid in the cell.
 
-31.	Click the **Bar chart** button to see results as a bar chart.
+34.	Click the **Bar chart** button to see results as a bar chart.
 
     ![](./Media/Lab3-Image13.png)
     ![](./Media/Lab3-Image14.png)
 
+35. Set the title of the **Cmd 10** cell to “Load Taxi Location Data from Azure SQL Data Warehouse”.
+
+36. Using Python, open a JDBC connection to your Azure SQL Data Warehouse and load Taxi location lookup data from the Staging.NYCTaxiLocationLookup table into a new data frame called dfLocationLookup. 
+
+    **IMPORTANT**: Don't forget to replace the 'mdwsqlvirtualserver-suffix' with your specific Azure SQL Data Warehouse server name.
+
+    In the same cell, create a temporary view called "NYCTaxiLocation" and display the contents of the data frame. Use the Python code below:
+
+```python
+jdbcUrl = "jdbc:sqlserver://mdwsqlvirtualserver-suffix.database.windows.net:1433;database=MDWASQLDW"
+connectionProperties = {
+  "user" : "mdwadmin",
+  "password" : "P@ssw0rd123!",
+  "driver" : "com.microsoft.sqlserver.jdbc.SQLServerDriver"
+}
+
+pushdown_query = '(select * from Staging.NYCTaxiLocationLookup) as t'
+dfLookupLocation = spark.read.jdbc(url=jdbcUrl, table=pushdown_query, properties=connectionProperties)
+
+dfLookupLocation.createOrReplaceTempView('NYCTaxiLocation')
+
+display(dfLookupLocation) 
+
+```
+
+37. Hit **Shift + Enter** to execute the command and create a new cell. Results will be displayed in a grid in the cell.
+
+    ![](./Media/Lab3-Image17.png)
+
+38. Set the title of the **Cmd 11** cell to “Combine Data Lake and Data Warehouse data frames using SQL”.
+
+39. In the **Cmd 11** cell, write a SQL query to join the two dataframes using their view names. Write a SELECT statement to return the "Borough" column from NYCTaxiLocation view and the columns "tpep_pickup_datetime", "passenger_count" and "total_amount" from the NYCTaxiDataTable view. Use a WHERE clause to filter taxi rides that happened on the Apr, 7th of 2018 with passenger_count > 5 and total_amount > 50.0. Use the SQL command below:
+
+```sql
+%sql
+
+select 
+    pu.Borough
+  , cast(tpep_pickup_datetime as date) as pickup_date
+  , passenger_count
+  , total_amount
+from NYCTaxiDataTable as rides
+  join NYCTaxiLocation as pu
+    on rides.PULocationID = pu.LocationID
+where cast(tpep_pickup_datetime as date) = '2018-04-07'
+  and passenger_count > 5
+  and total_amount > 50.0
+```
+
+40. Hit **Ctrl + Enter** to execute the command. Results will be displayed in a grid in the cell.
+
+    ![](./Media/Lab3-Image18.png)

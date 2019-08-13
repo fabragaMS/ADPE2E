@@ -30,7 +30,7 @@ In this section you will connect to Azure SQL Data Warehouse to create the datab
 -------------|
 **Execute these steps inside the MDWDesktop remote desktop connection**|
 
-**IMPORTANT**: The full solution script can be found [here](./Solution/Create Staging NYCTaxiData.sql)
+**IMPORTANT**: The full solution script can be found ![here](./Solution/Create Staging NYCTaxiData.sql)
 
 1.	Open Azure Data Studio. 
 2.	If you already have a connection to MDWSQLVirtualServer, then **go to step 6**.
