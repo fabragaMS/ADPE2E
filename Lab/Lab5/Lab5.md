@@ -36,7 +36,7 @@ In this section you will create a container in your MDWDataLake that will be use
 -------------|
 **Execute these steps on your host computer**|
 
-1.	In the Azure Portal, go to the MDW-Lab resource group, and then locate and click the Azure Storage account **mdwdatalake*suffix***. 
+1.	In the Azure Portal, go to the lab resource group, and then locate and click the Azure Storage account **mdwdatalake*suffix***. 
 
 2.	On the **Overview** panel, click **Blobs**.
 

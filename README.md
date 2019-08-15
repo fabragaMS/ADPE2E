@@ -52,6 +52,8 @@ By the end of the workshop you will have implementd the lab architecture referen
 
 ### [Lab 0: Deploy Azure Data Platform End2End to your subscription](./Deploy/Deploy.md)
 
+**IMPORTANT**: You should skip this Lab if you are executing the labs through subscriptions provided by CloudLabs. All Azure services will be deployed as you activate your registration.
+
 In this section you will automatically provision all Azure resources required to complete labs 1 though to 5. We will use a pre-defined ARM template with the definition of all Azure services used to ingest, store, process and visualise data. 
 
 The estimated time to complete this lab is: **30 minutes**.

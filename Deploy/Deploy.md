@@ -41,25 +41,20 @@ In this section you will use the Azure Portal to create a Resource Group that wi
 
     Recommended Regions|
     -------------------|
-    US East |
-    US East 2| 
-    US Central| 
-    US West 2 |
-    Europe West| 
-    Asia Southeast| 
-    Europe North |
-    US South Central| 
-    US West |
-    UK South |
-    Australia East| 
-    Canada Central |
-    Japan East |
-    Germany Central |
-    France Central |
-    India Central |
-    Brazil South |
-    Korea Central |
-    Korea South |
+    Central US|
+    East US|
+    East US 2|
+    South Central US|
+    West US|
+    West US 2|
+    UK South|
+    Japan East|
+    Central India|
+    West Europe|
+    North Europe|
+    Canada Central|
+    Australia East|
+    Southeast Asia|
 
 9.	Proceed to create the resource group by clicking **Review + Create**, and then **Create**.
 

@@ -27,7 +27,7 @@ In this section you are going to create an Azure Databricks cluster that will be
 -------------|
 **Execute these steps on your host computer**|
 
-1.	In the Azure Portal, navigate to the MDW-Lab resource group and locate the Azure Databricks resource MDWDatabricks-*suffix*.
+1.	In the Azure Portal, navigate to the lab resource group and locate the Azure Databricks resource MDWDatabricks-*suffix*.
 2.	On the **MDWDatabricks-*suffix*** blade, click the **Launch Workspace** button. The Azure Databricks portal will open on a new browser tab.
 
     ![](./Media/Lab3-Image02.png)
@@ -40,7 +40,8 @@ In this section you are going to create an Azure Databricks cluster that will be
 5.	On the **Create Cluster** blade, enter the following connection details:
     <br>- **Cluster Name**: MDWDatabricksCluster
     <br>- **Max Workers**: 4
-Leave all other fields with their default values.
+
+    Leave all other fields with their default values.
 
 6.	Click **Create Cluster**. It should take around 5 minutes for the cluster to be fully operational.
 
