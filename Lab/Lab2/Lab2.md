@@ -211,10 +211,11 @@ In this section you are going to create 5 datasets that will be used by your dat
 Dataset | Description
 --------|---------------
 **MDWResources_NYCTaxiData**| References MDWResources shared storage account container that contains source data files.
-**MDWResources_NYCTaxiLookup**| References MDWResources shared storage account that contains a .csv file with all taxi location codes and names.
+**MDWResources_NYCTaxiLookup_CSV**| References MDWResources shared storage account that contains a .csv file with all taxi location codes and names.
 **MDWASQLDW_StagingNYCTaxiData**| References the table Staging.NYCTaxiData in the Azure SQL Data Warehouse database MDWASQLDW.
 **MDWASQLDW_StagingNYCLocationLookup**| References the table [Staging].[NYCTaxiLocationLookup] in the Azure SQL Data Warehouse database MDWASQLDW and acts as destination of lookup data copied from MDWResources_NYCTaxiLookup.
-**MDWDataLake_NYCTaxiData**| References your MDWDataLake-*suffix* storage account. It acts as the destination for the files copied from MDWResources_NYCTaxiData. It also functions as a data source when copying data to MDWASQLDW_StagingNYCTaxiData.
+**MDWDataLake_NYCTaxiData_Binary**| References your MDWDataLake-*suffix* storage account. It acts as the destination for the files copied from MDWResources_NYCTaxiData. 
+**MDWDataLake_NYCTaxiData_CSV**| References your MDWDataLake-*suffix* storage account. It functions as a data source when copying data to MDWASQLDW_StagingNYCTaxiData.
 
 **IMPORTANT**|
 -------------|
@@ -232,36 +233,40 @@ Dataset | Description
 
     ![](./Media/Lab2-Image14.png)
 
-4.	On the New Data Set tab, enter the following details:
-    <br>- **General > Name**: MDWResources_NYCTaxiData
-    <br>- **Connection > Linked Service**: MDWResources
-    <br>- **Connection > File Path**: nyctaxidata / *.csv
-    <br>- **Connection > Binary Copy**: Checked
+4.	On the **Set Properties** blade, enter the following details:
+    <br>- **Name**: MDWResources_NYCTaxiData
+    <br>- **Linked service**: MDWResources
+    <br>- **File Path**: **Container**: nyctaxidata, **Directory**: [blank], **File**: [blank]
+    
+    ![](./Media/Lab2-Image41.png)
 
     Alternatively you can copy and paste the Dataset JSON definition below:
 
     ```json
     {
-    "name": "MDWResources_NYCTaxiData",
-    "properties": {
-        "linkedServiceName": {
-            "referenceName": "MDWResources",
-            "type": "LinkedServiceReference"
-        },
-        "type": "AzureBlob",
-        "typeProperties": {
-            "fileName": "*.csv",
-            "folderPath": "nyctaxidata"
+        "name": "MDWResources_NYCTaxiData",
+        "properties": {
+            "linkedServiceName": {
+                "referenceName": "MDWResources",
+                "type": "LinkedServiceReference"
+            },
+            "annotations": [],
+            "type": "Binary",
+            "typeProperties": {
+                "location": {
+                    "type": "AzureBlobStorageLocation",
+                    "container": "nyctaxidata"
+                }
+            }
         }
-    },
-    "type": "Microsoft.DataFactory/factories/datasets"
     }
     ```
 5.	Leave remaining fields with default values.
 
     ![](./Media/Lab2-Image15.png)
 
-6.	Repeat the process to create another dataset, this time referencing the NYCTaxiData container in your MDWDataLake storage account. 
+6.	Repeat the process to create another Azure Storage Binary dataset, this time referencing the NYCTaxiData container in your MDWDataLake storage account. This dataset acts as the destination for the NYC taxi data files you will copy from the previous dataset.
+
 7.	Type “Azure Blob Storage” in the search box and select **Azure Blob Storage**. Click **Continue**.
 
     ![](./Media/Lab2-Image13.png)
@@ -270,97 +275,151 @@ Dataset | Description
 
     ![](./Media/Lab2-Image14.png)
 
-11.	On the New Data Set tab, enter the following details:
-    <br>- **General > Name**: MDWDataLake_NYCTaxiData
-    <br>- **Connection > Linked Service**: MDWDataLake
-    <br>- **Connection > File Path**: nyctaxidata
-    <br>- **Connection > Binary Copy**: Unchecked
-    <br>- **Connection > Column names in the first row**: Checked
+9.	On the **Set Properties** blade, enter the following details:
+    <br>- **Name**: MDWDataLake_NYCTaxiData_Binary
+    <br>- **Linked Service**: MDWDataLake
+    <br>- **File Path**: **Container**: nyctaxidata, **Directory**: [blank], **File**: [blank]
+
+    ![](./Media/Lab2-Image42.png)
+
+    Click **Continue**.    
 
     Alternatively you can copy and paste the Dataset JSON definition below:
 
     ```json
     {
-    "name": "MDWDataLake_NYCTaxiData",
-    "properties": {
-        "linkedServiceName": {
-            "referenceName": "MDWDataLake",
-            "type": "LinkedServiceReference"
-        },
-        "type": "AzureBlob",
-        "typeProperties": {
-            "format": {
-                "type": "TextFormat",
-                "columnDelimiter": ",",
-                "rowDelimiter": "",
-                "nullValue": "",
-                "treatEmptyAsNull": true,
-                "firstRowAsHeader": true
+        "name": "MDWDataLake_NYCTaxiData_Binary",
+        "properties": {
+            "linkedServiceName": {
+                "referenceName": "MDWDataLake",
+                "type": "LinkedServiceReference"
             },
-            "fileName": "",
-            "folderPath": "nyctaxidata"
+            "annotations": [],
+            "type": "Binary",
+            "typeProperties": {
+                "location": {
+                    "type": "AzureBlobStorageLocation",
+                    "container": "nyctaxidata"
+                }
+            }
         }
-    },
-    "type": "Microsoft.DataFactory/factories/datasets"
     }
     ```
-12.	Leave remaining fields with default values.
+10.	Leave remaining fields with default values.
 
     ![](./Media/Lab2-Image16.png)
 
-13.	Repeat the process to create another dataset, this time referencing the NYCTaxiLookup container in your MDWResources storage account. 
-14.	Type “Azure Blob Storage” in the search box and select **Azure Blob Storage**. Click **Continue**.
+11.	Repeat the process to create a new Azure Storage CSV dataset referencing the NYCTaxiData container in your MDWDataLake storage account. This dataset acts as the data source of NYC taxi records (CSV) you will copy to your Azure SQL Data Warehouse.
+
+12.	Type “Azure Blob Storage” in the search box and select **Azure Blob Storage**. Click **Continue**.
 
     ![](./Media/Lab2-Image13.png)
 
-15.	On the **Select Format** blade, select **Binary** and click **Continue**.
+13.	On the **Select Format** blade, select **DelimitedText** and click **Continue**.
 
-    ![](./Media/Lab2-Image14.png)
+    ![](./Media/Lab2-Image43.png)
 
-16.	On the New Data Set tab, enter the following details:
-    <br>- **General > Name**: MDWResources_NYCTaxiLookup
-    <br>- **Connection > Linked Service**: MDWResources
-    <br>- **Connection > File Path**: nyctaxilookup / taxi_zone_lookup.csv
-    <br>- **Connection > Binary Copy**: Unchecked
-    <br>- **Connection > Column names in the first row**: Checked.
-    <br>- **Connection > Quote character**: “ (double-quote) *expand Advanced to see this field*
+14.	On the **Set Properties** blade, enter the following details:
+    <br>- **Name**: MDWDataLake_NYCTaxiData_CSV
+    <br>- **Linked Service**: MDWDataLake
+    <br>- **File Path**: **Container**: nyctaxidata, **Directory**: [blank], **File Path**: [blank]
+    <br>- **First row as header**: Checked
+    <br>- **Import schema**: None
+
+    ![](./Media/Lab2-Image44.png)
+
+    Click **Continue**.
+
+15.	On the dataset properties, set the following property values:
+    <br>- **Connection > Escape character**: No escape character
+    <br>- **Connection > Quote character**: No quote character
+
+    Leave remaining fields with default values.
+
+    ![](./Media/Lab2-Image46.png)
 
     Alternatively you can copy and paste the Dataset JSON definition below:
 
     ```json
     {
-    "name": "MDWResources_NYCTaxiLookup",
-    "properties": {
-        "linkedServiceName": {
-            "referenceName": "MDWResources",
-            "type": "LinkedServiceReference"
-        },
-        "type": "AzureBlob",
-        "typeProperties": {
-            "format": {
-                "type": "TextFormat",
-                "columnDelimiter": ",",
-                "rowDelimiter": "",
-                "quoteChar": "\"",
-                "nullValue": "\\N",
-                "treatEmptyAsNull": true,
-                "firstRowAsHeader": true
+        "name": "MDWDataLake_NYCTaxiData_CSV",
+        "properties": {
+            "linkedServiceName": {
+                "referenceName": "MDWDataLake",
+                "type": "LinkedServiceReference"
             },
-            "fileName": "taxi_zone_lookup.csv",
-            "folderPath": "nyctaxilookup"
+            "annotations": [],
+            "type": "DelimitedText",
+            "typeProperties": {
+                "location": {
+                    "type": "AzureBlobStorageLocation",
+                    "container": "nyctaxidata"
+                },
+                "columnDelimiter": ",",
+                "escapeChar": "",
+                "firstRowAsHeader": true,
+                "quoteChar": ""
+            },
+            "schema": []
         }
-    },
-    "type": "Microsoft.DataFactory/factories/datasets"
     }
     ```
-17.	Leave remaining fields with default values.
 
-18.	Repeat the process to create another dataset, this time referencing the Staging.NYCTaxiData in your Azure SQL Data Warehouse database. 
-19.	Type “Azure SQL Data Warehouse” in the search box and select **Azure SQL Data Warehouse**. Click **Continue**.
+16.	Repeat the process to create another Azure Blob CSV dataset, this time referencing the NYCTaxiLookup container in your MDWResources storage account. 
+
+17.	Type “Azure Blob Storage” in the search box and select **Azure Blob Storage**. Click **Continue**.
+
+    ![](./Media/Lab2-Image13.png)
+
+18.	On the **Select Format** blade, select **DelimitedText** and click **Continue**.
+
+    ![](./Media/Lab2-Image43.png)
+
+19.	On the **Set Properties** blade, enter the following details:
+    <br>- **Name**: MDWResources_NYCTaxiLookup_CSV
+    <br>- **Linked Service**: MDWResources
+    <br>- **File Path**: **Container**:nyctaxilookup, **Directory*: [blank], **File**: [blank]
+    <br>- **First row as header**: Checked
+    <br>- **Import schema**: None.
+
+    ![](./Media/Lab2-Image47.png)
+
+20.	Leave remaining fields with default values.  
+
+    Alternatively you can copy and paste the Dataset JSON definition below:
+
+    ```json
+    {
+        "name": "MDWResources_NYCTaxiLookup_CSV",
+        "properties": {
+            "linkedServiceName": {
+                "referenceName": "MDWResources",
+                "type": "LinkedServiceReference"
+            },
+            "annotations": [],
+            "type": "DelimitedText",
+            "typeProperties": {
+                "location": {
+                    "type": "AzureBlobStorageLocation",
+                    "container": "nyctaxilookup"
+                },
+                "columnDelimiter": ",",
+                "escapeChar": "\\",
+                "firstRowAsHeader": true,
+                "quoteChar": "\""
+            },
+            "schema": []
+        }
+    }
+    ```
+
+
+21.	Repeat the process to create another dataset, this time referencing the Staging.NYCTaxiData in your Azure SQL Data Warehouse database. 
+22.	Type “Azure SQL Data Warehouse” in the search box and select **Azure SQL Data Warehouse**. Click **Continue**.
 
     ![](./Media/Lab2-Image17.png)
 
-20.	On the Set Properties blade, enter the following details:
+23.	On the Set Properties blade, enter the following details:
     <br>- **Name**: MDWASQLDW_StagingNYCTaxiData
     <br>- **Linked Service**: MDWSQLVirtualServer_MDWASQLDW
     <br>- **Table**: [Staging].[NYCTaxiData]
@@ -384,17 +443,17 @@ Dataset | Description
     }
     ```
 
-21.	Leave remaining fields with default values.
+24.	Leave remaining fields with default values.
 
     ![](./Media/Lab2-Image18.png)
 
-22.	Repeat the process to create another dataset, this time referencing the Staging.NYCLocationLookup in your Azure SQL Data Warehouse database. 
+25.	Repeat the process to create another dataset, this time referencing the Staging.NYCLocationLookup in your Azure SQL Data Warehouse database. 
 
-23.	Type “Azure SQL Data Warehouse” in the search box and select **Azure SQL Data Warehouse**. Click **Finish**.
+26.	Type “Azure SQL Data Warehouse” in the search box and select **Azure SQL Data Warehouse**. Click **Finish**.
 
     ![](./Media/Lab2-Image17.png)
 
-24.	On the Set Properties blade, enter the following details:
+27.	On the Set Properties blade, enter the following details:
     <br>-**Name**: MDWASQLDW_StagingNYCLocationLookup
     <br>-**Linked Service**: MDWSQLVirtualServer_MDWASQLDW
     <br>-**Table**: [Staging].[NYCTaxiLocationLookup]
@@ -418,11 +477,11 @@ Dataset | Description
     }
     ```
 
-25.	Leave remaining fields with default values.
+28.	Leave remaining fields with default values.
 
     ![](./Media/Lab2-Image19.png)
 
-26.	Publish your dataset changes by clicking the **Publish all** button.
+29.	Publish your dataset changes by clicking the **Publish all** button.
 
     ![](./Media/Lab2-Image20.png)
 
@@ -447,6 +506,7 @@ In this section you create a data factory pipeline to copy data in the following
             {
                 "name": "CopyTaxiDataFiles",
                 "type": "Copy",
+                "dependsOn": [],
                 "policy": {
                     "timeout": "7.00:00:00",
                     "retry": 0,
@@ -454,14 +514,21 @@ In this section you create a data factory pipeline to copy data in the following
                     "secureOutput": false,
                     "secureInput": false
                 },
+                "userProperties": [],
                 "typeProperties": {
                     "source": {
-                        "type": "BlobSource",
-                        "recursive": true
+                        "type": "BinarySource",
+                        "storeSettings": {
+                            "type": "AzureBlobStorageReadSettings",
+                            "recursive": true
+                        }
                     },
                     "sink": {
-                        "type": "BlobSink",
-                        "copyBehavior": "PreserveHierarchy"
+                        "type": "BinarySink",
+                        "storeSettings": {
+                            "type": "AzureBlobStorageWriteSettings",
+                            "copyBehavior": "PreserveHierarchy"
+                        }
                     },
                     "enableStaging": false
                 },
@@ -473,7 +540,7 @@ In this section you create a data factory pipeline to copy data in the following
                 ],
                 "outputs": [
                     {
-                        "referenceName": "MDWDataLake_NYCTaxiData",
+                        "referenceName": "MDWDataLake_NYCTaxiData_Binary",
                         "type": "DatasetReference"
                     }
                 ]
@@ -496,15 +563,22 @@ In this section you create a data factory pipeline to copy data in the following
                     "secureOutput": false,
                     "secureInput": false
                 },
+                "userProperties": [],
                 "typeProperties": {
                     "source": {
-                        "type": "BlobSource",
-                        "recursive": true
+                        "type": "DelimitedTextSource",
+                        "storeSettings": {
+                            "type": "AzureBlobStorageReadSettings",
+                            "recursive": true,
+                            "wildcardFileName": "*.*"
+                        },
+                        "formatSettings": {
+                            "type": "DelimitedTextReadSettings"
+                        }
                     },
                     "sink": {
                         "type": "SqlDWSink",
                         "allowPolyBase": true,
-                        "writeBatchSize": 10000,
                         "preCopyScript": "truncate table Staging.NYCTaxiData",
                         "polyBaseSettings": {
                             "rejectValue": 0,
@@ -516,7 +590,7 @@ In this section you create a data factory pipeline to copy data in the following
                 },
                 "inputs": [
                     {
-                        "referenceName": "MDWDataLake_NYCTaxiData",
+                        "referenceName": "MDWDataLake_NYCTaxiData_CSV",
                         "type": "DatasetReference"
                     }
                 ],
@@ -530,6 +604,7 @@ In this section you create a data factory pipeline to copy data in the following
             {
                 "name": "CopyTaxiLookupDataToDW",
                 "type": "Copy",
+                "dependsOn": [],
                 "policy": {
                     "timeout": "7.00:00:00",
                     "retry": 0,
@@ -537,16 +612,23 @@ In this section you create a data factory pipeline to copy data in the following
                     "secureOutput": false,
                     "secureInput": false
                 },
+                "userProperties": [],
                 "typeProperties": {
                     "source": {
-                        "type": "BlobSource",
-                        "recursive": true
+                        "type": "DelimitedTextSource",
+                        "storeSettings": {
+                            "type": "AzureBlobStorageReadSettings",
+                            "recursive": true,
+                            "wildcardFileName": "*.*"
+                        },
+                        "formatSettings": {
+                            "type": "DelimitedTextReadSettings"
+                        }
                     },
                     "sink": {
                         "type": "SqlDWSink",
                         "allowPolyBase": true,
-                        "writeBatchSize": 10000,
-                        "preCopyScript": "truncate table Staging.NYCTaxiLocationLookup",
+                        "preCopyScript": "truncate table [Staging].[NYCTaxiLocationLookup]",
                         "polyBaseSettings": {
                             "rejectValue": 0,
                             "rejectType": "value",
@@ -564,7 +646,7 @@ In this section you create a data factory pipeline to copy data in the following
                 },
                 "inputs": [
                     {
-                        "referenceName": "MDWResources_NYCTaxiLookup",
+                        "referenceName": "MDWResources_NYCTaxiLookup_CSV",
                         "type": "DatasetReference"
                     }
                 ],
@@ -599,6 +681,7 @@ In this section you create a data factory pipeline to copy data in the following
                     "secureOutput": false,
                     "secureInput": false
                 },
+                "userProperties": [],
                 "typeProperties": {
                     "storedProcedureName": "[Staging].[spNYCLoadTaxiDataSummary]"
                 },
@@ -607,12 +690,13 @@ In this section you create a data factory pipeline to copy data in the following
                     "type": "LinkedServiceReference"
                 }
             }
-        ]
-    },
-    "type": "Microsoft.DataFactory/factories/pipelines"
+        ],
+        "annotations": []
+    }
 }
 ```
 </details>
+<br>
 
 **IMPORTANT**|
 -------------|
@@ -629,7 +713,7 @@ In this section you create a data factory pipeline to copy data in the following
 5.	Select the Copy Data activity and enter the following details:
     <br>- **General > Name**: CopyTaxiDataFiles
     <br>- **Source > Source dataset**: MDWResources_NYCTaxiData
-    <br>- **Sink > Sink dataset**: MDWDataLake_NYCTaxiData
+    <br>- **Sink > Sink dataset**: MDWDataLake_NYCTaxiData_Binary
     <br>- **Sink > Copy Behavior**: Preserve Hierarchy
 6.	Leave remaining fields with default values.
 
@@ -640,7 +724,7 @@ In this section you create a data factory pipeline to copy data in the following
 8.	From the Activities panel, type “Copy Data” in the search box. Drag the Copy Data activity on to the design surface.
 9.	Select the Copy Data activity and enter the following details:
     <br>- **General > Name**: CopyTaxiDataToDW
-    <br>- **Source > Source dataset**: MDWDataLake_NYCTaxiData
+    <br>- **Source > Source dataset**: MDWDataLake_NYCTaxiData_CSV
     <br>- **Sink > Sink dataset**: MDWASQLDW_StagingNYCTaxiData
     <br>- **Sink > Pre Copy Script**: 
     ```sql
@@ -659,7 +743,7 @@ In this section you create a data factory pipeline to copy data in the following
 13.	From the Activities panel, type “Copy Data” in the search box. Drag the Copy Data activity on to the design surface.
 14.	Select the Copy Data activity and enter the following details:
     <br>- **General > Name**: CopyTaxiLookupDataToDW
-    <br>- **Source > Source dataset**: MDWResources_NYCTaxiLookup
+    <br>- **Source > Source dataset**: MDWResources_NYCTaxiLookup_CSV
     <br>- **Sink > Sink dataset**: MDWASQLDW_StagingNYCLocationLookup
     <br>- **Sink > Pre Copy Script**: 
     ```sql
