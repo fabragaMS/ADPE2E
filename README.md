@@ -31,13 +31,20 @@ New York City data used in this lab was obtained from the New York City Open Dat
 
 ## Lab Prerequisites and Deployment
 The following prerequisites must be completed before you start these labs:
-    <br>- You must be connected to the internet;
-    <br>- You must have a Pay-As-You-Go Azure account with administrator- or contributor-level access to your subscription. If you don’t have an account, you can sign up for an account following the instructions here: https://azure.microsoft.com/en-au/pricing/purchase-options/pay-as-you-go/. 
-    <br>**IMPORTANT**: Azure free subscriptions have quota restrictions that prevent the workshop resources from being deployed successfully. Please use a Pay-As-You-Go subscription instead.
-    <br>- Lab 5 requires you to have a Twitter account. If you don’t have an account you can sign up for free following the instructions here: https://twitter.com/signup. 
-    <br>- Lab 5 requires you to have a Power BI Pro account. If you don’t have an account you can sign up for a 60-day trial for free here: https://powerbi.microsoft.com/en-us/power-bi-pro/
-    <br>- The approximate cost to run the resources provisioned  for the estimated duration of this workshop (2 days) is around USD 150.00. You can minimise the costs by turning off MDWSQLServer and MDWDataGateway VMs and also the MDWASQLDW Azure SQL Data Warehouse after Lab 3 as they are not  required for the remaining labs.
 
+* You must be connected to the internet;
+
+* Use either Edge or Chrome when executing the labs. Internet Explorer may have issues when rendering the UI for specific Azure services.
+
+* You must have a Pay-As-You-Go Azure account with administrator- or contributor-level access to your subscription. If you don’t have an account, you can sign up for an account following the instructions here: https://azure.microsoft.com/en-au/pricing/purchase-options/pay-as-you-go/. 
+    <br>**IMPORTANT**: Azure free subscriptions have quota restrictions that prevent the workshop resources from being deployed successfully. Please use a Pay-As-You-Go subscription instead.
+
+* Lab 1 requires you to open a Remote Desktop Connection (RDP) to Azure Virtual Machines. If you are using a Mac, please ensure you have the latest version of the Microsoft Remote Desktop software installed: https://apps.apple.com/us/app/microsoft-remote-desktop-10/id1295203466?mt=12
+
+* Lab 5 requires you to have a Twitter account. If you don’t have an account you can sign up for free following the instructions here: https://twitter.com/signup. 
+
+* Lab 5 requires you to have a Power BI Pro account. If you don’t have an account you can sign up for a 60-day trial for free here: https://powerbi.microsoft.com/en-us/power-bi-pro/
+  
 ## Lab Guide
 
 Throughout a series of 5 labs you will progressively implement a modern data platform architecture using datasets from New York City. 

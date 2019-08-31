@@ -29,7 +29,7 @@ In this section you are going to establish a Remote Desktop Connection to MDWDes
 -------------|
 **Execute these steps on your host computer**|
 
-1.	In the Azure Portal, navigate to the **MDW-Lab** resource group and click the **MDWDesktop** virtual machine.
+1.	In the Azure Portal, navigate to the lab resource group and click the **MDWDesktop** virtual machine.
 
 2.	On the MDWDesktop blade, from the Overview menu, click the Connect button. 
 
@@ -97,6 +97,18 @@ go
 
 ```sql
 restore database NYCDataSets from url = 'https://mdwresources.blob.core.windows.net/nycdatasets/NYCDataSets.Full.bak'
+   with move 'NYCDataSets' to 'F:\Data\NYCDataSets.mdf'
+      , move 'NYCDataSets_log' to 'F:\Log\NYCDataSets_log.ldf'
+      , stats = 5
+go
+```
+
+**IMPORTANT** |
+--------------|
+In a classroom environment concurrent restore database operations cannot occur using the same backup file. If you get an error message when restoring the database, please change the backup file name to "NYCDataSets.Full_*nn*.bak", where *nn* is a number between 01 and 10. See example below:
+
+```sql
+restore database NYCDataSets from url = 'https://mdwresources.blob.core.windows.net/nycdatasets/NYCDataSets_01.Full.bak'
    with move 'NYCDataSets' to 'F:\Data\NYCDataSets.mdf'
       , move 'NYCDataSets_log' to 'F:\Log\NYCDataSets_log.ldf'
       , stats = 5
@@ -185,7 +197,7 @@ In this section you are going to install and configure required software onto MD
 -------------|
 **Execute these steps on your host computer**|
 
-1.	In the Azure Portal, navigate to the MDW-Lab resource group and locate the Azure Data Factory **MDWDataFactory-*suffix***.
+1.	In the Azure Portal, navigate to the lab resource group and locate the Azure Data Factory **MDWDataFactory-*suffix***.
 
 2.	On the **MDWDataFactory-*suffix*** blade, click the **Author & Monitor** button. The Azure Data Factory portal will open on a new browser tab.
 
@@ -224,7 +236,7 @@ In this section you are going to establish a Remote Desktop Connection to MDWDat
 -------------|
 **Execute these steps on your host computer**|
 
-1.	On the Azure Portal, navigate to the MDW-Lab resource group and locate the **MDWDataGateway** virtual machine.
+1.	On the Azure Portal, navigate to the lab resource group and locate the **MDWDataGateway** virtual machine.
 
 2.	On the **MDWDataGateway** blade, from the **Overview** menu, click the **Connect** button. 
 

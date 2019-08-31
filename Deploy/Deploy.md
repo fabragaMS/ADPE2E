@@ -88,3 +88,18 @@ In this section you will use automated deployment and ARM templates to automate 
 7. Once your deployment is complete you are ready to start your labs. Enjoy!
 
     ![](./Media/Lab0-Image09.png)
+
+**IMPORTANT**|
+-------------|
+The approximate cost to run the resources provisioned for the estimated duration of this workshop (2 days) is around USD 150.00. You can minimise costs by taking the actions below:
+
+Azure Resource | Type | Action |
+---------------|------|--------|
+MDWSQLServer   | Virtual Machine |Stop it after completing Lab 1|
+MDWDataGateway | Virtual Machine |Stop it after completing Lab 1|
+MDWASQLDW      | Azure SQL Data Warehouse | Pause it after completing Lab 3|
+MDWDatabricks | Databricks Workspace | Stop cluster after completing Lab 4
+MDWCosmosDB   | Cosmos DB | Delete ImageMetadata container after completing Lab 4
+MDWDesktop | Virtual Machine | Stop it after completing Lab 4
+MDWLogicApp | Logic App | Disable it after completing Lab 5
+MDWStreamAnalytics | Stream Analytics job | Pause job after completing Lab 5
