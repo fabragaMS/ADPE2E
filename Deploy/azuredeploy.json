@@ -96,7 +96,7 @@
                         "createOption": "FromImage",
                         "caching": "ReadWrite",
                         "managedDisk": {
-                            "storageAccountType": "Premium_LRS"
+                            "storageAccountType": "StandardSSD_LRS"
                         },
                         "diskSizeGB": 127
                     },
@@ -107,9 +107,9 @@
                             "createOption": "Empty",
                             "caching": "ReadOnly",
                             "managedDisk": {
-                                "storageAccountType": "Premium_LRS"
+                                "storageAccountType": "StandardSSD_LRS"
                             },
-                            "diskSizeGB": 512
+                            "diskSizeGB": 127
                         }
                     ]
                 },
@@ -264,7 +264,7 @@
                         "createOption": "FromImage",
                         "caching": "ReadWrite",
                         "managedDisk": {
-                            "storageAccountType": "Premium_LRS"
+                            "storageAccountType": "StandardSSD_LRS"
                         },
                         "diskSizeGB": 127
                     },

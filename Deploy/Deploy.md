@@ -2,6 +2,41 @@
 
 In this section you will automatically provision all Azure resources required to complete labs 1 though to 5. We will use a pre-defined ARM template with the definition of all Azure services used to ingest, store, process and visualise data. 
 
+## Azure services provisioned for the workshop
+
+The following Azure services will be deployed in your subscription:
+
+Name                        | Type | Pricing Tier | Pricing Info |
+----------------------------|------|--------------|--------------|
+mdwcosmosdb-*suffix*        | Azure Cosmos DB account | 400 RU/sec | https://azure.microsoft.com/en-us/pricing/details/cosmos-db/
+MDWDatabricks-*suffix*      | Azure Databricks Service | Standard | https://azure.microsoft.com/en-us/pricing/details/databricks/
+MDWComputerVision	        | Cognitive Services | S1 | https://azure.microsoft.com/en-us/pricing/details/cognitive-services/computer-vision/
+MDWTextAnalytics	        | Cognitive Services | Standard | https://azure.microsoft.com/en-us/pricing/details/cognitive-services/text-analytics/
+MDWDataFactory-*suffix*	    | Data factory (V2) | Data pipelines | https://azure.microsoft.com/en-us/pricing/details/data-factory/
+MDWDataGateway_OsDisk	    | Disk | E10 | https://azure.microsoft.com/en-us/pricing/details/managed-disks/
+MDWDesktop_OsDisk	        | Disk | E10 | https://azure.microsoft.com/en-us/pricing/details/managed-disks/
+MDWSQLServer_DataDisk	    | Disk | E10 | https://azure.microsoft.com/en-us/pricing/details/managed-disks/
+MDWSQLServer_OsDisk	        | Disk | E10 | https://azure.microsoft.com/en-us/pricing/details/managed-disks/
+MDWEventHubs-*suffix*       | Event Hubs Namespace | Standard | https://azure.microsoft.com/en-us/pricing/details/event-hubs/
+MDWKeyVault-*suffix*        | Key vault | Standard | https://azure.microsoft.com/en-us/pricing/details/key-vault/
+MDWLogicApp	                | Logic app | | https://azure.microsoft.com/en-au/pricing/details/logic-apps/
+MDWDataGateway-nic	        | Network interface ||
+MDWDesktop-nic	            | Network interface ||
+MDWSQLServer-nic	        | Network interface ||
+MDWDataGateway-publicip	    | Public IP address || https://azure.microsoft.com/en-us/pricing/details/ip-addresses/
+MDWDesktop-publicip	        | Public IP address || https://azure.microsoft.com/en-us/pricing/details/ip-addresses/
+MDWASQLDW                   | SQL data warehouse | DW200c | https://azure.microsoft.com/en-us/pricing/details/sql-data-warehouse/gen2/
+mdwsqlvirtualserver-*suffix*| SQL server || 
+mdwdatalakesuffix	        | Storage account || https://azure.microsoft.com/en-us/pricing/details/storage/blobs/
+MDWStreamAnalytics-*suffix*	| Stream Analytics job | 3 SU | https://azure.microsoft.com/en-us/pricing/details/stream-analytics/
+MDWDataGateway	            | Virtual machine | D4s v3 | https://azure.microsoft.com/en-us/pricing/details/virtual-machines/windows/
+MDWDesktop	                | Virtual machine | A4 v2 | https://azure.microsoft.com/en-us/pricing/details/virtual-machines/windows/
+MDWSQLServer	            | Virtual machine | D4s v3 | https://azure.microsoft.com/en-us/pricing/details/virtual-machines/windows/
+MDWVirtualNetwork	        | Virtual network || https://azure.microsoft.com/en-us/pricing/details/virtual-network/
+
+
+ <br>**IMPORTANT**: When you deploy the lab resources in your own subscription you are responsible for the charges related to the use of the services provisioned. If you don't want any extra charges associated with the lab resources you should delete the lab resource group and all resources in it.
+
 The estimated time to complete this lab is: 30 minutes.
 
 ## Prepare your Azure subscription
@@ -37,7 +72,7 @@ In this section you will use the Azure Portal to create a Resource Group that wi
 
 8.	In the Region drop down list, select one of the regions from the list below.
 
-    **IMPORTANT**: The ARM template you will use to deploy the lab components uses the Resource Group region as the default region for all services. To avoid deployment error when services are not available in the region selected, please use one of the recommended regions.
+    **IMPORTANT**: The ARM template you will use to deploy the lab components uses the Resource Group region as the default region for all services. To avoid deployment errors when services are not available in the region selected, please use one of the recommended regions in the list below.
 
     Recommended Regions|
     -------------------|
@@ -89,9 +124,9 @@ In this section you will use automated deployment and ARM templates to automate 
 
     ![](./Media/Lab0-Image09.png)
 
-**IMPORTANT**|
--------------|
-The approximate cost to run the resources provisioned for the estimated duration of this workshop (2 days) is around USD 150.00. You can minimise costs by taking the actions below:
+## Workshop cost management
+
+The approximate cost to run the resources provisioned for the estimated duration of this workshop (2 days) is around USD 150.00. Remember that you will start get charged from the moment the resource template deployment completes successfully. You can minimise costs during the execution of the labs by taking the following actions below:
 
 Azure Resource | Type | Action |
 ---------------|------|--------|
@@ -103,3 +138,5 @@ MDWCosmosDB   | Cosmos DB | Delete ImageMetadata container after completing Lab 
 MDWDesktop | Virtual Machine | Stop it after completing Lab 4
 MDWLogicApp | Logic App | Disable it after completing Lab 5
 MDWStreamAnalytics | Stream Analytics job | Pause job after completing Lab 5
+
+Some of the services still incur costs even when not running. If you don't want any extra charges associated with the lab resources you should delete the lab resource group and all resources in it.
