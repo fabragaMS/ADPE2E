@@ -108,7 +108,7 @@ go
 In a classroom environment concurrent restore database operations cannot occur using the same backup file. If you get an error message when restoring the database, please change the backup file name to "NYCDataSets.Full_*nn*.bak", where *nn* is a number between 01 and 10. See example below:
 
 ```sql
-restore database NYCDataSets from url = 'https://mdwresources.blob.core.windows.net/nycdatasets/NYCDataSets_01.Full.bak'
+restore database NYCDataSets from url = 'https://mdwresources.blob.core.windows.net/nycdatasets/NYCDataSets.Full_01.bak'
    with move 'NYCDataSets' to 'F:\Data\NYCDataSets.mdf'
       , move 'NYCDataSets_log' to 'F:\Log\NYCDataSets_log.ldf'
       , stats = 5
