@@ -115,7 +115,7 @@ nycTaxiDataSchema = StructType([
 dfNYCTaxiData = spark.read.format('csv').options(header='true', schema=nycTaxiDataSchema).load('wasbs://nyctaxidata@[your MDWDataLake storage account name].blob.core.windows.net/')
 ```
 
-13.	Remember to replace *[your MDWDataLake storage account name]* with **mdwdatalake*suffix*** and to replace *[your MDWDataLake storage account key]* with the storage account key. Your **Cmd 2** cell should look like this:
+13.	Remember to replace *[your MDWDataLake storage account name]* with **mdwdatalake*suffix***. Your **Cmd 2** cell should look like this:
 
     ![](./Media/Lab3-Image09.png)
 
@@ -185,9 +185,9 @@ where cast(tpep_pickup_datetime as date) = '2018-04-07'
 
     ![](./Media/Lab3-Image12.png)
 
-31.	Set the title of the **Cmd 9** cell to “Use SQL to aggregate NYC Taxi Data records and visualize data”
+31.	Set the title of the **Cmd 8** cell to “Use SQL to aggregate NYC Taxi Data records and visualize data”
 
-32.	In the **Cmd 9** cell, write a SQL query to aggregate records and return total number of rides by payment type. Use the command below:
+32.	In the **Cmd 8** cell, write a SQL query to aggregate records and return total number of rides by payment type. Use the command below:
 
 ```sql
 %sql
@@ -214,7 +214,7 @@ order by TotalRideCount desc
     ![](./Media/Lab3-Image13.png)
     ![](./Media/Lab3-Image14.png)
 
-35. Set the title of the **Cmd 10** cell to “Load Taxi Location Data from Azure SQL Data Warehouse”.
+35. Set the title of the **Cmd 9** cell to “Load Taxi Location Data from Azure SQL Data Warehouse”.
 
 36. Using Python, open a JDBC connection to your Azure SQL Data Warehouse and load Taxi location lookup data from the Staging.NYCTaxiLocationLookup table into a new data frame called dfLocationLookup. 
 
@@ -243,9 +243,9 @@ display(dfLookupLocation)
 
     ![](./Media/Lab3-Image17.png)
 
-38. Set the title of the **Cmd 11** cell to “Combine Data Lake and Data Warehouse data frames using SQL”.
+38. Set the title of the **Cmd 10** cell to “Combine Data Lake and Data Warehouse data frames using SQL”.
 
-39. In the **Cmd 11** cell, write a SQL query to join the two dataframes using their view names. Write a SELECT statement to return the "Borough" column from NYCTaxiLocation view and the columns "tpep_pickup_datetime", "passenger_count" and "total_amount" from the NYCTaxiDataTable view. Use a WHERE clause to filter taxi rides that happened on the Apr, 7th of 2018 with passenger_count > 5 and total_amount > 50.0. Use the SQL command below:
+39. In the **Cmd 10** cell, write a SQL query to join the two dataframes using their view names. Write a SELECT statement to return the "Borough" column from NYCTaxiLocation view and the columns "tpep_pickup_datetime", "passenger_count" and "total_amount" from the NYCTaxiDataTable view. Use a WHERE clause to filter taxi rides that happened on the Apr, 7th of 2018 with passenger_count > 5 and total_amount > 50.0. Use the SQL command below:
 
 ```sql
 %sql
