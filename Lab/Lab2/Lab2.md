@@ -3,6 +3,12 @@ In this lab you will use Azure Data Factory to download large data files to your
 
 The estimated time to complete this lab is: **60 minutes**.
 
+## Microsoft Learn & Technical Documentation
+
+Azure Service | Microsoft Learn | Technical Documentation|
+--------------|-----------------|------------------------|
+Azure Data Lake Gen2 | [Large Scale Data Processing with Azure Data Lake Storage Gen2](https://docs.microsoft.com/en-us/learn/paths/data-processing-with-azure-adls/) | [Azure Data Lake Gen2 Technical Documentation](https://docs.microsoft.com/en-us/azure/storage/blobs/data-lake-storage-introduction)
+
 ## Lab Architecture
 ![Lab Architecture](./Media/Lab2-Image01.png)
 
@@ -686,7 +692,7 @@ In this section you create a data factory pipeline to copy data in the following
                     "storedProcedureName": "[Staging].[spNYCLoadTaxiDataSummary]"
                 },
                 "linkedServiceName": {
-                    "referenceName": "MDWVirtualSQLServer_MDWASQLDW",
+                    "referenceName": "MDWSQLVirtualServer_MDWASQLDW",
                     "type": "LinkedServiceReference"
                 }
             }

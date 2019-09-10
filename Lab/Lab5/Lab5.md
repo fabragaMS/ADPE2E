@@ -7,6 +7,16 @@ In this lab you will use an Azure Logic App to connect to Twitter and generate a
 
 The estimated time to complete this lab is: **75 minutes**.
 
+## Microsoft Learn & Technical Documentation
+
+Azure Service | Microsoft Learn | Technical Documentation|
+--------------|-----------------|------------------------|
+Azure Logic Apps | [Build automated workflows to integrate data and apps with Azure Logic Apps](https://docs.microsoft.com/en-us/learn/paths/build-workflows-with-logic-apps/) | [Azure Logic Apps Technical Documentation](https://docs.microsoft.com/en-us/azure/logic-apps/)
+Azure Text Analytics | [Discover sentiment in text with the Text Analytics API](https://docs.microsoft.com/en-us/learn/modules/classify-user-feedback-with-the-text-analytics-api/) | [Azure Text Analytics API Technical Documentation](https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/)
+Azure Event Hubs | [Enable reliable messaging for Big Data applications using Azure Event Hubs](https://docs.microsoft.com/en-us/learn/modules/enable-reliable-messaging-for-big-data-apps-using-event-hubs/) | [Azure Event Hubs Technical Documentation](https://docs.microsoft.com/en-us/azure/event-hubs/)
+Azure Stream Analytics | [Implement a Data Streaming Solution with Azure Streaming Analytics](https://docs.microsoft.com/en-us/learn/paths/implement-data-streaming-with-asa/) | [Azure Stream Analytics Technical Documentation](https://docs.microsoft.com/en-us/azure/stream-analytics/)
+Power BI | [Create and use analytics reports with Power BI](https://docs.microsoft.com/en-us/learn/paths/create-use-analytics-reports-power-bi/) | [Power BI Technical Documentation](https://docs.microsoft.com/en-us/power-bi/)
+
 ## Lab Architecture
 ![Lab Architecture](./Media/Lab5-Image01.png)
 

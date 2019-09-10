@@ -3,6 +3,14 @@ In this lab you will configure the Azure environment to allow relational data to
 
 The estimated time to complete this lab is: **75 minutes**.
 
+## Microsoft Learn & Technical Documentation
+
+Azure Service | Microsoft Learn | Technical Documentation|
+--------------|-----------------|------------------------|
+Azure SQL Database | [Work with relational data in Azure](https://docs.microsoft.com/en-us/learn/paths/work-with-relational-data-in-azure/) | [Azure SQL Database Technical Documentation](https://docs.microsoft.com/en-us/azure/sql-database/)
+Azure Data Factory | [Data ingestion with Azure Data Factory](https://docs.microsoft.com/en-us/learn/modules/data-ingestion-with-azure-data-factory/)| [Azure Data Factory Technical Documentation](https://docs.microsoft.com/en-us/azure/data-factory/)
+Azure SQL Data Warehouse | [Implement a Data Warehouse with Azure SQL Data Warehouse](https://docs.microsoft.com/en-us/learn/paths/implement-sql-data-warehouse/) | [Azure SQL Data Warehouse Technical Documentation](https://docs.microsoft.com/en-us/azure/sql-data-warehouse/)
+
 ## Lab Architecture
 ![Lab Architecture](./Media/Lab1-Image01.png)
 
@@ -341,7 +349,7 @@ In this section you will build an Azure Data Factory pipeline to copy a table fr
     ![](./Media/Lab1-Image32.png)
 
 6.	On the New Linked Service (Azure SQL Data Warehouse) blade, enter the following details:
-    <br>- **Name**: MDWVirtualSQLServer_MDWASQLDW
+    <br>- **Name**: MDWSQLVirtualServer_MDWASQLDW
     <br>- **Connect via integration runtime**: AutoResolveIntegrationRuntime
     <br>- **Account selection method**: From Azure subscription
     <br>- **Azure subscription**: *<your subscription>*

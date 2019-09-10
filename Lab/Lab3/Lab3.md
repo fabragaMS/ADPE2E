@@ -3,6 +3,12 @@ In this lab you will use Azure Databricks to explore the New York Taxi data file
 
 The estimated time to complete this lab is: **45 minutes**.
 
+## Microsoft Learn & Technical Documentation
+
+Azure Service | Microsoft Learn | Technical Documentation|
+--------------|-----------------|------------------------|
+Azure Databricks | [Perform data engineering with Azure Databricks](https://docs.microsoft.com/en-us/learn/paths/data-engineering-with-databricks/) | [Azure Databricks Technical Documentation](https://docs.microsoft.com/en-us/azure/azure-databricks/)
+
 ## Lab Architecture
 ![Lab Architecture](./Media/Lab3-Image01.png)
 

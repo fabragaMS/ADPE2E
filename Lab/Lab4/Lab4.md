@@ -3,6 +3,13 @@ In this lab you will use Azure Data Factory to download New York City images to 
 
 The estimated time to complete this lab is: **75 minutes**.
 
+## Microsoft Learn & Technical Documentation
+
+Azure Service | Microsoft Learn | Technical Documentation|
+--------------|-----------------|------------------------|
+Azure Cognitive Vision Services | [Process and classify images with the Azure Cognitive Vision Services](https://docs.microsoft.com/en-us/learn/paths/classify-images-with-vision-services/) | [Azure Computer Vision Technical Documentation](https://docs.microsoft.com/en-us/azure/cognitive-services/computer-vision/)
+Azure Cosmos DB | [Work with NoSQL data in Azure Cosmos DB](https://docs.microsoft.com/en-us/learn/paths/work-with-nosql-data-in-azure-cosmos-db/) | [Azure Cosmos DB Technical Documentation](https://docs.microsoft.com/en-us/azure/cosmos-db/)
+
 ## Lab Architecture
 ![Lab Architecture](./Media/Lab4-Image01.png)
 
@@ -142,12 +149,12 @@ https://github.com/fabragaMS/ADPE2E/raw/master/Lab/Lab4/NYCImageMetadata-Lab.dbc
 
 15.	If you want to test it, you can copy any publicly available image URL and paste it in the Image URL notebook parameter. You can use any of the following image URLs in the list as examples:
 
-Test Image URLs|
----------------|
-https://petlifetoday.com/wp-content/uploads/2018/06/wireless-dog-fence.jpg|
-https://static.pexels.com/photos/4204/nature-lawn-blur-flower.jpg|
-https://image.redbull.com/rbcom/052/2017-05-22/89eef344-d24f-4520-8680-8b8f7508b264/0012/0/0/0/2428/3642/800/1/best-beginner-motocross-bikes-ktm-250-sx-f.jpg|
-http://www.kiplinger.com/slideshow/investing/T024-S001-the-best-emerging-markets-stocks-for-2019/images/intro.jpg|
+Test Image|Test Image URL|
+----------|--------------|
+![](https://petlifetoday.com/wp-content/uploads/2018/06/wireless-dog-fence.jpg)|https://petlifetoday.com/wp-content/uploads/2018/06/wireless-dog-fence.jpg|
+![](https://static.pexels.com/photos/4204/nature-lawn-blur-flower.jpg)|https://static.pexels.com/photos/4204/nature-lawn-blur-flower.jpg|
+![](https://image.redbull.com/rbcom/052/2017-05-22/89eef344-d24f-4520-8680-8b8f7508b264/0012/0/0/0/2428/3642/800/1/best-beginner-motocross-bikes-ktm-250-sx-f.jpg)|https://image.redbull.com/rbcom/052/2017-05-22/89eef344-d24f-4520-8680-8b8f7508b264/0012/0/0/0/2428/3642/800/1/best-beginner-motocross-bikes-ktm-250-sx-f.jpg|
+![](https://www.zastavki.com/pictures/originals/2014/World___Panama_City_landscape_in_panama_079246_.jpg)|https://www.zastavki.com/pictures/originals/2014/World___Panama_City_landscape_in_panama_079246_.jpg|
 
 16.	Click Run All to execute the notebook.
 
