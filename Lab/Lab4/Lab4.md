@@ -1,7 +1,7 @@
 # Lab 4: Add AI to your Big Data Pipeline with Cognitive Services
 In this lab you will use Azure Data Factory to download New York City images to your data lake. Then, as part of the same pipeline, you are going to use an Azure Databricks notebook to invoke Computer Vision Cognitive Service to generate metadata documents and save them in back in your data lake. The Azure Data Factory pipeline then finishes by saving all metadata information in a Cosmos DB collection. You will use Power BI to visualise NYC images and their AI-generated metadata.
 
-**IMPORTANT**: The typical use case for Cosmos DB is to serve as the operational database layer for globally distributed applications. This lab intends to illustrates how analytics data pipelines can be used to deliver insights to intelligent apps through Cosmos DB. For the sake of keeping this lab simple we will use Power BI to query Cosmos DB data instead of an App.
+**IMPORTANT**: The typical use case for Cosmos DB is to serve as the operational database layer for data-driven applications (e.g. real-time personalisation). This lab intends to illustrates how analytics data pipelines can be used to deliver insights to intelligent apps through Cosmos DB. For the sake of keeping this lab simple we will use Power BI to query Cosmos DB data instead of an App.
 
 The estimated time to complete this lab is: **75 minutes**.
 
