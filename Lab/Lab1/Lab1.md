@@ -70,7 +70,7 @@ In this section you are going to install Power BI Desktop and Azure Data Studio 
     <br>![](./Media/Lab1-Image05.png)
     <br>
     <br>**Power BI Desktop (64-bit)**
-    <br>https://www.microsoft.com/en-us/download/details.aspx?id=45331
+    <br>https://aka.ms/pbiSingleInstaller
     <br>![](./Media/Lab1-Image06.png)
 
 ## Restore NYCDataSets database onto MDWSQLServer
