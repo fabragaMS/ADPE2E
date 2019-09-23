@@ -511,12 +511,15 @@ In this section you are going to use Power BI to visualize data from Azure SQL D
 1.	On MDWDesktop, download the Power BI report from the link https://aka.ms/MDWLab1 and save it on the Desktop.
 2.	Open the file MDWLab1.pbit with Power BI Desktop. Optionally sign up for the Power BI tips and tricks email, or to dismiss this, click to sign in with an existing account, and then hit the escape key.
 3.	When prompted to enter the value of the **MDWSQLVirtualServer** parameter, type the full server name: mdwsqlvirtualserver-*suffix*.database.windows.net
+
+![](./Media/Lab1-Image50.png)
+
 4.	Click Load, and then Run to acknowledge the Native Database Query message
 5.	When prompted, enter the **Database** credentials:
     <br>- **User Name**: MDWAdmin
     <br>- **Password**: P@ssw0rd123!
 
-    ![](./Media/Lab1-Image50.png)
+![](./Media/Lab1-Image52.png)
 
 6.	Once the data is finished loading, interact with the report by changing the CollisionDate slicer and by clicking on the other visualisations.
 7.	Save your work and close Power BI Desktop.

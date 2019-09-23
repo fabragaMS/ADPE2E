@@ -383,11 +383,13 @@ Dataset | Description
 
     ![](./Media/Lab4-Image38.png)
 
-14.	On the **New Data Set** tab, enter the following details:
-    <br>- **General > Name**: MDWDataLake_NYCImageMetadata_JSON
-    <br>- **Connection > Linked Service**: MDWDataLake
-    <br>- **Connection > File Path**: nycimagemetadata
-    <br>- **File format**: JSON format
+14.	On the **Set properties** blade, enter the following details:
+    <br>- **Name**: MDWDataLake_NYCImageMetadata_JSON
+    <br>- **Linked Service**: MDWDataLake
+    <br>- **File Path**:  **Container**: nycimagemetadata, **Directory**: [blank], **File**: [blank]
+    <br>- **Import Schema**: None
+
+    ![](./Media/Lab4-Image39.png)
 
     Alternatively you can copy and paste the dataset JSON definition below:
 
@@ -400,21 +402,19 @@ Dataset | Description
                 "type": "LinkedServiceReference"
             },
             "annotations": [],
-            "type": "AzureBlob",
+            "type": "Json",
             "typeProperties": {
-                "format": {
-                    "type": "JsonFormat"
-                },
-                "fileName": "",
-                "folderPath": "nycimagemetadata"
+                "location": {
+                    "type": "AzureBlobStorageLocation",
+                    "container": "nycimagemetadata"
+                }
             }
-        },
-        "type": "Microsoft.DataFactory/factories/datasets"
+        }
     }
     ```
 15.	Leave remaining fields with default values.
 
-    ![](./Media/Lab4-Image39.png)
+![](./Media/Lab4-Image73.png)
 
 16.	Repeat the process to create another dataset, this time referencing the **ImageMetadata** collection in your **MDWCosmosDB** database. 
 
@@ -533,7 +533,7 @@ In this section you will create an Azure Data Factory pipeline to copy New York 
 17.	Select the **Notebook** activity and enter the following details:
     <br>- **General > Name**: GetImageMetadata
     <br>- **Azure Databricks > Databricks Linked Service**: MDWDatabricks
-    <br>- **Settings > Notebook path**: [Click Browse and navigate to /Users/*your-user-name*/ImageMetadata-Lab]
+    <br>- **Settings > Notebook path**: [Click Browse and navigate to /Users/*your-user-name*/NYCImageMetadata-Lab]
     <br>- **Base Parameters**: [Click **+ New**] >
     <br>- **nycImageUrl**: 
     ```
