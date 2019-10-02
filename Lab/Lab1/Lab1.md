@@ -65,7 +65,7 @@ In this section you are going to install Power BI Desktop and Azure Data Studio 
 
 4.	Using the browser, download and install the latest version of following software. During the setup, accept all default settings:
     <br>
-    <br>- **Azure Data Studio (User Installer)**
+    <br> **Azure Data Studio (User Installer)**
     <br>https://docs.microsoft.com/en-us/sql/azure-data-studio/download
     <br>![](./Media/Lab1-Image05.png)
     <br>
@@ -80,7 +80,7 @@ In this section you are going to connect to MDWSQLServer to restore the NYCDataS
 
 **IMPORTANT**|
 -------------|
-**Execute these steps inside the MDWDesktop remote desktop connection**|
+**Execute these steps in the MDWDesktop remote desktop connection**|
 
 1.	Open Azure Data Studio and establish a new connection to MDWSQLServer using Windows Authentication
 
@@ -217,21 +217,21 @@ In this section you are going to install and configure required software onto MD
 
     ![](./Media/Lab1-Image14.png)
 
-5.	On the **Integration Runtime Setup** blade, select **Perform data movement and dispatch activities to external computers** and click **Next**.
+5.	On the **Integration Runtime Setup** blade, select **Perform data movement and dispatch activities to external computers** and click **Continue**.
 
     ![](./Media/Lab1-Image15.png)
 
-6.	When prompted to choose what network environment the integration runtime will connect to, select **Self-Hosted** and click **Next**.
+6.	When prompted to choose what network environment the integration runtime will connect to, select **Self-Hosted** and click **Continue**.
 
     ![](./Media/Lab1-Image16.png)
 
-7.	Type MDWDataGateway in the **Name** text box and give it a meaningful description such as the example here. Click **Next**.
+7.	Type MDWDataGateway in the **Name** text box and give it a meaningful description such as the example here. Click **Create**.
 
     ![](./Media/Lab1-Image17.png)
 
 8.	Copy any of the generated **Authentication Key** keys (Key 1 or Key 2) to Notepad. You are going to need it in the next step.
 
-9.	Click **Finish**.
+9.	Click **Close**.
 
     ![](./Media/Lab1-Image18.png)
 
