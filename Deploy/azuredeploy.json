@@ -11,8 +11,6 @@
         "MDWAdminUserName":"mdwadmin",
         "MDWAdminPassword":"P@ssw0rd123!",
 
-        "SQLServerVMSize":"Standard_D4s_v3",
-        "DataGatewayVMSize":"Standard_D4s_v3",
         "DesktopVMSize":"Standard_A4_v2",
         "AzureSQLDWSize":"DW200c",
 
@@ -22,17 +20,6 @@
         "MDWVirtualNetworkIPAddressPrefix": "10.10.0.0/16",
         "MDWVirtualSubnetName": "default",
         "MDWVirtualSubnetIPAddressPrefix": "10.10.0.0/24",
-
-        
-        "MDWSQLServerName":"MDWSQLServer",
-        "MDWSQLServerNICName":"[concat(variables('MDWSQLServerName'),'-nic')]",
-        "MDWSQLServerOSDiskName":"[concat(variables('MDWSQLServerName'),'_OsDisk')]",
-        "MDWSQLServerDataDiskName":"[concat(variables('MDWSQLServerName'),'_DataDisk')]",
-        
-        "MDWDataGatewayName":"MDWDataGateway",
-        "MDWDataGatewayNICName":"[concat(variables('MDWDataGatewayName'),'-nic')]",
-        "MDWDataGatewayOSDiskName":"[concat(variables('MDWDataGatewayName'),'_OsDisk')]",
-        "MDWDataGatewayPublicIPName":"[concat(variables('MDWDataGatewayName'),'-publicip')]",
         
         "MDWDesktopName":"MDWDesktop",
         "MDWDesktopNICName":"[concat(variables('MDWDesktopName'),'-nic')]",
@@ -70,133 +57,10 @@
 
         "MDWLogicAppName": "MDWLogicApp",
         "MDWCosmosDBAccountName": "[concat('mdwcosmosdb-', substring(variables('UniqueSuffix'),0,5))]"
+		
 
     },
     "resources": [
-        {
-            "type": "Microsoft.Compute/virtualMachines",
-            "name": "[variables('MDWSQLServerName')]",
-            "apiVersion": "2018-06-01",
-            "location": "[resourceGroup().location]",
-            "scale": null,
-            "properties": {
-                "hardwareProfile": {
-                    "vmSize": "[variables('SQLServerVMSize')]"
-                },
-                "storageProfile": {
-                    "imageReference": {
-                        "publisher": "MicrosoftSQLServer",
-                        "offer": "SQL2017-WS2016",
-                        "sku": "Enterprise",
-                        "version": "latest"
-                    },
-                    "osDisk": {
-                        "osType": "Windows",
-                        "name": "[variables('MDWSQLServerOSDiskName')]",
-                        "createOption": "FromImage",
-                        "caching": "ReadWrite",
-                        "managedDisk": {
-                            "storageAccountType": "StandardSSD_LRS"
-                        },
-                        "diskSizeGB": 127
-                    },
-                    "dataDisks": [
-                        {
-                            "lun": 0,
-                            "name": "[variables('MDWSQLServerDataDiskName')]",
-                            "createOption": "Empty",
-                            "caching": "ReadOnly",
-                            "managedDisk": {
-                                "storageAccountType": "StandardSSD_LRS"
-                            },
-                            "diskSizeGB": 127
-                        }
-                    ]
-                },
-                "osProfile": {
-                    "computerName": "[variables('MDWSQLServerName')]",
-                    "adminUsername": "[variables('MDWAdminUserName')]",
-                    "adminPassword": "[variables('MDWAdminPassword')]",
-                    "windowsConfiguration": {
-                        "provisionVMAgent": true,
-                        "enableAutomaticUpdates": true
-                    },
-                    "secrets": [],
-                    "allowExtensionOperations": true
-                },
-                "networkProfile": {
-                    "networkInterfaces": [
-                        {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('MDWSQLServerNICName'))]"
-                        }
-                    ]
-                }
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/networkInterfaces', variables('MDWSQLServerNICName'))]"
-            ]
-        },
-        {
-            "name": "[variables('MDWSQLServerName')]",
-            "type": "Microsoft.SqlVirtualMachine/SqlVirtualMachines",
-            "apiVersion": "2017-03-01-preview",
-            "location": "[resourceGroup().location]",
-            "properties": {
-                "virtualMachineResourceId": "[resourceId('Microsoft.Compute/virtualMachines', variables('MDWSQLServerName'))]",
-                "ServerConfigurationsManagementSettings": {
-                    "SQLConnectivityUpdateSettings": {
-                        "ConnectivityType": "PRIVATE",
-                        "Port": "1433"
-                    },
-                    "SQLWorkloadTypeUpdateSettings": {
-                        "SQLWorkloadType": "GENERAL"
-                    },
-                    "SQLStorageUpdateSettings": {
-                        "DiskCount": 1,
-                        "DiskConfigurationType": "NEW",
-                        "StartingDeviceID": 2
-                    }
-                }
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.Compute/virtualMachines', variables('MDWSQLServerName'))]"
-            ]
-        },
-        {
-            "type": "Microsoft.Network/networkInterfaces",
-            "name": "[variables('MDWSQLServerNICName')]",
-            "apiVersion": "2018-12-01",
-            "location": "[resourceGroup().location]",
-            "scale": null,
-            "properties": {
-                "provisioningState": "Succeeded",
-                "ipConfigurations": [
-                    {
-                        "name": "ipconfig1",
-                        "properties": {
-                            "provisioningState": "Succeeded",
-                            "privateIPAllocationMethod": "Dynamic",
-                            "subnet": {
-                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('MDWVirtualNetworkName'), variables('MDWVirtualSubnetName'))]"
-                            },
-                            "primary": true,
-                            "privateIPAddressVersion": "IPv4"
-                        }
-                    }
-                ],
-                "dnsSettings": {
-                    "dnsServers": [],
-                    "appliedDnsServers": []
-                },
-                "enableAcceleratedNetworking": true,
-                "enableIPForwarding": false,
-                "primary": true,
-                "tapConfigurations": []
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('MDWVirtualNetworkName'), variables('MDWVirtualSubnetName'))]"
-            ]
-        },
         {
             "type": "Microsoft.Network/virtualNetworks",
             "name": "[variables('MDWVirtualNetworkName')]",
@@ -240,98 +104,7 @@
                 "[resourceId('Microsoft.Network/virtualNetworks', variables('MDWVirtualNetworkName'))]"
             ]
         },
-        {
-            "type": "Microsoft.Compute/virtualMachines",
-            "name": "[variables('MDWDataGatewayName')]",
-            "apiVersion": "2018-10-01",
-            "location": "[resourceGroup().location]",
-            "tags": {},
-            "scale": null,
-            "properties": {
-                "hardwareProfile": {
-                    "vmSize": "[variables('DataGatewayVMSize')]"
-                },
-                "storageProfile": {
-                    "imageReference": {
-                        "publisher": "MicrosoftWindowsServer",
-                        "offer": "WindowsServer",
-                        "sku": "2016-Datacenter",
-                        "version": "latest"
-                    },
-                    "osDisk": {
-                        "osType": "Windows",
-                        "name": "[variables('MDWDataGatewayOSDiskName')]",
-                        "createOption": "FromImage",
-                        "caching": "ReadWrite",
-                        "managedDisk": {
-                            "storageAccountType": "StandardSSD_LRS"
-                        },
-                        "diskSizeGB": 127
-                    },
-                    "dataDisks": []
-                },
-                "osProfile": {
-                    "computerName": "[variables('MDWDataGatewayName')]",
-                    "adminUsername": "[variables('MDWAdminUserName')]",
-                    "adminPassword": "[variables('MDWAdminPassword')]",
-                    "windowsConfiguration": {
-                        "provisionVMAgent": true,
-                        "enableAutomaticUpdates": true
-                    },
-                    "secrets": [],
-                    "allowExtensionOperations": true
-                },
-                "networkProfile": {
-                    "networkInterfaces": [
-                        {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('MDWDataGatewayNICName'))]"
-                        }
-                    ]
-                }
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/networkInterfaces', variables('MDWDataGatewayNICName'))]"
-            ]
-        },
-        {
-            "type": "Microsoft.Network/networkInterfaces",
-            "name": "[variables('MDWDataGatewayNICName')]",
-            "apiVersion": "2018-12-01",
-            "location": "[resourceGroup().location]",
-            "scale": null,
-            "properties": {
-                "provisioningState": "Succeeded",
-                "ipConfigurations": [
-                    {
-                        "name": "ipconfig1",
-                        "properties": {
-                            "provisioningState": "Succeeded",
-                            "privateIPAllocationMethod": "Dynamic",
-                            "subnet": {
-                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('MDWVirtualNetworkName'), variables('MDWVirtualSubnetName'))]"
-                            },
-                            "primary": true,
-                            "privateIPAddressVersion": "IPv4",
-                            "publicIPAddress": {
-                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('MDWDataGatewayPublicIPName'))]"
-                            }
-                        }
-                    }
-                ],
-                "dnsSettings": {
-                    "dnsServers": [],
-                    "appliedDnsServers": []
-                },
-                "enableAcceleratedNetworking": true,
-                "enableIPForwarding": false,
-                "primary": true,
-                "tapConfigurations": []
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/publicIPAddresses', variables('MDWDataGatewayPublicIPName'))]",
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('MDWVirtualNetworkName'), variables('MDWVirtualSubnetName'))]"
-            ]
-        },
+        
         {
             "type": "Microsoft.Network/publicIPAddresses",
             "sku": {
@@ -352,26 +125,7 @@
             },
             "dependsOn": []
         },
-        {
-            "type": "Microsoft.Network/publicIPAddresses",
-            "sku": {
-                "name": "Basic",
-                "tier": "Regional"
-            },
-            "name": "[variables('MDWDataGatewayPublicIPName')]",
-            "apiVersion": "2018-12-01",
-            "location": "[resourceGroup().location]",
-            "tags": {},
-            "scale": null,
-            "properties": {
-                "provisioningState": "Succeeded",
-                "publicIPAddressVersion": "IPv4",
-                "publicIPAllocationMethod": "Dynamic",
-                "idleTimeoutInMinutes": 4,
-                "ipTags": []
-            },
-            "dependsOn": []
-        },
+        
         {
             "type": "Microsoft.Compute/virtualMachines",
             "name": "[variables('MDWDesktopName')]",
@@ -514,7 +268,22 @@
                 "administratorLoginPassword": "[variables('MDWAdminPassword')]",
                 "version": "12.0"
             },
-            "dependsOn": []
+            "dependsOn": [],
+			"resources":[
+				{
+					"type": "firewallrules",
+					"name": "AllowAllAzureIps",
+					"location": "[resourceGroup().location]",
+					"apiVersion": "2015-05-01-preview",
+					"dependsOn": [
+						"[variables('MDWSQLVirtualServerName')]"
+					],
+					"properties": {
+						"startIpAddress": "0.0.0.0",
+						"endIpAddress": "0.0.0.0"
+					}
+				}
+			]
         },
         {
             "type": "Microsoft.Sql/servers/databases",
@@ -548,6 +317,45 @@
             "dependsOn": [
                 "[resourceId('Microsoft.Sql/servers', variables('MDWSQLVirtualServerName'))]"
             ]
+        },
+		{
+            "type": "Microsoft.Sql/servers/databases",
+            "apiVersion": "2017-10-01-preview",
+            "location": "[resourceGroup().location]",
+            "tags": {},
+            "name": "[concat(variables('MDWSQLVirtualServerName'), '/NYCDataSets')]",
+            "properties": {
+                "collation": "SQL_Latin1_General_CP1_CI_AS",
+                "maxSizeBytes": 5368709120,
+                "zoneRedundant": false,
+                "readScale": "Disabled",
+                "readReplicaCount": 0
+            },
+            "sku": {
+                "name": "S1",
+                "tier": "Standard"
+            },
+			"dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', variables('MDWSQLVirtualServerName'))]"
+            ],
+			"resources": [
+				{
+					"name": "Import",
+					"type": "extensions",
+					"apiVersion": "2014-04-01",
+					"dependsOn": [
+						"[resourceId('Microsoft.Sql/servers/databases', variables('MDWSQLVirtualServerName'), 'NYCDataSets')]"
+					],
+					"properties": {
+						"storageKeyType": "SharedAccessKey",
+						"storageKey": "?sv=2018-03-28&ss=b&srt=sco&sp=rwl&se=2050-12-30T17:25:52Z&st=2019-04-05T09:25:52Z&spr=https&sig=4qrD8NmhaSmRFu2gKja67ayohfIDEQH3LdVMa2Utykc%3D",
+						"storageUri": "https://mdwresources.blob.core.windows.net/nycdatasets/NYCDataSets.bacpac",
+						"administratorLogin": "[variables('MDWAdminUserName')]",
+						"administratorLoginPassword": "[variables('MDWAdminPassword')]",
+						"operationMode": "Import"
+					}
+				}
+			]
         },
         {
             "apiVersion": "2018-06-01",

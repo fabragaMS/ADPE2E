@@ -1,7 +1,8 @@
-# Azure Data Platform End2End
+# Azure Data Platform End2End (V2)
 
 In this workshop you will learn about the main concepts related to advanced analytics and Big Data processing and how Azure Data Services can be used to implement a modern data warehouse architecture. You will understand what Azure services you can leverage to establish a solid data platform to quickly ingest, process and visualise data from a large variety of data sources. The reference architecture you will build as part of this exercise has been proven to give you the flexibility and scalability to grow and handle large volumes of data and keep an optimal level of performance.
-In the exercises in this lab you will build data pipelines using data related to New York City. The workshop was designed to progressively implement an extended modern data platform architecture starting from a traditional relational data pipeline. Then we introduce big data scenarios with large files and distributed computing. We add non-structured data and AI into the mix and finish with real-time streaming analytics. You will have done all of that by the end of the workshop.
+
+In the exercises in this lab you will build data pipelines using data related to New York City. The workshop was designed to progressively implement an extended modern data platform architecture starting from a traditional relational data pipeline. Then we introduce big data scenarios with large data files and distributed computing. We add non-structured data and AI into the mix and finish off with real-time stream analytics. You will have done all of that by the end of the workshop.
 
 **IMPORTANT**:
 
@@ -9,7 +10,7 @@ In the exercises in this lab you will build data pipelines using data related to
 
 * The services covered in this course are only a subset of a much larger family of Azure services. Similar outcomes can be achieved by leveraging other services and/or features not covered by this workshop. Specific business requirements may also ask for the use of different services or features not included in this workshop.
 
-* Some concepts presented in this course can be quite complex and you may need to seek for more information from different sources.
+* Some concepts presented in this course can be quite complex and you may need to seek for more information from different sources to compliment your understanding of the Azure services covered.
 
 ![](./Media/ModernDataPlatformReferenceArchitecture.jpg)
 
@@ -52,7 +53,7 @@ The following prerequisites must be completed before you start these labs:
 
 Throughout a series of 5 labs you will progressively implement a modern data platform architecture using datasets from New York City. 
 
-You will start ingesting relational data about traffic collisions in Manhattan hosted by SQL Server in your Azure SQL Data Warehouse. Then we will introduce the concepts of data lake and  big data challenges and you will put then to practice by ingesting and processing over 100 million yellow taxi ride records stored as large data files stored in your data lake.
+You will start ingesting relational data about motorvehicle collisions in Manhattan hosted in an Azure SQL Database into your Azure SQL Data Warehouse. Then we will introduce the concepts of data lake and  big data challenges and you will put then to practice by ingesting and processing over 50 million yellow taxi ride records stored as large data files stored in your data lake.
 
 You will then have use Databricks and the power of Spark clusters to explore big data files. Then you will incorporate AI into your data pipeline by invoking Cognitive Services Computer Vision API to automatically generate metadata for New York City street photographies and store them in a Cosmos DB database. Finally, you will use the Twitter hashtag #NYC as a source of streaming events that you will capture, store and process in real time with Event Hubs, Stream Analytics and Power BI.
 
@@ -74,22 +75,21 @@ The estimated time to complete this lab is: **30 minutes**.
 
 ### [Lab 1: Load Data into Azure SQL Data Warehouse using Azure Data Factory Pipelines](./Lab/Lab1/Lab1.md)
 
-In this lab you will configure the Azure environment to allow relational data to be transferred from a SQL Server 2017 database to an Azure SQL Data Warehouse database using Azure Data Factory. The dataset you will use contains data about motor vehicle collisions that happened in New York City from 2012 to 2019. You will use Power BI to visualise collision data loaded from Azure SQL Data Warehouse.
+In this lab you will configure the Azure environment to allow relational data to be transferred from a Azure SQL Database to an Azure SQL Data Warehouse database using Azure Data Factory. The dataset you will use contains data about motor vehicle collisions that happened in New York City from 2012 to 2019. You will use Power BI to visualise collision data loaded from Azure SQL Data Warehouse.
 
-The estimated time to complete this lab is: **75 minutes**.
+The estimated time to complete this lab is: **45 minutes**.
 
 Step     | Description
 -------- | -----
-![1](./Media/Black1.png) | Restore SQL Server backup from Azure Storage and Configure Azure Data Factory Self-Hosted Integration Runtime
-![2](./Media/Black2.png) | Build an Azure Data Factory Pipeline to copy data from a SQL Server table
-![3](./Media/Black3.png) | Use Azure Storage as a staging area for Polybase
-![4](./Media/Black4.png) | Load data to an Azure SQL Data Warehouse table using Polybase
-![5](./Media/Black5.png) | Visualize data from Azure SQL Data Warehouse using Power BI
+![1](./Media/Black1.png) | Build an Azure Data Factory Pipeline to copy data from an Azure SQL Database table
+![2](./Media/Black2.png) | Use Azure Storage as a staging area for Polybase
+![3](./Media/Black3.png) | Load data to an Azure SQL Data Warehouse table using Polybase
+![4](./Media/Black4.png) | Visualize data from Azure SQL Data Warehouse using Power BI
 
 ![](./Lab/Lab1/Media/Lab1-Image51.png)
 
-### [Lab 2: Transform Big Data using Azure Data Factory and Azure SQL Data Warehouse](./Lab/Lab2/Lab2.md)
-In this lab you will use Azure Data Factory to download large data files into your data lake and use an Azure SQL Data Warehouse stored procedure to generate a summary dataset and store it in the final table. The dataset you will use contains detailed New York City Yellow Taxi rides for 2018. You will generate a daily aggregated summary of all rides and save the result in your data warehouse. You will then use Power BI to visualise summarised data. 
+### [Lab 2: Transform Big Data using Azure Data Factory Mapping Data Flows](./Lab/Lab2/Lab2.md)
+In this lab you will use Azure Data Factory to download large data files into your data lake and use an Azure SQL Data Warehouse stored procedure to generate a summary dataset and store it in the final table. The dataset you will use contains detailed New York City Yellow Taxi rides for the first half of 2019. You will generate a daily aggregated summary of all rides using Mapping Data Flows and save the resulting dataset in your Azure SQL Data Warehouse. You will then use Power BI to visualise summarised data. 
 
 The estimated time to complete this lab is: **60 minutes**.
 
@@ -155,9 +155,9 @@ Activity | Duration
 Workshop Overview | 15 minutes
 Modern Data Platform Concepts: Part I | 15 minutes
 **Modern Data Warehousing** |
-Lab 1: Load Data into Azure SQL Data Warehouse using Azure Data Factory Pipelines    | 75 minutes
+Lab 1: Load Data into Azure SQL Data Warehouse using Azure Data Factory Pipelines    | 45 minutes
 Modern Data Platform Concepts: Part II | 15 minutes
-Lab 2: Transform Big Data using Azure Data Factory and Azure SQL Data Warehouse    | 60 minutes
+Lab 2: Transform Big Data using Azure Data Factory Mapping Data Flows    | 60 minutes
 **Advanced Analytics** |
 Modern Data Platform Concepts: Part III | 15 minutes
 Lab 3: Explore Big Data using Azure Databricks    | 45 minutes
@@ -176,14 +176,12 @@ The workshop content will be delivered over the course of two days with the foll
 Activity | Duration
 -------- | ---------
 Workshop Overview | 45 minutes
-Lab 0: Deploy Azure Data Platform End2End to your subscription * | 30 minutes
+Lab 0: Deploy Azure Data Platform End2End to your subscription | 30 minutes
 Modern Data Platform Concepts: Part I | 90 minutes
 **Modern Data Warehousing** |
-Lab 1: Load Data into Azure SQL Data Warehouse using Azure Data Factory Pipelines    | 75 minutes
+Lab 1: Load Data into Azure SQL Data Warehouse using Azure Data Factory Pipelines    | 45 minutes
 Modern Data Platform Concepts: Part II | 90 minutes
 Lab 2: Transform Big Data using Azure Data Factory and Azure SQL Data Warehouse    | 60 minutes
-
-\* Lab 0 preferable done before Day 1.
 
 ### **Day 2**
 

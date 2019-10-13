@@ -13,25 +13,18 @@ MDWDatabricks-*suffix*      | Azure Databricks Service | Standard | https://azur
 MDWComputerVision	        | Cognitive Services | S1 | https://azure.microsoft.com/en-us/pricing/details/cognitive-services/computer-vision/
 MDWTextAnalytics	        | Cognitive Services | Standard | https://azure.microsoft.com/en-us/pricing/details/cognitive-services/text-analytics/
 MDWDataFactory-*suffix*	    | Data factory (V2) | Data pipelines | https://azure.microsoft.com/en-us/pricing/details/data-factory/
-MDWDataGateway_OsDisk	    | Disk | E10 | https://azure.microsoft.com/en-us/pricing/details/managed-disks/
-MDWDesktop_OsDisk	        | Disk | E10 | https://azure.microsoft.com/en-us/pricing/details/managed-disks/
-MDWSQLServer_DataDisk	    | Disk | E10 | https://azure.microsoft.com/en-us/pricing/details/managed-disks/
-MDWSQLServer_OsDisk	        | Disk | E10 | https://azure.microsoft.com/en-us/pricing/details/managed-disks/
 MDWEventHubs-*suffix*       | Event Hubs Namespace | Standard | https://azure.microsoft.com/en-us/pricing/details/event-hubs/
 MDWKeyVault-*suffix*        | Key vault | Standard | https://azure.microsoft.com/en-us/pricing/details/key-vault/
 MDWLogicApp	                | Logic app | | https://azure.microsoft.com/en-au/pricing/details/logic-apps/
-MDWDataGateway-nic	        | Network interface ||
-MDWDesktop-nic	            | Network interface ||
-MDWSQLServer-nic	        | Network interface ||
-MDWDataGateway-publicip	    | Public IP address || https://azure.microsoft.com/en-us/pricing/details/ip-addresses/
-MDWDesktop-publicip	        | Public IP address || https://azure.microsoft.com/en-us/pricing/details/ip-addresses/
 MDWASQLDW                   | SQL data warehouse | DW200c | https://azure.microsoft.com/en-us/pricing/details/sql-data-warehouse/gen2/
+NYCDataSets                   | SQL database | Standard S1 | https://azure.microsoft.com/en-au/pricing/details/sql-database/single/
 mdwsqlvirtualserver-*suffix*| SQL server || 
 mdwdatalakesuffix	        | Storage account || https://azure.microsoft.com/en-us/pricing/details/storage/blobs/
 MDWStreamAnalytics-*suffix*	| Stream Analytics job | 3 SU | https://azure.microsoft.com/en-us/pricing/details/stream-analytics/
-MDWDataGateway	            | Virtual machine | D4s v3 | https://azure.microsoft.com/en-us/pricing/details/virtual-machines/windows/
 MDWDesktop	                | Virtual machine | A4 v2 | https://azure.microsoft.com/en-us/pricing/details/virtual-machines/windows/
-MDWSQLServer	            | Virtual machine | D4s v3 | https://azure.microsoft.com/en-us/pricing/details/virtual-machines/windows/
+MDWDesktop_OsDisk	        | Disk | E10 | https://azure.microsoft.com/en-us/pricing/details/managed-disks/
+MDWDesktop-nic	            | Network interface ||
+MDWDesktop-publicip	        | Public IP address || https://azure.microsoft.com/en-us/pricing/details/ip-addresses/
 MDWVirtualNetwork	        | Virtual network || https://azure.microsoft.com/en-us/pricing/details/virtual-network/
 
 
@@ -126,12 +119,10 @@ In this section you will use automated deployment and ARM templates to automate 
 
 ## Workshop cost management
 
-The approximate cost to run the resources provisioned for the estimated duration of this workshop (2 days) is around USD 150.00. Remember that you will start get charged from the moment the resource template deployment completes successfully. You can minimise costs during the execution of the labs by taking the following actions below:
+The approximate cost to run the resources provisioned for the estimated duration of this workshop (2 days) is around USD 100.00. Remember that you will start get charged from the moment the resource template deployment completes successfully. You can minimise costs during the execution of the labs by taking the following actions below:
 
 Azure Resource | Type | Action |
 ---------------|------|--------|
-MDWSQLServer   | Virtual Machine |Stop it after completing Lab 1|
-MDWDataGateway | Virtual Machine |Stop it after completing Lab 1|
 MDWASQLDW      | Azure SQL Data Warehouse | Pause it after completing Lab 3|
 MDWDatabricks | Databricks Workspace | Stop cluster after completing Lab 4
 MDWCosmosDB   | Cosmos DB | Delete ImageMetadata container after completing Lab 4

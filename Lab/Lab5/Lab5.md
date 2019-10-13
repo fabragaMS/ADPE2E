@@ -9,8 +9,11 @@ The estimated time to complete this lab is: **75 minutes**.
 
 ## Microsoft Learn & Technical Documentation
 
+The following Azure services will be used in this lab. If you need further training resources or access to technical documentation please find in the table below links to Microsoft Learn and to each service's Technical Documentation.
+
 Azure Service | Microsoft Learn | Technical Documentation|
 --------------|-----------------|------------------------|
+Azure Data Lake Gen2 | [Large Scale Data Processing with Azure Data Lake Storage Gen2](https://docs.microsoft.com/en-us/learn/paths/data-processing-with-azure-adls/) | [Azure Data Lake Gen2 Technical Documentation](https://docs.microsoft.com/en-us/azure/storage/blobs/data-lake-storage-introduction)
 Azure Logic Apps | [Build automated workflows to integrate data and apps with Azure Logic Apps](https://docs.microsoft.com/en-us/learn/paths/build-workflows-with-logic-apps/) | [Azure Logic Apps Technical Documentation](https://docs.microsoft.com/en-us/azure/logic-apps/)
 Azure Text Analytics | [Discover sentiment in text with the Text Analytics API](https://docs.microsoft.com/en-us/learn/modules/classify-user-feedback-with-the-text-analytics-api/) | [Azure Text Analytics API Technical Documentation](https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/)
 Azure Event Hubs | [Enable reliable messaging for Big Data applications using Azure Event Hubs](https://docs.microsoft.com/en-us/learn/modules/enable-reliable-messaging-for-big-data-apps-using-event-hubs/) | [Azure Event Hubs Technical Documentation](https://docs.microsoft.com/en-us/azure/event-hubs/)

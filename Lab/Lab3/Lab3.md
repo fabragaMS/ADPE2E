@@ -5,9 +5,13 @@ The estimated time to complete this lab is: **45 minutes**.
 
 ## Microsoft Learn & Technical Documentation
 
+The following Azure services will be used in this lab. If you need further training resources or access to technical documentation please find in the table below links to Microsoft Learn and to each service's Technical Documentation.
+
 Azure Service | Microsoft Learn | Technical Documentation|
 --------------|-----------------|------------------------|
 Azure Databricks | [Perform data engineering with Azure Databricks](https://docs.microsoft.com/en-us/learn/paths/data-engineering-with-databricks/) | [Azure Databricks Technical Documentation](https://docs.microsoft.com/en-us/azure/azure-databricks/)
+Azure Data Lake Gen2 | [Large Scale Data Processing with Azure Data Lake Storage Gen2](https://docs.microsoft.com/en-us/learn/paths/data-processing-with-azure-adls/) | [Azure Data Lake Gen2 Technical Documentation](https://docs.microsoft.com/en-us/azure/storage/blobs/data-lake-storage-introduction)
+Azure SQL Data Warehouse | [Implement a Data Warehouse with Azure SQL Data Warehouse](https://docs.microsoft.com/en-us/learn/paths/implement-sql-data-warehouse/) | [Azure SQL Data Warehouse Technical Documentation](https://docs.microsoft.com/en-us/azure/sql-data-warehouse/)
 
 ## Lab Architecture
 ![Lab Architecture](./Media/Lab3-Image01.png)
@@ -15,6 +19,8 @@ Azure Databricks | [Perform data engineering with Azure Databricks](https://docs
 Step     | Description
 -------- | -----
 ![](./Media/Red1.png) |Build an Azure Databricks notebook to explore the data files you saved in your data lake in the previous exercise. You will use Python and SQL commands to open a connection to your data lake and query data from data files.
+![](./Media/Red2.png) |Integrate datasets from Azure SQL Data Warehouse to your big data processing pipeline. Databricks becomes the bridge between your relational and non-relational data stores.
+
 
 **IMPORTANT**: Some of the Azure services provisioned require globally unique name and a “-suffix” has been added to their names to ensure this uniqueness. Please take note of the suffix generated as you will need it for the following resources in this lab:
 
@@ -183,7 +189,7 @@ select cast(tpep_pickup_datetime as date) as pickup_date
   , passenger_count
   , total_amount
 from NYCTaxiDataTable
-where cast(tpep_pickup_datetime as date) = '2018-04-07'
+where cast(tpep_pickup_datetime as date) = '2019-04-07'
   and passenger_count > 5
 ```
 
@@ -236,7 +242,7 @@ connectionProperties = {
   "driver" : "com.microsoft.sqlserver.jdbc.SQLServerDriver"
 }
 
-pushdown_query = '(select * from Staging.NYCTaxiLocationLookup) as t'
+pushdown_query = '(select * from NYC.TaxiLocationLookup) as t'
 dfLookupLocation = spark.read.jdbc(url=jdbcUrl, table=pushdown_query, properties=connectionProperties)
 
 dfLookupLocation.createOrReplaceTempView('NYCTaxiLocation')
