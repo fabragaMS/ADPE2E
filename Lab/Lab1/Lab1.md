@@ -275,15 +275,14 @@ In this section you will build an Azure Data Factory pipeline to copy a table fr
                 "referenceName": "MDWSQLVirtualServer_NYCDataSets",
                 "type": "LinkedServiceReference"
             },
-            "folder": {
-                "name": "Lab1"
-            },
-            "type": "SqlServerTable",
+            "annotations": [],
+            "type": "AzureSqlTable",
+            "schema": [],
             "typeProperties": {
-                "tableName": "[NYC].[NYPD_MotorVehicleCollisions]"
+                "schema": "NYC",
+                "table": "NYPD_MotorVehicleCollisions"
             }
-        },
-        "type": "Microsoft.DataFactory/factories/datasets"
+        }
     }
     ```
 
