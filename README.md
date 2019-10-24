@@ -6,6 +6,9 @@ In the exercises in this lab you will build data pipelines using data related to
 
 **IMPORTANT**:
 
+> [!IMPORTANT]
+> Test important message
+
 * The reference architecture proposed in this workshop aims to explain just enough of the role of each of the Azure Data Services included in the overall modern data platform architecture. This workshop does not replace the need of in-depth training on each Azure service covered.
 
 * The services covered in this course are only a subset of a much larger family of Azure services. Similar outcomes can be achieved by leveraging other services and/or features not covered by this workshop. Specific business requirements may also ask for the use of different services or features not included in this workshop.
