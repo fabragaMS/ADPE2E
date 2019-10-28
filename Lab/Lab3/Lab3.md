@@ -270,7 +270,7 @@ select
 from NYCTaxiDataTable as rides
   join NYCTaxiLocation as pu
     on rides.PULocationID = pu.LocationID
-where cast(tpep_pickup_datetime as date) = '2018-04-07'
+where cast(tpep_pickup_datetime as date) = '2019-04-07'
   and passenger_count > 5
   and total_amount > 50.0
 ```
