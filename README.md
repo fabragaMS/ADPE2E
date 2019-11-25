@@ -14,6 +14,12 @@ In the exercises in this lab you will build data pipelines using data related to
 
 ![](./Media/ModernDataPlatformReferenceArchitecture.jpg)
 
+### Azure Synapse Analytics
+
+Microsoft recently announced Azure Synapse Analytics as the evolution of Azure SQL Data Warehouse blending big data, data warehousing, and data integration into a single service for end-to-end analytics at cloud scale. This reference architecture and workshop content will be updated as annouced features in the roadmap become publicly available. For more information please visit: https://azure.microsoft.com/en-au/services/synapse-analytics/
+
+![](./Media/AzureSynapse.png)
+
 ## Document Structure
 This document contains detailed step-by-step instructions on how to implement a Modern Data Platform architecture using Azure Data Services. It’s recommended you carefully read the detailed description contained in this document for a successful experience with all Azure services. 
 
@@ -43,9 +49,7 @@ The following prerequisites must be completed before you start these labs:
 
     <br>**IMPORTANT**: When you deploy the lab resources in your own subscription you are responsible for the charges related to the use of the services provisioned. For more information about the list of services and tips on how to save money when executing these labs, please visit the Cost Management section of the [Lab 0: Deploy Azure Data Platform End2End to your subscription](./Deploy/Deploy.md) page.
 
-* Lab 1 requires you to open a Remote Desktop Connection (RDP) to Azure Virtual Machines. If you are using a Mac, please ensure you have the latest version of the Microsoft Remote Desktop software installed: https://apps.apple.com/us/app/microsoft-remote-desktop-10/id1295203466?mt=12
-
-* Lab 5 requires you to have a Twitter account. If you don’t have an account you can sign up for free following the instructions here: https://twitter.com/signup. 
+* Labs 1 to 4 require you to open a Remote Desktop Connection (RDP) to Azure Virtual Machines. If you are using a Mac, please ensure you have the latest version of the Microsoft Remote Desktop software installed: https://apps.apple.com/us/app/microsoft-remote-desktop-10/id1295203466?mt=12
 
 * Lab 5 requires you to have a Power BI Pro account. If you don’t have an account you can sign up for a 60-day trial for free here: https://powerbi.microsoft.com/en-us/power-bi-pro/
   
@@ -53,9 +57,9 @@ The following prerequisites must be completed before you start these labs:
 
 Throughout a series of 5 labs you will progressively implement a modern data platform architecture using datasets from New York City. 
 
-You will start ingesting relational data about motorvehicle collisions in Manhattan hosted in an Azure SQL Database into your Azure SQL Data Warehouse. Then we will introduce the concepts of data lake and  big data challenges and you will put then to practice by ingesting and processing over 50 million yellow taxi ride records stored as large data files stored in your data lake.
+You will start ingesting relational data about motorvehicle collisions in Manhattan hosted in an Azure SQL Database into your Azure Synapse Analytics data warehouse. Then we will introduce the concepts of data lake and  big data challenges and you will put then to practice by ingesting and processing over 50 million yellow taxi ride records stored as large data files stored in your data lake.
 
-You will then have use Databricks and the power of Spark clusters to explore big data files. Then you will incorporate AI into your data pipeline by invoking Cognitive Services Computer Vision API to automatically generate metadata for New York City street photographies and store them in a Cosmos DB database. Finally, you will use the Twitter hashtag #NYC as a source of streaming events that you will capture, store and process in real time with Event Hubs, Stream Analytics and Power BI.
+You will then have use Databricks and the power of Spark clusters to explore big data files. Then you will incorporate AI into your data pipeline by invoking Cognitive Services Computer Vision API to automatically generate metadata for New York City street photographies and store them in a Cosmos DB database. Finally, you will use a LogicApp to simmulate high-frequency stock purchase transactions as a source of streaming events that you will capture, store and process in real time with Event Hubs, Stream Analytics and Power BI.
 
 By the end of the workshop you will have implementd the lab architecture referenced below:
 
@@ -73,23 +77,23 @@ The estimated time to complete this lab is: **30 minutes**.
 -------------|
 **In order to avoid potential delays caused by issues found during the ARM template deployment it is recommended you execute Lab 0 prior to Day 1.**|
 
-### [Lab 1: Load Data into Azure SQL Data Warehouse using Azure Data Factory Pipelines](./Lab/Lab1/Lab1.md)
+### [Lab 1: Load Data into Azure Synapse Analytics using Azure Data Factory Pipelines](./Lab/Lab1/Lab1.md)
 
-In this lab you will configure the Azure environment to allow relational data to be transferred from a Azure SQL Database to an Azure SQL Data Warehouse database using Azure Data Factory. The dataset you will use contains data about motor vehicle collisions that happened in New York City from 2012 to 2019. You will use Power BI to visualise collision data loaded from Azure SQL Data Warehouse.
+In this lab you will configure the Azure environment to allow relational data to be transferred from a Azure SQL Database to an Azure Synapse Analytics database using Azure Data Factory. The dataset you will use contains data about motor vehicle collisions that happened in New York City from 2012 to 2019. You will use Power BI to visualise collision data loaded from Azure Synapse Analytics.
 
 The estimated time to complete this lab is: **45 minutes**.
 
 Step     | Description
 -------- | -----
 ![1](./Media/Black1.png) | Build an Azure Data Factory Pipeline to copy data from an Azure SQL Database table
-![2](./Media/Black2.png) | Use Azure Storage as a staging area for Polybase
-![3](./Media/Black3.png) | Load data to an Azure SQL Data Warehouse table using Polybase
-![4](./Media/Black4.png) | Visualize data from Azure SQL Data Warehouse using Power BI
+![2](./Media/Black2.png) | Use Azure Data Lake Storage Gen2 as a staging area for Polybase
+![3](./Media/Black3.png) | Load data to an Azure Synapse Analytics table using Polybase
+![4](./Media/Black4.png) | Visualize data from Azure Synapse Analytics using Power BI
 
 ![](./Lab/Lab1/Media/Lab1-Image51.png)
 
 ### [Lab 2: Transform Big Data using Azure Data Factory Mapping Data Flows](./Lab/Lab2/Lab2.md)
-In this lab you will use Azure Data Factory to download large data files into your data lake and use an Azure SQL Data Warehouse stored procedure to generate a summary dataset and store it in the final table. The dataset you will use contains detailed New York City Yellow Taxi rides for the first half of 2019. You will generate a daily aggregated summary of all rides using Mapping Data Flows and save the resulting dataset in your Azure SQL Data Warehouse. You will then use Power BI to visualise summarised data. 
+In this lab you will use Azure Data Factory to download large data files into your data lake and use an Azure Synapse Analytics stored procedure to generate a summary dataset and store it in the final table. The dataset you will use contains detailed New York City Yellow Taxi rides for the first half of 2019. You will generate a daily aggregated summary of all rides using Mapping Data Flows and save the resulting dataset into your Azure Synapse Analytics data warehouse. You will then use Power BI to visualise summarised data. 
 
 The estimated time to complete this lab is: **60 minutes**.
 
@@ -97,9 +101,9 @@ The estimated time to complete this lab is: **60 minutes**.
 Step     | Description
 -------- | -----
 ![](./Media/Green1.png) | Build an Azure Data Factory Pipeline to copy big data files from shared Azure Storage
-![](./Media/Green2.png) | Save data files to your data lake
-![](./Media/Green3.png) | Use Polybase to load data into staging tables in your Azure SQL Data Warehouse. Call a Stored Procedure to perform data aggregations and save results in the final table.
-![](./Media/Green4.png) | Visualize data from your Azure SQL Data Warehouse using Power BI
+![](./Media/Green2.png) | Ingest data files into your data lake
+![](./Media/Green3.png) | Use Mapping Data Flows to generate a aggregated daily summary and save the resulting dataset into your Azure Synapse Analytics data warehouse.
+![](./Media/Green4.png) | Visualize data from your Azure Synapse Analytics using Power BI
 
 ![](./Lab/Lab2/Media/Lab2-Image40.png)
 
@@ -111,6 +115,7 @@ The estimated time to complete this lab is: **45 minutes**.
 Step     | Description
 -------- | -----
 ![](./Media/Red1.png) |Build an Azure Databricks notebook to explore the data files you saved in your data lake in the previous exercise. You will use Python and SQL commands to open a connection to your data lake and query data from data files.
+![](./Media/Red2.png) |Integrate datasets from Azure Synapse Analytics data warehouse to your big data processing pipeline. Databricks becomes the bridge between your relational and non-relational data stores.
 
 ![](./Lab/Lab3/Media/Lab3-Image14.png)
 
@@ -131,18 +136,17 @@ Step     | Description
 ![](./Lab/Lab4/Media/Lab4-Image70.png)
 
 ### [Lab 5: Ingest and Analyse real-time data with Event Hubs and Stream Analytics](./Lab/Lab5/Lab5.md)
-In this lab you will use an Azure Logic App to connect to Twitter and generate a stream of messages using the hashtag #NYC. The logic app will invoke the Azure Text Analytics Cognitive service to score Tweet sentiment and send the messages to Event Hubs. You will use Stream Analytics to generate the average Tweet sentiment in the last 60 seconds and send the results to a real-time dataset in Power BI.
+In this lab you will use an Azure Logic App to simmulate a NYSE stream of stock purchase transactions. The logic app will then send the messages to Event Hubs. You will then use Stream Analytics to receive and process the stream and perform aggregations to calculate the number of transactions and amound traded in the last 10 seconds. Stream Analytics will send the results to a real-time dataset in Power BI.
 
-The estimated time to complete this lab is: **75 minutes**.
+The estimated time to complete this lab is: **45 minutes**.
 
 Step     | Description
 -------- | -----
-![](./Media/Orange1.png) | Build an Azure Logic App to invoke the Twitter API and retrieve Tweets with the hashtag #NYC
-![](./Media/Orange2.png) | For each Tweet, invoke the Azure Text Analytics Cognitive service to detect its sentiment score
-![](./Media/Orange3.png) | Format and send the Tweet’s JSON message to Event Hubs
-![](./Media/Orange4.png) | Save Tweet messages into your data lake for future analysis (cold path)
-![](./Media/Orange5.png) | Send stream of Tweet messages to Stream Analytics for real-time analytics (hot path)
-![](./Media/Orange6.png) | Visualize real-time data generated by Stream Analytics with Power BI
+![](./Media/Orange1.png) | Review the Azure Logic App logic that simmulates the NYSE transaction stream sent to EventHubs
+![](./Media/Orange2.png) | Save simmulated NYSE stock transaction messages into your data lake for future analysis (cold path)
+![](./Media/Orange3.png) | Send stream of NYSE stock transaction messages to Stream Analytics for real-time analytics (hot path)
+![](./Media/Orange4.png) | Incorporate Stock Company reference data into your stream processing logic
+![](./Media/Orange5.png) | Visualize real-time data generated by Stream Analytics with Power BI
 
 ![](./Lab/Lab5/Media/Lab5-Image52.png)
 
@@ -155,7 +159,7 @@ Activity | Duration
 Workshop Overview | 15 minutes
 Modern Data Platform Concepts: Part I | 15 minutes
 **Modern Data Warehousing** |
-Lab 1: Load Data into Azure SQL Data Warehouse using Azure Data Factory Pipelines    | 45 minutes
+Lab 1: Load Data into Azure Synapse Analytics using Azure Data Factory Pipelines    | 45 minutes
 Modern Data Platform Concepts: Part II | 15 minutes
 Lab 2: Transform Big Data using Azure Data Factory Mapping Data Flows    | 60 minutes
 **Advanced Analytics** |
@@ -165,7 +169,7 @@ Modern Data Platform Concepts: Part IV | 15 minutes
 Lab 4: Add AI to your Big Data Pipeline with Cognitive Services    | 75 minutes
 **Real-time Analytics** |
 Modern Data Platform Concepts: Part V | 15 minutes
-Lab 5: Ingest and Analyse real-time data with Event Hubs and Stream Analytics   | 75 minutes
+Lab 5: Ingest and Analyse real-time data with Event Hubs and Stream Analytics   | 45 minutes
 
 ### **2-Day Format**
 
@@ -179,9 +183,9 @@ Workshop Overview | 45 minutes
 Lab 0: Deploy Azure Data Platform End2End to your subscription | 30 minutes
 Modern Data Platform Concepts: Part I | 90 minutes
 **Modern Data Warehousing** |
-Lab 1: Load Data into Azure SQL Data Warehouse using Azure Data Factory Pipelines    | 45 minutes
+Lab 1: Load Data into Azure Synapse Analytics using Azure Data Factory Pipelines    | 45 minutes
 Modern Data Platform Concepts: Part II | 90 minutes
-Lab 2: Transform Big Data using Azure Data Factory and Azure SQL Data Warehouse    | 60 minutes
+Lab 2: Transform Big Data using Azure Data Factory and Azure Synapse Analytics    | 60 minutes
 
 ### **Day 2**
 
@@ -194,4 +198,4 @@ Modern Data Platform Concepts: Part IV | 60 minutes
 Lab 4: Add AI to your Big Data Pipeline with Cognitive Services    | 75 minutes
 **Real-time Analytics** |
 Modern Data Platform Concepts: Part V | 60 minutes
-Lab 5: Ingest and Analyse real-time data with Event Hubs and Stream Analytics   | 75 minutes
+Lab 5: Ingest and Analyse real-time data with Event Hubs and Stream Analytics   | 45 minutes

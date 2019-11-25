@@ -1,5 +1,5 @@
-# Lab 1: Load Data into Azure SQL Data Warehouse using Azure Data Factory Pipelines
-In this lab you will configure the Azure environment to allow relational data to be transferred from an Azure SQL Database to an Azure SQL Data Warehouse database using Azure Data Factory. The dataset you will use contains data about motor vehicle collisions that happened in New Your City from 2012 to 2019. You will use Power BI to visualise collision data loaded from Azure SQL Data Warehouse.
+# Lab 1: Load Data into Azure Synapse Analytics using Azure Data Factory Pipelines
+In this lab you will configure the Azure environment to allow relational data to be transferred from an Azure SQL Database to an Azure Synapse Analytics data warehouse using Azure Data Factory. The dataset you will use contains data about motor vehicle collisions that happened in New Your City from 2012 to 2019. You will use Power BI to visualise collision data loaded from your Azure Synapse Analytics data warehouse.
 
 The estimated time to complete this lab is: **45 minutes**.
 
@@ -11,7 +11,8 @@ Azure Service | Microsoft Learn | Technical Documentation|
 --------------|-----------------|------------------------|
 Azure SQL Database | [Work with relational data in Azure](https://docs.microsoft.com/en-us/learn/paths/work-with-relational-data-in-azure/) | [Azure SQL Database Technical Documentation](https://docs.microsoft.com/en-us/azure/sql-database/)
 Azure Data Factory | [Data ingestion with Azure Data Factory](https://docs.microsoft.com/en-us/learn/modules/data-ingestion-with-azure-data-factory/)| [Azure Data Factory Technical Documentation](https://docs.microsoft.com/en-us/azure/data-factory/)
-Azure SQL Data Warehouse | [Implement a Data Warehouse with Azure SQL Data Warehouse](https://docs.microsoft.com/en-us/learn/paths/implement-sql-data-warehouse/) | [Azure SQL Data Warehouse Technical Documentation](https://docs.microsoft.com/en-us/azure/sql-data-warehouse/)
+Azure Synapse Analytics | [Implement a Data Warehouse with Azure Synapse Analytics](https://docs.microsoft.com/en-us/learn/paths/implement-sql-data-warehouse/) | [Azure Synapse Analytics Technical Documentation](https://docs.microsoft.com/en-us/azure/sql-data-warehouse/)
+Azure Data Lake Storage Gen2 | [Large Scale Data Processing with Azure Data Lake Storage Gen2](https://docs.microsoft.com/en-us/learn/paths/data-processing-with-azure-adls/) | [Azure Data Lake Storage Gen2 Technical Documentation](https://docs.microsoft.com/en-us/azure/storage/blobs/data-lake-storage-introduction)
 
 ## Lab Architecture
 ![Lab Architecture](./Media/Lab1-Image01.png)
@@ -19,28 +20,29 @@ Azure SQL Data Warehouse | [Implement a Data Warehouse with Azure SQL Data Wareh
 Step     | Description
 -------- | -----
 ![1](./Media/Black1.png) | Build an Azure Data Factory Pipeline to copy data from an Azure SQL Database table
-![2](./Media/Black2.png) | Use Azure Storage as a staging area for Polybase
-![3](./Media/Black3.png) | Load data to an Azure SQL Data Warehouse table using Polybase
-![4](./Media/Black4.png) | Visualize data from Azure SQL Data Warehouse using Power BI
+![2](./Media/Black2.png) | Use Azure Data Lake Storage Gen2 as a staging area for Polybase
+![3](./Media/Black3.png) | Load data to an Azure Synapse Analytics table using Polybase
+![4](./Media/Black4.png) | Visualize data from Azure Synapse Analytics using Power BI
 
 **IMPORTANT**: Some of the Azure services provisioned require globally unique name and a “-suffix” has been added to their names to ensure this uniqueness. Please take note of the suffix generated as you will need it for the following resources in this lab:
 
 Name	                     |Type
 -----------------------------|--------------------
-MDWDataFactory-*suffix*	     |Data Factory (V2)
-mdwdatalake*suffix*	         |Storage Account
-mdwsqlvirtualserver-*suffix* |SQL server
+SynapseDataFactory-*suffix*	     |Data Factory (V2)
+synapsedatalake*suffix*	         |Data Lake Storage Gen2
+synapsesql-*suffix* |SQL server
+operationalsql-*suffix* |SQL server
 
-## Connect to MDWDesktop
-In this section you are going to establish a Remote Desktop Connection to MDWDesktop virtual machine.
+## Connect to ADPDesktop
+In this section you are going to establish a Remote Desktop Connection to ADPDesktop virtual machine.
 
 **IMPORTANT**|
 -------------|
 **Execute these steps on your host computer**|
 
-1.	In the Azure Portal, navigate to the lab resource group and click the **MDWDesktop** virtual machine.
+1.	In the Azure Portal, navigate to the lab resource group and click the **ADPDesktop** virtual machine.
 
-2.	On the MDWDesktop blade, from the Overview menu, click the Connect button. 
+2.	On the ADPDesktop blade, from the Overview menu, click the Connect button. 
 
     ![](./Media/Lab1-Image02.png)
 
@@ -48,19 +50,24 @@ In this section you are going to establish a Remote Desktop Connection to MDWDes
 
     ![](./Media/Lab1-Image03.png)
 
-## Install required software onto MDWDesktop
-In this section you are going to install Power BI Desktop and Azure Data Studio on MDWDesktop.
+4. If you have issues connecting via Remote Desktop Protocol (RDP), you can then connect via Azure Bastion by clicking the **Bastion** tab and providing the credentials indicated in the next section. This will open a new browser tab with the remote connection via SSL and HTML5.
+
+    ![](./Media/Lab1-Image54.png)
+
+
+## Install required software onto ADPDesktop
+In this section you are going to install Power BI Desktop and Azure Data Studio on ADPDesktop.
 
 ![](./Media/Lab1-Image04.jpg)
 
 **IMPORTANT**|
 -------------|
-**Execute these steps inside the MDWDesktop remote desktop connection**|
+**Execute these steps inside the ADPDesktop remote desktop connection**|
 
-1.	Once the RDP file is downloaded, click on it to establish an RDP connection with MDWDesktop
+1.	Once the RDP file is downloaded, click on it to establish an RDP connection with ADPDesktop
 
 2.	User the following credentials to authenticate:
-    <br>- **User Name**: MDWAdmin
+    <br>- **User Name**: ADPAdmin
     <br>- **Password**: P@ssw0rd123!
 3.	Once logged in, accept the default privacy settings.
 
@@ -74,27 +81,29 @@ In this section you are going to install Power BI Desktop and Azure Data Studio 
     <br>https://aka.ms/pbiSingleInstaller
     <br>![](./Media/Lab1-Image06.png)
 
-## Create Azure SQL Data Warehouse database objects
-In this section you will connect to Azure SQL Data Warehouse to create the database objects used to host and process data.
+## Create Azure Synapse Analytics data warehouse objects
+In this section you will connect to Azure Synapse Analytics to create the database objects used to host and process data.
 
 ![](./Media/Lab1-Image10.png)
 
 **IMPORTANT**|
 -------------|
-**Execute these steps inside the MDWDesktop remote desktop connection**|
+**Execute these steps inside the ADPDesktop remote desktop connection**|
 
 1.	Open Azure Data Studio. On the Servers panel, click **New Connection**.
 
     ![](./Media/Lab1-Image11.png)
 
 2.	On the **Connection Details** panel, enter the following connection details:
-    <br> - **Server**: mdwsqlvirtualserver-suffix.database.windows.net
+    <br> - **Server**: synapsesql-*suffix*.database.windows.net
     <br>- **Authentication Type**: SQL Login
-    <br>- **User Name**: mdwadmin
+    <br>- **User Name**: ADPAdmin
     <br>- **Password**: P@ssw0rd123!
-    <br>- **Database**: MDWASQLDW
+    <br>- **Database**: SynapseDW
 
 3.	Click **Connect**.
+
+    ![](./Media/Lab1-Image08.png)
 
 4.	Right-click the server name and click **New Query**.
 
@@ -149,8 +158,8 @@ with (distribution = round_robin)
 go
 ```
 
-## Create Staging Container on Azure Blob Storage
-In this section you create a staging container in your MDWDataLake that will be used as a staging environment for Polybase before data can be copied to Azure SQL Data Warehouse.
+## Create Staging Container on Azure Data Lake Storage Gen2
+In this section you create a staging container in your data lake account that will be used as a staging environment for Polybase before data can be copied to Azure Synapse Analytics.
 
 ![](./Media/Lab1-Image24.jpg)
 
@@ -158,26 +167,22 @@ In this section you create a staging container in your MDWDataLake that will be 
 -------------|
 **Execute these steps on your host computer**|
 
-1.	In the Azure Portal, go to the lab resource group and locate the Azure Storage account **mdwdatalake*suffix***. 
+1.	In the Azure Portal, go to the lab resource group and locate the Azure Storage account **synapsedatalake*suffix***. 
 
 2.	On the **Overview** panel, click **Containers**.
 
     ![](./Media/Lab1-Image25.png)
 
-3.	On the **mdwdalalake*suffix* – Containers** blade, click **+ Container**.
-
-    ![](./Media/Lab1-Image26.png)
-
-4.	On the **New container** blade, enter the following details:
+3.	On the **synapsedatalake*suffix* – Containers** blade, click **+ Container**. On the **New container** blade, enter the following details:
     <br>- **Name**: polybase
     <br>- **Public access level**: Private (no anynymous access)
 
-5.	Click **OK** to create the new container.
+4.	Click **OK** to create the new container.
 
     ![](./Media/Lab1-Image27.png)
 
 ## Create Azure Data Factory Pipeline to Copy Relational Data
-In this section you will build an Azure Data Factory pipeline to copy a table from MDWSQLServer to Azure SQL Data Warehouse.
+In this section you will build an Azure Data Factory pipeline to copy a table from NYCDataSets database to Azure Synapse Analytics data warehouse.
 
 ![](./Media/Lab1-Image28.jpg)
 
@@ -187,7 +192,14 @@ In this section you will build an Azure Data Factory pipeline to copy a table fr
 -------------|
 **Execute these steps on your host computer**|
 
-1.	Open the **Azure Data Factory** portal and click the **Author *(pencil icon)*** option on the left-hand side panel. Under **Connections** tab, click **Linked Services** and then click **+ New** to create a new linked service connection.
+1.	In the Azure Portal, go to the lab resource group and locate the Azure Data Factory resource **SynapseDataFactory-*suffix***. 
+
+2.	On the **Overview** panel, click **Author & Monitor**. The **Azure Data Factory** portal will open in a new browser tab.
+
+    ![](./Media/Lab1-Image55.png)
+
+
+3. In the **Azure Data Factory** portal and click the **Author *(pencil icon)*** option on the left-hand side panel. Under **Connections** tab, click **Linked Services** and then click **+ New** to create a new linked service connection.
 
     ![](./Media/Lab1-Image29.png)
 
@@ -196,32 +208,32 @@ In this section you will build an Azure Data Factory pipeline to copy a table fr
     ![](./Media/Lab1-Image30.png)
 
 3.	On the **New Linked Service (Azure SQL Database)** blade, enter the following details:
-    <br>- **Name**: MDWSQLVirtualServer_NYCDataSets
+    <br>- **Name**: OperationalSQL_NYCDataSets
     <br>- **Account selection method**: From Azure subscription
     <br>- **Azure subscription**: *[your subscription]*
-    <br>- **Server Name**: mdwsqlvirtualserver-*suffix*
+    <br>- **Server Name**: operationalsql-*suffix*
     <br>- **Database Name**: NYCDataSets
     <br>- **Authentication** Type: SQL Authentication 
-    <br>- **User** Name: MDWAdmin
+    <br>- **User** Name: ADPAdmin
     <br>- **Password**: P@ssw0rd123!
 
 4.	Click **Test connection** to make sure you entered the correct connection details and then click **Finish**.
 
     ![](./Media/Lab1-Image31.png)
 
-5.	Repeat the process to create an **Azure SQL Data Warehouse** linked service connection.
+5.	Repeat the process to create an **Azure Synapse Analytics** linked service connection.
 
     ![](./Media/Lab1-Image32.png)
 
-6.	On the New Linked Service (Azure SQL Data Warehouse) blade, enter the following details:
-    <br>- **Name**: MDWSQLVirtualServer_MDWASQLDW
+6.	On the New Linked Service (Azure Synapse Analytics) blade, enter the following details:
+    <br>- **Name**: SynapseSQL_SynapseDW
     <br>- **Connect via integration runtime**: AutoResolveIntegrationRuntime
     <br>- **Account selection method**: From Azure subscription
     <br>- **Azure subscription**: *[your subscription]*
-    <br>- **Server Name**: mdwsqlvirtualserver-*suffix*
-    <br>- **Database Name**: MDWASQLDW
+    <br>- **Server Name**: synapsesql-*suffix*
+    <br>- **Database Name**: SynapseDW
     <br>- **Authentication** Type: SQL Authentication 
-    <br>- **User** Name: MDWAdmin
+    <br>- **User** Name: ADPAdmin
     <br>- **Password**: P@ssw0rd123!
 7.	Click **Test connection** to make sure you entered the correct connection details and then click **Finish**.
 
@@ -232,12 +244,12 @@ In this section you will build an Azure Data Factory pipeline to copy a table fr
     ![](./Media/Lab1-Image34.png)
 
 9.	On the **New Linked Service (Azure Blob Storage)** blade, enter the following details:
-    <br>- **Name**: MDWDataLake
+    <br>- **Name**: synapsedatalake
     <br>- **Connect via integration runtime**: AutoResolveIntegrationRuntime
     <br>- **Authentication method**: Account key
     <br>- **Account selection method**: From Azure subscription
     <br>- **Azure subscription**: *[your subscription]*
-    <br>- **Storage account name**: mdwdatalake*suffix*
+    <br>- **Storage account name**: synapsedatalake*suffix*
 10.	Click **Test connection** to make sure you entered the correct connection details and then click **Finish**.
 
     ![](./Media/Lab1-Image35.png)
@@ -262,7 +274,7 @@ In this section you will build an Azure Data Factory pipeline to copy a table fr
 
 3.	On the **New Data Set** tab, enter the following details:
     <br>- **Name**: NYCDataSets_MotorVehicleCollisions
-    <br>- **Linked Service**: MDWSQLVirtualServer_NYCDataSets
+    <br>- **Linked Service**: OperationalSQL_NYCDataSets
     <br>- **Table**: [NYC].[NYPD_MotorVehicleCollisions]
 
     Alternatively you can copy and paste the dataset JSON definition below:
@@ -272,8 +284,11 @@ In this section you will build an Azure Data Factory pipeline to copy a table fr
         "name": "NYCDataSets_MotorVehicleCollisions",
         "properties": {
             "linkedServiceName": {
-                "referenceName": "MDWSQLVirtualServer_NYCDataSets",
+                "referenceName": "OperationalSQL_NYCDataSets",
                 "type": "LinkedServiceReference"
+            },
+            "folder": {
+                "name": "Lab1"
             },
             "annotations": [],
             "type": "AzureSqlTable",
@@ -290,27 +305,30 @@ In this section you will build an Azure Data Factory pipeline to copy a table fr
 
     ![](./Media/Lab1-Image39.png)
 
-5.	Repeat the process to create a new **Azure SQL Data Warehouse** data set.
+5.	Repeat the process to create a new **Azure Synapse Analytics** data set.
 
     ![](./Media/Lab1-Image40.png)
 
 6.	On the **New Data Set** tab, enter the following details:
-    <br>- **Name**: MDWASQLDW_MotorVehicleCollisions
-    <br>- **Linked Service**: MDWSQLVirtualServer_MDWASQLDW
+    <br>- **Name**: SynapseDW_MotorVehicleCollisions
+    <br>- **Linked Service**: SynapseSQL_SynapseDW
     <br>- **Table**: [NYC].[NYPD_MotorVehicleCollisions]
 
     Alternatively you can copy and paste the dataset JSON definition below:
 
     ```json
     {
-        "name": "NYCDataSets_MotorVehicleCollisions",
+        "name": "SynapseDW_MotorVehicleCollisions",
         "properties": {
             "linkedServiceName": {
-                "referenceName": "MDWSQLVirtualServer_NYCDataSets",
+                "referenceName": "SynapseSQL_SynapseDW",
                 "type": "LinkedServiceReference"
             },
+            "folder": {
+                "name": "Lab1"
+            },
             "annotations": [],
-            "type": "AzureSqlTable",
+            "type": "AzureSqlDWTable",
             "schema": [],
             "typeProperties": {
                 "schema": "NYC",
@@ -351,10 +369,10 @@ In this section you will build an Azure Data Factory pipeline to copy a table fr
 5.	Select the **Copy Data** activity and enter the following details:
     <br>- **General > Name**: CopyMotorVehicleCollisions
     <br>- **Source > Source dataset**: NYCDataSets_MotorVehicleCollisions
-    <br>- **Sink > Sink dataset**: MDWASQLDW_MotorVehicleCollisions
+    <br>- **Sink > Sink dataset**: SynapseDW_MotorVehicleCollisions
     <br>- **Sink > Allow PolyBase**: Checked
     <br>- **Settings > Enable staging**: Checked
-    <br>- **Settings > Staging account linked service**: MDWDataLake
+    <br>- **Settings > Staging account linked service**: synapsedatalake
     <br>- **Settings > Storage Path**: polybase
 6.	Leave remaining fields with default values.
 
@@ -377,21 +395,21 @@ In this section you will build an Azure Data Factory pipeline to copy a table fr
     ![](./Media/Lab1-Image49.png)
 
 ## Visualize Data with Power BI
-In this section you are going to use Power BI to visualize data from Azure SQL Data Warehouse. The Power BI report will use an Import connection to query Azure SQL Data Warehouse and visualise Motor Vehicle Collision data from the table you loaded in the previous exercise.
+In this section you are going to use Power BI to visualize data from Azure Synapse Analytics. The Power BI report will use an Import connection to query Azure Synapse Analytics and visualise Motor Vehicle Collision data from the table you loaded in the previous exercise.
 
 **IMPORTANT**|
 -------------|
-**Execute these steps inside the MDWDesktop remote desktop connection**|
+**Execute these steps inside the ADPDesktop remote desktop connection**|
 
-1.	On MDWDesktop, download the Power BI report from the link https://aka.ms/MDWLab1 and save it on the Desktop.
-2.	Open the file MDWLab1.pbit with Power BI Desktop. Optionally sign up for the Power BI tips and tricks email, or to dismiss this, click to sign in with an existing account, and then hit the escape key.
-3.	When prompted to enter the value of the **MDWSQLVirtualServer** parameter, type the full server name: mdwsqlvirtualserver-*suffix*.database.windows.net
+1.	On ADPDesktop, download the Power BI report from the link https://aka.ms/ADPLab1 and save it on the Desktop.
+2.	Open the file ADPLab1.pbit with Power BI Desktop. Optionally sign up for the Power BI tips and tricks email, or to dismiss this, click to sign in with an existing account, and then hit the escape key.
+3.	When prompted to enter the value of the **SynapseSQLEnpoint** parameter, type the full server name: synapsesql-*suffix*.database.windows.net
 
 ![](./Media/Lab1-Image50.png)
 
 4.	Click Load, and then Run to acknowledge the Native Database Query message
 5.	When prompted, enter the **Database** credentials:
-    <br>- **User Name**: MDWAdmin
+    <br>- **User Name**: adpadmin
     <br>- **Password**: P@ssw0rd123!
 
 ![](./Media/Lab1-Image52.png)

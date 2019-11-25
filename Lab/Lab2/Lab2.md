@@ -1,5 +1,5 @@
 # Lab 2: Transform Big Data using Azure Data Factory Mapping Data Flows
-In this lab you will use Azure Data Factory to download large data files to your data lake and use Mapping Dataflows to generate a summary dataset and store it. The dataset you will use contains detailed New York City Yellow Taxi rides for the first half of 2019. You will generate a daily aggregated summary of all rides using Mapping Data Flows and save the resulting dataset in your Azure SQL Data Warehouse. You will use Power BI to visualise summarised taxi ride data.
+In this lab you will use Azure Data Factory to download large data files to your data lake and use Mapping Dataflows to generate a summary dataset and store it. The dataset you will use contains detailed New York City Yellow Taxi rides for the first half of 2019. You will generate a daily aggregated summary of all rides using Mapping Data Flows and save the resulting dataset in your Azure Synapse Analytics. You will use Power BI to visualise summarised taxi ride data.
 
 The estimated time to complete this lab is: **60 minutes**.
 
@@ -11,7 +11,7 @@ Azure Service | Microsoft Learn | Technical Documentation|
 --------------|-----------------|------------------------|
 Azure Data Lake Gen2 | [Large Scale Data Processing with Azure Data Lake Storage Gen2](https://docs.microsoft.com/en-us/learn/paths/data-processing-with-azure-adls/) | [Azure Data Lake Gen2 Technical Documentation](https://docs.microsoft.com/en-us/azure/storage/blobs/data-lake-storage-introduction)
 Azure Data Factory | [Data ingestion with Azure Data Factory](https://docs.microsoft.com/en-us/learn/modules/data-ingestion-with-azure-data-factory/)| [Azure Data Factory Technical Documentation](https://docs.microsoft.com/en-us/azure/data-factory/)
-Azure SQL Data Warehouse | [Implement a Data Warehouse with Azure SQL Data Warehouse](https://docs.microsoft.com/en-us/learn/paths/implement-sql-data-warehouse/) | [Azure SQL Data Warehouse Technical Documentation](https://docs.microsoft.com/en-us/azure/sql-data-warehouse/)
+Azure Synapse Analytics | [Implement a Data Warehouse with Azure Synapse Analytics](https://docs.microsoft.com/en-us/learn/paths/implement-sql-data-warehouse/) | [Azure Synapse Analytics Technical Documentation](https://docs.microsoft.com/en-us/azure/sql-data-warehouse/)
 
 ## Lab Architecture
 ![Lab Architecture](./Media/Lab2-Image01.png)
@@ -19,44 +19,46 @@ Azure SQL Data Warehouse | [Implement a Data Warehouse with Azure SQL Data Wareh
 Step     | Description
 -------- | -----
 ![](./Media/Green1.png) | Build an Azure Data Factory Pipeline to copy big data files from shared Azure Storage
-![](./Media/Green2.png) | Save data files to your data lake
-![](./Media/Green3.png) | Use Mapping Data Flows to generate a aggregated daily summary and save the resulting dataset into your Azure SQL Data Warehouse table.
-![](./Media/Green4.png) | Visualize data from your Azure SQL Data Warehouse using Power BI
+![](./Media/Green2.png) | Ingest data files into your data lake
+![](./Media/Green3.png) | Use Mapping Data Flows to generate a aggregated daily summary and save the resulting dataset into your Azure Synapse Analytics data warehouse.
+![](./Media/Green4.png) | Visualize data from your Azure Synapse Analytics using Power BI
 
 **IMPORTANT**: Some of the Azure services provisioned require globally unique name and a “-suffix” has been added to their names to ensure this uniqueness. Please take note of the suffix generated as you will need it for the following resources in this lab:
 
 Name	                     |Type
 -----------------------------|--------------------
-MDWDataFactory-*suffix*	     |Data Factory (V2)
-mdwdatalake*suffix*	         |Storage Account
-mdwsqlvirtualserver-*suffix* |SQL server
+SynapseDataFactory-*suffix*	     |Data Factory (V2)
+synapsedatalake*suffix*	         |Storage Account
+synapsesql-*suffix* |SQL server
 
-## Create Azure SQL Data Warehouse database objects
-In this section you will connect to Azure SQL Data Warehouse to create the database objects used to host and process data.
+## Create Azure Synapse Analytics database objects
+In this section you will connect to Azure Synapse Analytics to create the data warehouse objects used to host and process data.
 
 ![](./Media/Lab2-Image02.jpg)
 
 **IMPORTANT**|
 -------------|
-**Execute these steps inside the MDWDesktop remote desktop connection**|
+**Execute these steps inside the ADPDesktop remote desktop connection**|
 
 1.	Open Azure Data Studio. 
-2.	If you already have a connection to MDWSQLVirtualServer, then **go to step 6**.
+2.	If you already have a connection to SynapseSQL endpoint, then **go to step 6**.
 3.	On the **Servers** panel, click **New Connection**.
 
     ![](./Media/Lab2-Image03.png)
 
 4.	On the Connection Details panel, enter the following connection details:
-    <br>- **Server**: mdwsqlvirtualserver-*suffix*.database.windows.net
+    <br>- **Server**: synapsesql-*suffix*.database.windows.net
     <br>- **Authentication Type**: SQL Login
-    <br>- **User Name**: mdwadmin
+    <br>- **User Name**: adpadmin
     <br>- **Password**: P@ssw0rd123!
-    <br>- **Database**: MDWASQLDW
+    <br>- **Database**: SynapseDW
 5.	Click **Connect**.
 
     ![](./Media/Lab2-Image04.png)
 
-6.	Right click the MDWSQLVirtualServer name and then click **New Query**.
+6.	Right click the SynapseSQL endpoint name and then click **New Query**.
+
+    ![](./Media/Lab2-Image75.png)
 
 7.	Create two new round robin distributed tables named [NYC].[TaxiDataSummary] and [NYC].[TaxiLocationLookup]. Use the script below:
 
@@ -87,7 +89,7 @@ In this section you will connect to Azure SQL Data Warehouse to create the datab
         [LocationID] [int] NULL,
         [Borough] [varchar](200) NULL,
         [Zone] [varchar](200) NULL,
-        [service_zone] [varchar](200) NULL
+        [ServiceZone] [varchar](200) NULL
     )
     with
     (
@@ -98,8 +100,8 @@ In this section you will connect to Azure SQL Data Warehouse to create the datab
     ```
 
 
-## Create NYCTaxiData Container on Azure Blob Storage
-In this section you will create a container in your MDWDataLake that will be used as a repository for the NYC Taxi Data files. You will copy 6 files from the MDWResources Storage Account into your NYCTaxiData container. These files contain data for all Yellow Taxi rides in the first half of 2019, one file for each month of the year.
+## Create the NYCTaxiData-Raw Container on Azure Data Lake Storage Gen2
+In this section you will create a container in your SynapseDataLake that will be used as a repository for the NYC Taxi Data files. You will copy 6 files from the MDWResources Storage Account into your NYCTaxiData-Raw container. These files contain data for all Yellow Taxi rides in the first half of 2019, one file for each month of the year.
 
 ![](./Media/Lab2-Image05.jpg)
 
@@ -107,19 +109,16 @@ In this section you will create a container in your MDWDataLake that will be use
 -------------|
 **Execute these steps on your host computer**|
 
-1.	In the Azure Portal, go to the lab resource group and locate the Azure Storage account **mdwdatalake*suffix***. 
+1.	In the Azure Portal, go to the lab resource group and locate the Azure Storage account **synapsedatalake*suffix***. 
 2.	On the **Overview** panel, click **Containers**.
 
     ![](./Media/Lab2-Image06.png)
 
-3.	On the **mdwdalalake*suffix* – Countainers** blade, click **+ Container**.
-
-    ![](./Media/Lab2-Image07.png)
-
-4.	On the New container blade, enter the following details:
-    <br>- **Name**: nyctaxidata
+3.	On the **synapsedatalake*suffix* – Countainers** blade, click **+ Container**. On the New container blade, enter the following details:
+    <br>- **Name**: nyctaxidata-raw
     <br>- **Public access level**: Private (no anonymous access)
-5.	Click **OK** to create the new container.
+
+4.	Click **OK** to create the new container.
 
     ![](./Media/Lab2-Image08.png)
 
@@ -156,11 +155,11 @@ In this section you are going to create 5 datasets that will be used by your dat
 Dataset |Role           | Description
 --------|---------------|----------------
 **MDWResources_NYCTaxiData_Binary**| Source |References MDWResources shared storage account container that contains source NYC Taxi data files.
-**MDWDataLake_NYCTaxiData_Binary**| Destination |References your MDWDataLake-*suffix* storage account. It acts as the destination for the NYC Taxi data files copied from MDWResources_NYCTaxiData_Binary.
-**MDWResources_NYCTaxiLookup_CSV**| Source |References MDWResources shared storage account that contains a .csv file with all taxi location codes and names.
-**MDWASQLDW_NYCTaxiLocationLookup**| Destination| References the destination table [NYC].[TaxiLocationLookup] in the Azure SQL Data Warehouse database MDWASQLDW and acts as destination of lookup data copied from MDWResources_NYCTaxiLookup_CSV.
-**MDWDataLake_NYCTaxiData_CSV**| Source | References your MDWDataLake-*suffix* storage account. It functions as a data source for the Mapping Data Flow.
-**MDWASQLDW_NYCTaxiDataSummary**| Destination | References the table [NYC].[TaxiDataSummary] in the Azure SQL Data Warehouse and acts as the destination for the summary data generated by your Mapping Data Flow.
+**SynapseDataLake_NYCTaxiData_Binary**| Destination |References your synapsedatalake-*suffix* storage account. It acts as the destination for the NYC Taxi data files copied from MDWResources_NYCTaxiData_Binary.
+**NYCDataSets_NYCTaxiLocationLookup**| Source |References [NYC].[TaxiLocationLookup] table on the NYCDataSets database. This table contains records with all taxi location codes and names.
+**SynapseDW_NYCTaxiLocationLookup**| Destination| References the destination table [NYC].[TaxiLocationLookup] in the Azure Synapse Analytics data warehouse SynapseDW and acts as destination of lookup data copied from NYCDataSets_NYCTaxiLookup.
+**SynapseDataLake_NYCTaxiData_CSV**| Source | References the NYCTaxiData-Raw container in your SynapseDataLake-*suffix* storage account. It functions as a data source for the Mapping Data Flow.
+**SynapseDW_NYCTaxiDataSummary**| Destination | References the table [NYC].[TaxiDataSummary] in the Azure Synapse Analytics and acts as the destination for the summary data generated by your Mapping Data Flow.
 
 **IMPORTANT**|
 -------------|
@@ -213,7 +212,7 @@ Dataset |Role           | Description
 
     ![](./Media/Lab2-Image15.png)
 
-6.	Repeat the process to create another Azure Storage Binary dataset, this time referencing the NYCTaxiData container in your MDWDataLake storage account. This dataset acts as the destination for the NYC taxi data files you will copy from the previous dataset.
+6.	Repeat the process to create another Azure Storage Binary dataset, this time referencing the NYCTaxiData container in your SynapseDataLake storage account. This dataset acts as the destination for the NYC taxi data files you will copy from the previous dataset.
 
 7.	Type “Azure Blob Storage” in the search box and select **Azure Blob Storage**. Click **Continue**.
 
@@ -224,9 +223,9 @@ Dataset |Role           | Description
     ![](./Media/Lab2-Image14.png)
 
 9.	On the **Set Properties** blade, enter the following details:
-    <br>- **Name**: MDWDataLake_NYCTaxiData_Binary
-    <br>- **Linked Service**: MDWDataLake
-    <br>- **File Path**: **Container**: nyctaxidata, **Directory**: [blank], **File**: [blank]
+    <br>- **Name**: SynapseDataLake_NYCTaxiData_Binary
+    <br>- **Linked Service**: SynapseDataLake
+    <br>- **File Path**: **Container**: nyctaxidata-raw, **Directory**: [blank], **File**: [blank]
 
     ![](./Media/Lab2-Image42.png)
 
@@ -236,10 +235,10 @@ Dataset |Role           | Description
 
     ```json
     {
-        "name": "MDWDataLake_NYCTaxiData_Binary",
+        "name": "SynapseDataLake_NYCTaxiData_Binary",
         "properties": {
             "linkedServiceName": {
-                "referenceName": "MDWDataLake",
+                "referenceName": "SynapseDataLake",
                 "type": "LinkedServiceReference"
             },
             "folder": {
@@ -250,7 +249,7 @@ Dataset |Role           | Description
             "typeProperties": {
                 "location": {
                     "type": "AzureBlobStorageLocation",
-                    "container": "nyctaxidata"
+                    "container": "nyctaxidata-raw"
                 }
             }
         }
@@ -260,7 +259,7 @@ Dataset |Role           | Description
 
     ![](./Media/Lab2-Image16.png)
 
-11.	Repeat the process to create a new Azure Storage CSV dataset referencing the NYCTaxiData container in your MDWDataLake storage account. This dataset acts as the data source of NYC taxi records (CSV) you will copy to your Azure SQL Data Warehouse.
+11.	Repeat the process to create a new Azure Storage CSV dataset referencing the NYCTaxiData container in your SynapseDataLake storage account. This dataset acts as the data source of NYC taxi records (CSV) you will copy to your Azure Synapse Analytics.
 
     **IMPORTANT**: You will need to download the sample file from https://aka.ms/TaxiDataSampleFile to your Desktop. This file will be used to derive the schema for the dataset. 
     
@@ -275,9 +274,9 @@ Dataset |Role           | Description
     ![](./Media/Lab2-Image43.png)
 
 14.	On the **Set Properties** blade, enter the following details:
-    <br>- **Name**: MDWDataLake_NYCTaxiData_CSV
-    <br>- **Linked Service**: MDWDataLake
-    <br>- **File Path**: **Container**: nyctaxidata, **Directory**: [blank], **File Path**: [blank]
+    <br>- **Name**: SynapseDataLake_NYCTaxiData_CSV
+    <br>- **Linked Service**: SynapseDataLake
+    <br>- **File Path**: **Container**: nyctaxidata-raw, **Directory**: [blank], **File Path**: [blank]
     <br>- **First row as header**: Checked
     <br>- **Import schema**: From sample file > [select the sample file you downloaded in step 11]
 
@@ -289,21 +288,18 @@ Dataset |Role           | Description
 
     ```json
     {
-        "name": "MDWDataLake_NYCTaxiData_CSV",
+        "name": "SynapseDataLake_NYCTaxiData_CSV",
         "properties": {
             "linkedServiceName": {
-                "referenceName": "MDWDataLake",
+                "referenceName": "SynapseDataLake",
                 "type": "LinkedServiceReference"
-            },
-            "folder": {
-                "name": "Lab2"
             },
             "annotations": [],
             "type": "DelimitedText",
             "typeProperties": {
                 "location": {
                     "type": "AzureBlobStorageLocation",
-                    "container": "nyctaxidata"
+                    "container": "nyctaxidata-raw"
                 },
                 "columnDelimiter": ",",
                 "escapeChar": "\\",
@@ -388,67 +384,55 @@ Dataset |Role           | Description
     }
     ```
 
-15.	Repeat the process to create another Azure Blob CSV dataset, this time referencing the NYCTaxiLookup container in your MDWResources storage account. 
+15.	Repeat the process to create an Azure SQL Database dataset. It references the NYC.TaxiLocationLookup table in the NYCDataSets database. 
 
-16.	Type “Azure Blob Storage” in the search box and select **Azure Blob Storage**. Click **Continue**.
+16.	Type “Azure SQL Database" in the search box and select **Azure SQL Database**. Click **Continue**.
 
-    ![](./Media/Lab2-Image13.png)
+    ![](./Media/Lab2-Image76.png)
 
-17.	On the **Select Format** blade, select **DelimitedText** and click **Continue**.
-
-    ![](./Media/Lab2-Image43.png)
-
-18.	On the **Set Properties** blade, enter the following details:
-    <br>- **Name**: MDWResources_NYCTaxiLookup_CSV
-    <br>- **Linked Service**: MDWResources
-    <br>- **File Path**: **Container**:nyctaxilookup, **Directory*: [blank], **File**: [blank]
-    <br>- **First row as header**: Checked
+17.	On the **Set Properties** blade, enter the following details:
+    <br>- **Name**: NYCDataSets_NYCTaxiLocationLookup
+    <br>- **Linked Service**: OperationalSQL_NYCDataSets
+    <br>- **Table name**: NYC.TaxiLocationLookup
     <br>- **Import schema**: None.
 
     ![](./Media/Lab2-Image47.png)
 
-19.	Leave remaining fields with default values.  
+18.	Leave remaining fields with default values.  
 
     Alternatively you can copy and paste the Dataset JSON definition below:
 
     ```json
     {
-        "name": "MDWResources_NYCTaxiLookup_CSV",
+        "name": "NYCDataSets_NYCTaxiLocationLookup",
         "properties": {
             "linkedServiceName": {
-                "referenceName": "MDWResources",
+                "referenceName": "OperationalSQL_NYCDataSets",
                 "type": "LinkedServiceReference"
             },
             "folder": {
                 "name": "Lab2"
             },
             "annotations": [],
-            "type": "DelimitedText",
+            "type": "AzureSqlTable",
+            "schema": [],
             "typeProperties": {
-                "location": {
-                    "type": "AzureBlobStorageLocation",
-                    "container": "nyctaxilookup"
-                },
-                "columnDelimiter": ",",
-                "escapeChar": "\\",
-                "firstRowAsHeader": true,
-                "quoteChar": "\""
-            },
-            "schema": []
+                "schema": "NYC",
+                "table": "TaxiLocationLookup"
+            }
         }
     }
     ```
 
+19.	Repeat the process to create another dataset, this time referencing the NYC.TaxiDataSummary in your Azure Synapse Analytics database. 
 
-20.	Repeat the process to create another dataset, this time referencing the NYC.TaxiDataSummary in your Azure SQL Data Warehouse database. 
-
-21.	Type “Azure SQL Data Warehouse” in the search box and select **Azure SQL Data Warehouse**. Click **Continue**.
+20.	Type “Azure Synapse Analytics” in the search box and select **Azure Synapse Analytics**. Click **Continue**.
 
     ![](./Media/Lab2-Image17.png)
 
-22.	On the Set Properties blade, enter the following details:
-    <br>- **Name**: MDWASQLDW_NYCTaxiDataSummary
-    <br>- **Linked Service**: MDWSQLVirtualServer_MDWASQLDW
+21.	On the Set Properties blade, enter the following details:
+    <br>- **Name**: SynapseDW_NYCTaxiDataSummary
+    <br>- **Linked Service**: SynapseSQL_SynapseDW
     <br>- **Table**: [NYC].[TaxiDataSummary]
     <br>- **Import schema**: From connection/store
 
@@ -456,10 +440,10 @@ Dataset |Role           | Description
 
     ```json
     {
-        "name": "MDWASQLDW_NYCTaxiDataSummary",
+        "name": "SynapseDW_NYCTaxiDataSummary",
         "properties": {
             "linkedServiceName": {
-                "referenceName": "MDWSQLVirtualServer_MDWASQLDW",
+                "referenceName": "SynapseSQL_SynapseDW",
                 "type": "LinkedServiceReference"
             },
             "folder": {
@@ -523,34 +507,34 @@ Dataset |Role           | Description
                 "schema": "NYC",
                 "table": "TaxiDataSummary"
             }
-        },
-        "type": "Microsoft.DataFactory/factories/datasets"
+        }
     }
     ```
 
-23.	Leave remaining fields with default values.
+22.	Leave remaining fields with default values.
 
     ![](./Media/Lab2-Image18.png)
 
-24.	Repeat the process to create another dataset, this time referencing the [NYC].[TaxiLocationLookup] in your Azure SQL Data Warehouse database. 
+23.	Repeat the process to create another dataset, this time referencing the [NYC].[TaxiLocationLookup] in your Azure Synapse Analytics database. 
 
-25.	Type “Azure SQL Data Warehouse” in the search box and select **Azure SQL Data Warehouse**. Click **Finish**.
+24.	Type “Azure Synapse Analytics” in the search box and select **Azure Synapse Analytics**. Click **Finish**.
 
     ![](./Media/Lab2-Image17.png)
 
-26.	On the Set Properties blade, enter the following details:
-    <br>-**Name**: MDWASQLDW_NYCTaxiLocationLookup
-    <br>-**Linked Service**: MDWSQLVirtualServer_MDWASQLDW
+25.	On the Set Properties blade, enter the following details:
+    <br>-**Name**: SynapseDW_NYCTaxiLocationLookup
+    <br>-**Linked Service**: SynapseSQL_SynapseDW
     <br>-**Table**: [NYC].[TaxiLocationLookup]
+    <br>-**Import schema**: From connection/store
 
     Alternatively you can copy and paste the Dataset JSON definition below:
 
     ```json
     {
-        "name": "MDWASQLDW_NYCTaxiLocationLookup",
+        "name": "SynapseDW_NYCTaxiLocationLookup",
         "properties": {
             "linkedServiceName": {
-                "referenceName": "MDWSQLVirtualServer_MDWASQLDW",
+                "referenceName": "SynapseSQL_SynapseDW",
                 "type": "LinkedServiceReference"
             },
             "folder": {
@@ -585,17 +569,17 @@ Dataset |Role           | Description
     }
     ```
 
-27.	Leave remaining fields with default values.
+26.	Leave remaining fields with default values.
 
     ![](./Media/Lab2-Image19.png)
 
-28. Under **Factory Resources** tab, click the ellipsis **(…)** next to **Datasets** and then click **New folder** to create a new Folder. Name it **Lab2**.
+27. Under **Factory Resources** tab, click the ellipsis **(…)** next to **Datasets** and then click **New folder** to create a new Folder. Name it **Lab2**.
 
-29. Drag the previously created datasets into the **Lab2** folder you just created.
+28. Drag the previously created datasets into the **Lab2** folder you just created.
 
     ![](./Media/Lab2-Image69.png)
 
-30.	Publish your dataset changes by clicking the **Publish all** button.
+29.	Publish your dataset changes by clicking the **Publish all** button.
 
     ![](./Media/Lab2-Image20.png)
 
@@ -631,7 +615,7 @@ In this section you are going to create an integration runtime for Mapping Data 
 5. Click **Create** to create the integration runtime.
 
 ## Create a Mapping Data Flow
-In this section you are going to create a Mapping Data Flow that will transform the Taxi detailed records into an aggreated daily summary. The Mapping Data Flow will read all records from the files stored in your MDWDataLake account and apply a sequence of transformations before the aggregated summary can be saved into the NYC.TaxiDataSummary table in your Azure SQL Data Warehouse.
+In this section you are going to create a Mapping Data Flow that will transform the Taxi detailed records into an aggreated daily summary. The Mapping Data Flow will read all records from the files stored in your SynapseDataLake account and apply a sequence of transformations before the aggregated summary can be saved into the NYC.TaxiDataSummary table in your Azure Synapse Analytics.
 
 
 **IMPORTANT**|
@@ -653,13 +637,13 @@ In this section you are going to create a Mapping Data Flow that will transform 
     
 4. On the design surface click **Add Source**. On the source properties enter the following details:
     <br>- **Source Settings > Output stream name**: TaxiDataFiles
-    <br>- **Source Settings > Source dataset**: MDWDataLake_NYCTaxiData_CSV
+    <br>- **Source Settings > Source dataset**: SynapseDataLake_NYCTaxiData_CSV
 
     ![](./Media/Lab2-Image49.png)
 
 5. Repeat the process above and add another data source. On the source properties enter the following details:
     <br>- **Source Settings > Output stream name**: TaxiLocationLookup
-    <br>- **Source Settings > Source dataset**: MDWASQLDW_NYCTaxiLocationLookup
+    <br>- **Source Settings > Source dataset**: SynapseDW_NYCTaxiLocationLookup
 
     ![](./Media/Lab2-Image55.png)
 
@@ -815,7 +799,7 @@ In this section you are going to create a Mapping Data Flow that will transform 
 
 16. On the Sink properties, enter the following details:
     <br>- **Sink > Output stream name**: TaxiDataSummary
-    <br>- **Sink > Sink dataset**: MDWASQLDW_NYCTaxiDataSummary
+    <br>- **Sink > Sink dataset**: SynapseDW_NYCTaxiDataSummary
     <br>- **Settings > Table action**: Truncate table
     <br>- **Settings > Enable staging**: Checked
 
@@ -830,11 +814,11 @@ In this section you are going to create a Mapping Data Flow that will transform 
 ## Create and Execute Pipeline
 In this section you create a data factory pipeline to copy and transform data in the following sequence:
 
-* Copy NYC Taxi CSV Data files from shared storage account **MDWResources** to your the **nyctaxidata** container in your **MDWDataLake-*suffix*** storage account;
+* Copy NYC Taxi CSV Data files from shared storage account **MDWResources** to your the **nyctaxidata-raw** container in your **SynapseDataLake-*suffix*** storage account;
 
-* Copy NYC taxi location data to from the MDWResources shared account directly into the NYC.TaxiLocationLookup table in your Azure SQL Data Warehouse.
+* Copy NYC taxi location data to from the MDWResources shared account directly into the NYC.TaxiLocationLookup table in your Azure Synapse Analytics.
 
-* Use a Mapping Dataflow to transform the source data and generate a daily summary of taxi rides. The resulting dataset will be saved in the NYC.TaxiDataSummary table in your Azure SQL Data Warehouse. This table is then used as a source for the Power BI report.
+* Use a Mapping Dataflow to transform the source data and generate a daily summary of taxi rides. The resulting dataset will be saved in the NYC.TaxiDataSummary table in your Azure Synapse Analytics. This table is then used as a source for the Power BI report.
 
 **IMPORTANT**|
 -------------|
@@ -849,12 +833,12 @@ In this section you create a data factory pipeline to copy and transform data in
 
     ![](./Media/Lab2-Image21.png)
 
-4.	From the Activities panel, type “Copy Data” in the search box. Drag the Copy Data activity on to the design surface. This copy activity will copy data files from MDWResources to MDWDatalake.
+4.	From the Activities panel, type “Copy Data” in the search box. Drag the Copy Data activity on to the design surface. This copy activity will copy data files from MDWResources to SynapseDataLake.
 
 5.	Select the Copy Data activity and enter the following details:
     <br>- **General > Name**: Copy Taxi Data Files
     <br>- **Source > Source dataset**: MDWResources_NYCTaxiData_Binary
-    <br>- **Sink > Sink dataset**: MDWDataLake_NYCTaxiData_Binary
+    <br>- **Sink > Sink dataset**: SynapseDataLake_NYCTaxiData_Binary
     <br>- **Sink > Copy Behavior**: Preserve Hierarchy
 
 6.	Leave remaining fields with default values.
@@ -868,14 +852,14 @@ In this section you create a data factory pipeline to copy and transform data in
 
 14.	Select the Copy Data activity and enter the following details:
     <br>- **General > Name**: Copy Taxi Location Lookup
-    <br>- **Source > Source dataset**: MDWResources_NYCTaxiLookup_CSV
-    <br>- **Sink > Sink dataset**: MDWASQLDW_NYCTaxiLocationLookup
+    <br>- **Source > Source dataset**: NYCDataSets_NYCTaxiLocationLookup
+    <br>- **Sink > Sink dataset**: SynapseDW_NYCTaxiLocationLookup
     <br>- **Sink > Pre Copy Script**: 
     ```sql
     truncate table NYC.TaxiLocationLookup
     ```
     <br>- **Settings > Enable staging**: Checked
-    <br>- **Settings > Staging account linked service**: MDWDataLake
+    <br>- **Settings > Staging account linked service**: SynapseDataLake
     <br>- **Settings > Storage Path**: polybase
 
 15.	Leave remaining fields with default values.
@@ -893,7 +877,7 @@ In this section you create a data factory pipeline to copy and transform data in
 18.	On the Data Flow activity propertie enter the following details:
     <br>- **General > Name**: Transform NYC Taxi Data
     <br>- **Settings > Run on (Azure IR)**: MappingDataFlowsIR
-    <br>- **Settings > Polybase > Staging linked service**: MDWDataLake
+    <br>- **Settings > Polybase > Staging linked service**: SynapseDataLake
     <br>- **Settings > Polybase > Staging storage folder**: polybase / [blank]
 
     ![](./Media/Lab2-Image74.png)
@@ -924,21 +908,21 @@ In this section you create a data factory pipeline to copy and transform data in
     ![](./Media/Lab2-Image37.png)
 
 ## Visualize Data with Power BI
-In this section you are going to use Power BI to visualize data from Azure SQL Data Warehouse. The Power BI report will use an Import connection to query Azure SQL Data Warehouse and visualise Motor Vehicle Collision data from the table you loaded in the previous exercise.
+In this section you are going to use Power BI to visualize data from Azure Synapse Analytics. The Power BI report will use an Import connection to query Azure Synapse Analytics and visualise Motor Vehicle Collision data from the table you loaded in the previous exercise.
 
 **IMPORTANT**|
 -------------|
-**Execute these steps inside the MDWDesktop remote desktop connection**|
+**Execute these steps inside the ADPDesktop remote desktop connection**|
 
-1.	On MDWDesktop, download the Power BI report from the link https://aka.ms/MDWLab2 and save it in the Desktop.
-2.	Open the file MDWLab2.pbit with Power BI Desktop.
-3.	When prompted to enter the value of the MDWSQLVirtualServer parameter, type the full server name: **mdwsqlvirtualserver-*suffix*.database.windows.net**
+1.	On ADPDesktop, download the Power BI report from the link https://aka.ms/ADPLab2 and save it in the Desktop.
+2.	Open the file ADPLab2.pbit with Power BI Desktop.
+3.	When prompted to enter the value of the **SynapseSQLEndpoint** parameter, type the full server name: **synapsesql-*suffix*.database.windows.net**
 4.	Click **Load**.
 
     ![](./Media/Lab2-Image38.png)
 
 5.	When prompted to enter credentials, select **Database** from the left-hand side panel and enter the following details:
-    <br>- **User name**: mdwadmin
+    <br>- **User name**: adpadmin
     <br>- **Password**: P@ssw0rd123!
 6.	Leave remaining fields with their default values.
 7.	Click **Connect**.
