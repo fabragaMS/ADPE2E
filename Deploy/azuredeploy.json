@@ -1,69 +1,70 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
-    "parameters": {
-        "repoUrl":
-        {
-            "type": "string"
-        }
-    },
+    "parameters": {},
     "variables": {
-        "MDWAdminUserName":"mdwadmin",
-        "MDWAdminPassword":"P@ssw0rd123!",
+        "ADPAdminUserName":"adpadmin",
+        "ADPAdminPassword":"P@ssw0rd123!",
 
         "DesktopVMSize":"Standard_A4_v2",
-        "AzureSQLDWSize":"DW200c",
+        "SynapseSQLDWSize":"DW200c",
 
         "UniqueSuffix":"[uniqueString(resourceGroup().id)]",
 
-        "MDWVirtualNetworkName": "MDWVirtualNetwork",
-        "MDWVirtualNetworkIPAddressPrefix": "10.10.0.0/16",
-        "MDWVirtualSubnetName": "default",
-        "MDWVirtualSubnetIPAddressPrefix": "10.10.0.0/24",
+        "ADPVirtualNetworkName": "ADPVirtualNetwork",
+        "ADPVirtualNetworkIPAddressPrefix": "10.10.0.0/16",
+        "ADPVirtualSubnetName": "default",
+        "ADPVirtualSubnetIPAddressPrefix": "10.10.0.0/24",
         
-        "MDWDesktopName":"MDWDesktop",
-        "MDWDesktopNICName":"[concat(variables('MDWDesktopName'),'-nic')]",
-        "MDWDesktopOSDiskName":"[concat(variables('MDWDesktopName'),'_OsDisk')]",
-        "MDWDesktopPublicIPName":"[concat(variables('MDWDesktopName'),'-publicip')]",
+        "ADPDesktopName":"ADPDesktop",
+        "ADPDesktopNICName":"[concat(variables('ADPDesktopName'),'-nic')]",
+        "ADPDesktopOSDiskName":"[concat(variables('ADPDesktopName'),'_OsDisk')]",
+        "ADPDesktopPublicIPName":"[concat(variables('ADPDesktopName'),'-publicip')]",
         
-        "MDWDataLakeStorageName":"[concat('mdwdatalake', substring(variables('UniqueSuffix'),0,5))]",
+        "ADPDataLakeStorageName":"[concat('synapsedatalake', substring(variables('UniqueSuffix'),0,5))]",
 
-        "MDWSQLVirtualServerName": "[concat('mdwsqlvirtualserver-', substring(variables('UniqueSuffix'),0,5))]",
-        "MDWAzureSQLDataWarehouseName":"MDWASQLDW",
-        "MDWAzureSQLDataWarehouseCollation": "SQL_Latin1_General_CP1_CI_AS",
+		"ADPOperationalSQLEndpoint": "[concat('operationalsql-', substring(variables('UniqueSuffix'),0,5))]",
 
-        "MDWDataFactoryName": "[concat('MDWDataFactory-',substring(variables('UniqueSuffix'),0,5))]",
-        "MDWDataFactoryLocation": "[resourceGroup().location]",
+        "ADPSynapseSQLEndpoint": "[concat('synapsesql-', substring(variables('UniqueSuffix'),0,5))]",
+        "ADPSynapseDWName":"SynapseDW",
+        "ADPSynapseDWCollation": "SQL_Latin1_General_CP1_CI_AS",
 
-        "MDWDatabricksWorkspaceName":"[concat('MDWDatabricks-',substring(variables('UniqueSuffix'),0,5))]",
-        "MDWDatabricksResourceGroupName": "[concat('Databricks-', resourceGroup().name)]", 
-        "MDWDatabricksResourceGroupID": "[concat(subscription().id, '/resourceGroups/', variables('MDWDatabricksResourceGroupName'))]",
-        "MDWDatabricksTier":"standard",
+        "ADPDataFactoryName": "[concat('SynapseDataFactory-',substring(variables('UniqueSuffix'),0,5))]",
+        "ADPDataFactoryLocation": "[resourceGroup().location]",
 
-        "MDWTextAnalyticsName":"MDWTextAnalytics",
-        "MDWTextAnalyticsSKU": "S",
+        "ADPDatabricksWorkspaceName":"[concat('ADPDatabricks-',substring(variables('UniqueSuffix'),0,5))]",
+        "ADPDatabricksResourceGroupName": "[concat('Databricks-', resourceGroup().name)]", 
+        "ADPDatabricksResourceGroupID": "[concat(subscription().id, '/resourceGroups/', variables('ADPDatabricksResourceGroupName'))]",
+        "ADPDatabricksTier":"standard",
 
-        "MDWComputerVisionName":"MDWComputerVision",
-        "MDWComputerVisionSKU": "S1",
+        "ADPComputerVisionName":"ADPComputerVision",
+        "ADPComputerVisionSKU": "S1",
 
-        "MDWEventHubsName": "[concat('MDWEventHubs-', substring(variables('UniqueSuffix'),0,5))]",
-        "MDWEventHubsSKU": "Standard",
-        "MDWEventHubsThroughputUnits": 1,
+        "ADPEventHubsName": "[concat('ADPEventHubs-', substring(variables('UniqueSuffix'),0,5))]",
+        "ADPEventHubsSKU": "Standard",
+        "ADPEventHubsThroughputUnits": 1,
 
-        "MDWStreamAnalyticsName": "[concat('MDWStreamAnalytics-',substring(variables('UniqueSuffix'),0,5))]",
-        "MDWStreamAnalyticsSKU": "Standard",
+        "ADPStreamAnalyticsName": "[concat('SynapseStreamAnalytics-',substring(variables('UniqueSuffix'),0,5))]",
+        "ADPStreamAnalyticsSKU": "Standard",
 
-        "MDWKeyVaultName": "[concat('MDWKeyVault-',substring(variables('UniqueSuffix'),0,5))]",
+        "ADPKeyVaultName": "[concat('ADPKeyVault-',substring(variables('UniqueSuffix'),0,5))]",
 
-        "MDWLogicAppName": "MDWLogicApp",
-        "MDWCosmosDBAccountName": "[concat('mdwcosmosdb-', substring(variables('UniqueSuffix'),0,5))]"
+        "ADPLogicAppName": "ADPLogicApp",
+        "ADPCosmosDBAccountName": "[concat('adpcosmosdb-', substring(variables('UniqueSuffix'),0,5))]",
 		
-
+		"ADPBastionName": "ADPBastionHost",
+		"ADPBastionPublicIPName": "[concat(variables('ADPBastionName'),'-publicip')]",
+		
+		"ADPIntegrationAccountName": "ADPIntegrationAccount",
+		
+		"ADPEventHubConnectionName": "EventHubAPIConnection",
+		"ADPEventHubAuthPolicyID": "[resourceId('Microsoft.Eventhub/namespaces/authorizationRules', variables('ADPEventHubsName'), 'RootManageSharedAccessKey')]",
+		"ADPEventHubsAPIVersion": "[providers('Microsoft.Eventhub','namespaces').apiVersions[0]]"
     },
     "resources": [
         {
             "type": "Microsoft.Network/virtualNetworks",
-            "name": "[variables('MDWVirtualNetworkName')]",
+            "name": "[variables('ADPVirtualNetworkName')]",
             "apiVersion": "2018-12-01",
             "location": "[resourceGroup().location]",
             "scale": null,
@@ -71,7 +72,7 @@
                 "provisioningState": "Succeeded",
                 "addressSpace": {
                     "addressPrefixes": [
-                        "[variables('MDWVirtualNetworkIPAddressPrefix')]"
+                        "[variables('ADPVirtualNetworkIPAddressPrefix')]"
                     ]
                 },
                 "subnets": [
@@ -79,8 +80,18 @@
                         "name": "default",
                         "properties": {
                             "provisioningState": "Succeeded",
-                            "addressPrefix": "[variables('MDWVirtualSubnetIPAddressPrefix')]",
+                            "addressPrefix": "[variables('ADPVirtualSubnetIPAddressPrefix')]",
                             "delegations": []
+                        }
+                    },
+					{
+                        "name": "AzureBastionSubnet",
+                        "properties": {
+                            "addressPrefix": "10.10.100.0/24",
+                            "serviceEndpoints": [],
+                            "delegations": [],
+                            "privateEndpointNetworkPolicies": "Enabled",
+                            "privateLinkServiceNetworkPolicies": "Enabled"
                         }
                     }
                 ],
@@ -92,26 +103,40 @@
         },
         {
             "type": "Microsoft.Network/virtualNetworks/subnets",
-            "name": "[concat(variables('MDWVirtualNetworkName'), '/', variables('MDWVirtualSubnetName'))]",
-            "apiVersion": "2018-12-01",
+            "name": "[concat(variables('ADPVirtualNetworkName'), '/', variables('ADPVirtualSubnetName'))]",
+            "apiVersion": "2019-09-01",
             "scale": null,
             "properties": {
                 "provisioningState": "Succeeded",
-                "addressPrefix": "[variables('MDWVirtualSubnetIPAddressPrefix')]",
+                "addressPrefix": "[variables('ADPVirtualSubnetIPAddressPrefix')]",
                 "delegations": []
             },
             "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks', variables('MDWVirtualNetworkName'))]"
+                "[resourceId('Microsoft.Network/virtualNetworks', variables('ADPVirtualNetworkName'))]"
             ]
         },
-        
+        {
+            "type": "Microsoft.Network/virtualNetworks/subnets",
+            "apiVersion": "2019-09-01",
+            "name": "[concat(variables('ADPVirtualNetworkName'), '/', '/AzureBastionSubnet')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', variables('ADPVirtualNetworkName'))]"
+            ],
+            "properties": {
+                "addressPrefix": "10.10.100.0/24",
+                "serviceEndpoints": [],
+                "delegations": [],
+                "privateEndpointNetworkPolicies": "Enabled",
+                "privateLinkServiceNetworkPolicies": "Enabled"
+            }
+        },
         {
             "type": "Microsoft.Network/publicIPAddresses",
             "sku": {
                 "name": "Basic",
                 "tier": "Regional"
             },
-            "name": "[variables('MDWDesktopPublicIPName')]",
+            "name": "[variables('ADPDesktopPublicIPName')]",
             "apiVersion": "2018-12-01",
             "location": "[resourceGroup().location]",
             "tags": {},
@@ -125,10 +150,51 @@
             },
             "dependsOn": []
         },
-        
+		{
+            "type": "Microsoft.Network/publicIPAddresses",
+            "apiVersion": "2019-09-01",
+            "name": "[variables('ADPBastionPublicIPName')]",
+            "location": "[resourceGroup().location]",
+            "sku": {
+                "name": "Standard"
+            },
+            "properties": {
+                "ipAddress": "20.188.223.148",
+                "publicIPAddressVersion": "IPv4",
+                "publicIPAllocationMethod": "Static",
+                "idleTimeoutInMinutes": 4,
+                "ipTags": []
+            }
+        },
+        {
+            "type": "Microsoft.Network/bastionHosts",
+            "apiVersion": "2019-09-01",
+            "name": "[variables('ADPBastionName')]",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "dnsName": "[concat('bst-',guid(subscription().subscriptionId),'.bastion.azure.com')]",
+                "ipConfigurations": [
+                    {
+                        "name": "IpConf",
+                        "properties": {
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses',variables('ADPBastionPublicIPName'))]"
+                            },
+                            "subnet": {
+                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', variables('ADPVirtualNetworkName')), '/subnets/AzureBastionSubnet')]"
+                            }
+                        }
+                    }
+                ]
+            },
+			"dependsOn": [
+				"[resourceId('Microsoft.Network/virtualNetworks', variables('ADPVirtualNetworkName'))]"
+			]
+        },
         {
             "type": "Microsoft.Compute/virtualMachines",
-            "name": "[variables('MDWDesktopName')]",
+            "name": "[variables('ADPDesktopName')]",
             "apiVersion": "2018-10-01",
             "location": "[resourceGroup().location]",
             "tags": {},
@@ -146,7 +212,7 @@
                     },
                     "osDisk": {
                         "osType": "Windows",
-                        "name": "[variables('MDWDesktopOSDiskName')]",
+                        "name": "[variables('ADPDesktopOSDiskName')]",
                         "createOption": "FromImage",
                         "caching": "ReadWrite",
                         "managedDisk": {
@@ -157,9 +223,9 @@
                     "dataDisks": []
                 },
                 "osProfile": {
-                    "computerName": "[variables('MDWDesktopName')]",
-                    "adminUsername": "[variables('MDWAdminUserName')]",
-                    "adminPassword": "[variables('MDWAdminPassword')]",
+                    "computerName": "[variables('ADPDesktopName')]",
+                    "adminUsername": "[variables('ADPAdminUserName')]",
+                    "adminPassword": "[variables('ADPAdminPassword')]",
                     "windowsConfiguration": {
                         "provisionVMAgent": true,
                         "enableAutomaticUpdates": true
@@ -170,19 +236,19 @@
                 "networkProfile": {
                     "networkInterfaces": [
                         {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('MDWDesktopNICName'))]"
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('ADPDesktopNICName'))]"
                         }
                     ]
                 },
                 "licenseType": "Windows_Client"
             },
             "dependsOn": [
-                "[resourceId('Microsoft.Network/networkInterfaces', variables('MDWDesktopNICName'))]"
+                "[resourceId('Microsoft.Network/networkInterfaces', variables('ADPDesktopNICName'))]"
             ]
         },
         {
             "type": "Microsoft.Network/networkInterfaces",
-            "name": "[variables('MDWDesktopNICName')]",
+            "name": "[variables('ADPDesktopNICName')]",
             "apiVersion": "2018-12-01",
             "location": "[resourceGroup().location]",
             "tags": {},
@@ -196,10 +262,10 @@
                             "provisioningState": "Succeeded",
                             "privateIPAllocationMethod": "Dynamic",
                             "publicIPAddress": {
-                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('MDWDesktopPublicIPName'))]"
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('ADPDesktopPublicIPName'))]"
                             },
                             "subnet": {
-                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('MDWVirtualNetworkName'), variables('MDWVirtualSubnetName'))]"
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('ADPVirtualNetworkName'), variables('ADPVirtualSubnetName'))]"
                             },
                             "primary": true,
                             "privateIPAddressVersion": "IPv4"
@@ -216,8 +282,8 @@
                 "tapConfigurations": []
             },
             "dependsOn": [
-                "[resourceId('Microsoft.Network/publicIPAddresses', variables('MDWDesktopPublicIPName'))]",
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('MDWVirtualNetworkName'), variables('MDWVirtualSubnetName'))]"
+                "[resourceId('Microsoft.Network/publicIPAddresses', variables('ADPDesktopPublicIPName'))]",
+                "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('ADPVirtualNetworkName'), variables('ADPVirtualSubnetName'))]"
             ]
         },
         {
@@ -227,13 +293,13 @@
                 "tier": "Standard"
             },
             "kind": "StorageV2",
-            "name": "[variables('MDWDataLakeStorageName')]",
+            "name": "[variables('ADPDataLakeStorageName')]",
             "apiVersion": "2018-07-01",
             "location": "[resourceGroup().location]",
             "tags": {},
             "scale": null,
             "properties": {
-                "isHnsEnabled": false,
+                "isHnsEnabled": true,
                 "networkAcls": {
                     "bypass": "AzureServices",
                     "virtualNetworkRules": [],
@@ -259,13 +325,13 @@
         {
             "type": "Microsoft.Sql/servers",
             "kind": "v12.0",
-            "name": "[variables('MDWSQLVirtualServerName')]",
+            "name": "[variables('ADPSynapseSQLEndpoint')]",
             "apiVersion": "2015-05-01-preview",
             "location": "[resourceGroup().location]",
             "scale": null,
             "properties": {
-                "administratorLogin": "[variables('MDWAdminUserName')]",
-                "administratorLoginPassword": "[variables('MDWAdminPassword')]",
+                "administratorLogin": "[variables('ADPAdminUserName')]",
+                "administratorLoginPassword": "[variables('ADPAdminPassword')]",
                 "version": "12.0"
             },
             "dependsOn": [],
@@ -276,7 +342,36 @@
 					"location": "[resourceGroup().location]",
 					"apiVersion": "2015-05-01-preview",
 					"dependsOn": [
-						"[variables('MDWSQLVirtualServerName')]"
+						"[variables('ADPSynapseSQLEndpoint')]"
+					],
+					"properties": {
+						"startIpAddress": "0.0.0.0",
+						"endIpAddress": "0.0.0.0"
+					}
+				}
+			]
+        },
+		{
+            "type": "Microsoft.Sql/servers",
+            "kind": "v12.0",
+            "name": "[variables('ADPOperationalSQLEndpoint')]",
+            "apiVersion": "2015-05-01-preview",
+            "location": "[resourceGroup().location]",
+            "scale": null,
+            "properties": {
+                "administratorLogin": "[variables('ADPAdminUserName')]",
+                "administratorLoginPassword": "[variables('ADPAdminPassword')]",
+                "version": "12.0"
+            },
+            "dependsOn": [],
+			"resources":[
+				{
+					"type": "firewallrules",
+					"name": "AllowAllAzureIps",
+					"location": "[resourceGroup().location]",
+					"apiVersion": "2015-05-01-preview",
+					"dependsOn": [
+						"[variables('ADPOperationalSQLEndpoint')]"
 					],
 					"properties": {
 						"startIpAddress": "0.0.0.0",
@@ -288,26 +383,26 @@
         {
             "type": "Microsoft.Sql/servers/databases",
             "sku": {
-                "name": "[variables('AzureSQLDWSize')]",
+                "name": "[variables('SynapseSQLDWSize')]",
                 "tier": "DataWarehouse"
             },
             "kind": "v12.0,user,datawarehouse,gen2",
-            "name": "[concat(variables('MDWSQLVirtualServerName'), '/', variables('MDWAzureSQLDataWarehouseName'))]",
+            "name": "[concat(variables('ADPSynapseSQLEndpoint'), '/', variables('ADPSynapseDWName'))]",
             "apiVersion": "2017-03-01-preview",
             "location": "[resourceGroup().location]",
             "scale": null,
             "properties": {
-                "collation": "[variables('MDWAzureSQLDataWarehouseCollation')]",
+                "collation": "[variables('ADPSynapseDWCollation')]",
                 "maxSizeBytes": 263882790666240,
-                "catalogCollation": "[variables('MDWAzureSQLDataWarehouseCollation')]"
+                "catalogCollation": "[variables('ADPSynapseDWCollation')]"
             },
             "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers', variables('MDWSQLVirtualServerName'))]"
+                "[resourceId('Microsoft.Sql/servers', variables('ADPSynapseSQLEndpoint'))]"
             ]
         },
         {
             "type": "Microsoft.Sql/servers/firewallRules",
-            "name": "[concat(variables('MDWSQLVirtualServerName'), '/AllowAllWindowsAzureIps')]",
+            "name": "[concat(variables('ADPSynapseSQLEndpoint'), '/AllowAllWindowsAzureIps')]",
             "apiVersion": "2015-05-01-preview",
             "scale": null,
             "properties": {
@@ -315,7 +410,7 @@
                 "endIpAddress": "0.0.0.0"
             },
             "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers', variables('MDWSQLVirtualServerName'))]"
+                "[resourceId('Microsoft.Sql/servers', variables('ADPSynapseSQLEndpoint'))]"
             ]
         },
 		{
@@ -323,20 +418,23 @@
             "apiVersion": "2017-10-01-preview",
             "location": "[resourceGroup().location]",
             "tags": {},
-            "name": "[concat(variables('MDWSQLVirtualServerName'), '/NYCDataSets')]",
+            "name": "[concat(variables('ADPOperationalSQLEndpoint'), '/NYCDataSets')]",
+			"kind": "v12.0,user",
             "properties": {
                 "collation": "SQL_Latin1_General_CP1_CI_AS",
-                "maxSizeBytes": 5368709120,
+                "maxSizeBytes": 1073741824,
+                "catalogCollation": "SQL_Latin1_General_CP1_CI_AS",
                 "zoneRedundant": false,
                 "readScale": "Disabled",
                 "readReplicaCount": 0
             },
             "sku": {
-                "name": "S1",
-                "tier": "Standard"
+                "name": "Standard",
+                "tier": "Standard",
+                "capacity": 20
             },
 			"dependsOn": [
-                "[resourceId('Microsoft.Sql/servers', variables('MDWSQLVirtualServerName'))]"
+                "[resourceId('Microsoft.Sql/servers', variables('ADPOperationalSQLEndpoint'))]"
             ],
 			"resources": [
 				{
@@ -344,14 +442,14 @@
 					"type": "extensions",
 					"apiVersion": "2014-04-01",
 					"dependsOn": [
-						"[resourceId('Microsoft.Sql/servers/databases', variables('MDWSQLVirtualServerName'), 'NYCDataSets')]"
+						"[resourceId('Microsoft.Sql/servers/databases', variables('ADPOperationalSQLEndpoint'), 'NYCDataSets')]"
 					],
 					"properties": {
 						"storageKeyType": "SharedAccessKey",
 						"storageKey": "?sv=2018-03-28&ss=b&srt=sco&sp=rwl&se=2050-12-30T17:25:52Z&st=2019-04-05T09:25:52Z&spr=https&sig=4qrD8NmhaSmRFu2gKja67ayohfIDEQH3LdVMa2Utykc%3D",
 						"storageUri": "https://mdwresources.blob.core.windows.net/nycdatasets/NYCDataSets.bacpac",
-						"administratorLogin": "[variables('MDWAdminUserName')]",
-						"administratorLoginPassword": "[variables('MDWAdminPassword')]",
+						"administratorLogin": "[variables('ADPAdminUserName')]",
+						"administratorLoginPassword": "[variables('ADPAdminPassword')]",
 						"operationMode": "Import"
 					}
 				}
@@ -359,8 +457,8 @@
         },
         {
             "apiVersion": "2018-06-01",
-            "name": "[variables('MDWDataFactoryName')]",
-            "location": "[variables('MDWDataFactoryLocation')]",
+            "name": "[variables('ADPDataFactoryName')]",
+            "location": "[variables('ADPDataFactoryLocation')]",
             "type": "Microsoft.DataFactory/factories",
             "identity": {
                 "type": "SystemAssigned"
@@ -370,36 +468,23 @@
         {
             "apiVersion": "2018-04-01",
             "location": "[resourceGroup().location]",
-            "name": "[variables('MDWDatabricksWorkspaceName')]",
+            "name": "[variables('ADPDatabricksWorkspaceName')]",
             "sku": {
-                "name": "[variables('MDWDatabricksTier')]"
+                "name": "[variables('ADPDatabricksTier')]"
             },
             "comments": "Please do not use an existing resource group for ManagedResourceGroupId.",
             "properties": {
-                "ManagedResourceGroupId": "[variables('MDWDatabricksResourceGroupID')]"
+                "ManagedResourceGroupId": "[variables('ADPDatabricksResourceGroupID')]"
             },
             "type": "Microsoft.Databricks/workspaces"
         },
         {
             "type": "Microsoft.CognitiveServices/accounts",
             "sku": {
-                "name": "[variables('MDWTextAnalyticsSKU')]"
-            },
-            "kind": "TextAnalytics",
-            "name": "[variables('MDWTextAnalyticsName')]",
-            "apiVersion": "2016-02-01-preview",
-            "location": "[resourceGroup().location]",
-            "scale": null,
-            "properties": {},
-            "dependsOn": []
-        },
-        {
-            "type": "Microsoft.CognitiveServices/accounts",
-            "sku": {
-                "name": "[variables('MDWComputerVisionSKU')]"
+                "name": "[variables('ADPComputerVisionSKU')]"
             },
             "kind": "ComputerVision",
-            "name": "[variables('MDWComputerVisionName')]",
+            "name": "[variables('ADPComputerVisionName')]",
             "apiVersion": "2016-02-01-preview",
             "location": "[resourceGroup().location]",
             "scale": null,
@@ -409,11 +494,11 @@
         {
             "type": "Microsoft.EventHub/namespaces",
             "sku": {
-                "name": "[variables('MDWEventHubsSKU')]",
-                "tier": "[variables('MDWEventHubsSKU')]",
-                "capacity": "[variables('MDWEventHubsThroughputUnits')]"
+                "name": "[variables('ADPEventHubsSKU')]",
+                "tier": "[variables('ADPEventHubsSKU')]",
+                "capacity": "[variables('ADPEventHubsThroughputUnits')]"
             },
-            "name": "[variables('MDWEventHubsName')]",
+            "name": "[variables('ADPEventHubsName')]",
             "apiVersion": "2017-04-01",
             "location": "[resourceGroup().location]",
             "tags": {},
@@ -422,17 +507,49 @@
                 "isAutoInflateEnabled": false,
                 "maximumThroughputUnits": 0
             },
-            "dependsOn": []
+            "dependsOn": [],
+			"resources": [
+				{
+					"type": "Microsoft.EventHub/namespaces/AuthorizationRules",
+					"apiVersion": "2017-04-01",
+					"name": "[concat(variables('ADPEventHubsName'), '/RootManageSharedAccessKey')]",
+					"location": "[resourceGroup().location]",
+					"dependsOn": [
+						"[resourceId('Microsoft.EventHub/namespaces', variables('ADPEventHubsName'))]"
+					],
+					"properties": {
+						"rights": [
+							"Listen",
+							"Manage",
+							"Send"
+						]
+					}
+				},
+				{
+					"type": "Microsoft.EventHub/namespaces/eventhubs",
+					"apiVersion": "2017-04-01",
+					"name": "[concat(variables('ADPEventHubsName'), '/nysestocktrade')]",
+					"location": "Australia East",
+					"dependsOn": [
+						"[resourceId('Microsoft.EventHub/namespaces', variables('ADPEventHubsName'))]"
+					],
+					"properties": {
+						"messageRetentionInDays": 1,
+						"partitionCount": 1,
+						"status": "Active"
+					}
+				}
+			]
         },
         {
             "type": "Microsoft.StreamAnalytics/streamingjobs",
-            "name": "[variables('MDWStreamAnalyticsName')]",
+            "name": "[variables('ADPStreamAnalyticsName')]",
             "apiVersion": "2017-04-01-preview",
             "location": "[resourceGroup().location]",
             "scale": null,
             "properties": {
                 "sku": {
-                    "name": "[variables('MDWStreamAnalyticsSKU')]"
+                    "name": "[variables('ADPStreamAnalyticsSKU')]"
                 },
                 "eventsOutOfOrderPolicy": "Adjust",
                 "outputErrorPolicy": "Stop",
@@ -452,51 +569,222 @@
             },
             "dependsOn": []
         },
-        {
-            "type": "Microsoft.KeyVault/vaults",
-            "name": "[variables('MDWKeyVaultName')]",
-            "apiVersion": "2016-10-01",
+		{
+            "type": "Microsoft.Logic/integrationAccounts",
+            "apiVersion": "2016-06-01",
+            "name": "[variables('ADPIntegrationAccountName')]",
             "location": "[resourceGroup().location]",
-            "tags": {},
-            "scale": null,
-            "properties": {
-                "sku": {
-                    "family": "A",
-                    "name": "Standard"
-                },
-                "tenantId": "[subscription().tenantId]",
-                "accessPolicies": [],
-                "enabledForDeployment": false,
-                "enabledForDiskEncryption": false,
-                "enabledForTemplateDeployment": false
+            "sku": {
+                "name": "Basic"
             },
-            "dependsOn": []
+            "properties": {
+                "state": "Enabled"
+            }
         },
-        {
-            "type": "Microsoft.Logic/workflows",
-            "name": "[variables('MDWLogicAppName')]",
-            "apiVersion": "2017-07-01",
+		{
+			"type": "Microsoft.Logic/workflows",
+			"apiVersion": "2017-07-01",
+			"name": "[variables('ADPLogicAppName')]",
+			"location": "[resourceGroup().location]",
+			"properties": {
+				"state": "Disabled",
+				"integrationAccount": {
+					"id": "[resourceId('Microsoft.Logic/integrationAccounts', variables('ADPIntegrationAccountName'))]"
+				},
+				"definition": {
+					"$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+					"contentVersion": "1.0.0.0",
+					"parameters": {
+						"$connections": {
+							"defaultValue": {},
+							"type": "Object"
+						}
+					},
+					"triggers": {
+						"Recurrence": {
+							"recurrence": {
+								"frequency": "Second",
+								"interval": 1
+							},
+							"type": "Recurrence"
+						}
+					},
+					"actions": {
+						"Initialize_Config_Settings": {
+							"runAfter": {},
+							"type": "Compose",
+							"inputs": {
+								"numberOfMessages": 10,
+								"priceRangeMax": 100,
+								"priceRangeMin": 70,
+								"quantityRangeMax": 300,
+								"quantityRangeMin": 100,
+								"stockTickers": [
+									"MSFT",
+									"AMZN",
+									"GOOGL",
+									"FB",
+									"TWTR"
+								]
+							}
+						},
+						"Initialize_messageCount": {
+							"runAfter": {
+								"Parse_Config_Settings": [
+									"Succeeded"
+								]
+							},
+							"type": "InitializeVariable",
+							"inputs": {
+								"variables": [
+									{
+										"name": "messageCount",
+										"type": "Integer",
+										"value": 1
+									}
+								]
+							}
+						},
+						"Parse_Config_Settings": {
+							"runAfter": {
+								"Initialize_Config_Settings": [
+									"Succeeded"
+								]
+							},
+							"type": "ParseJson",
+							"inputs": {
+								"content": "@outputs('Initialize_Config_Settings')",
+								"schema": {
+									"properties": {
+										"numberOfMessages": {
+											"type": "integer"
+										},
+										"priceRangeMax": {
+											"type": "integer"
+										},
+										"priceRangeMin": {
+											"type": "integer"
+										},
+										"quantityRangeMax": {
+											"type": "integer"
+										},
+										"quantityRangeMin": {
+											"type": "integer"
+										},
+										"stockTickers": {
+											"items": {
+												"type": "string"
+											},
+											"type": "array"
+										}
+									},
+									"type": "object"
+								}
+							}
+						},
+						"Until_numberOfMessages_is_achieved": {
+							"actions": {
+								"Capture_Stock_Trade_Message": {
+									"runAfter": {
+										"Generate_Stock_Trade_Message": [
+											"Succeeded"
+										]
+									},
+									"type": "Compose",
+									"inputs": "@outputs('Generate_Stock_Trade_Message')?['body']"
+								},
+								"Generate_Stock_Trade_Message": {
+									"runAfter": {},
+									"type": "JavaScriptCode",
+									"inputs": {
+										"code": "var configSettings = workflowContext.actions.Initialize_Config_Settings.outputs;\r\n\r\nstockTickerIndex = Math.round(Math.random()*100) % configSettings.stockTickers.length;\r\n\r\nvar stockTrade = {\r\n    StockTicker: configSettings.stockTickers[stockTickerIndex]\r\n    , Quantity: Math.round(configSettings.quantityRangeMin + (configSettings.quantityRangeMax - configSettings.quantityRangeMin)*Math.random())\r\n    , Price: configSettings.priceRangeMin + (configSettings.priceRangeMax - configSettings.priceRangeMin)*Math.random()\r\n    , TradeTimestamp: new Date().toJSON()\r\n};\r\n\r\nreturn stockTrade;"
+									}
+								},
+								"Increment_messageCount": {
+									"runAfter": {
+										"Send_event_to_NYSEStockTradeSimm_Event_Hub": [
+											"Succeeded"
+										]
+									},
+									"type": "IncrementVariable",
+									"inputs": {
+										"name": "messageCount",
+										"value": 1
+									}
+								},
+								"Send_event_to_NYSEStockTradeSimm_Event_Hub": {
+									"runAfter": {
+										"Capture_Stock_Trade_Message": [
+											"Succeeded"
+										]
+									},
+									"type": "ApiConnection",
+									"inputs": {
+										"body": {
+                                            "ContentData": "@{base64(outputs('Capture_Stock_Trade_Message'))}"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['eventhubs']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/@{encodeURIComponent('nysestocktrade')}/events"
+									}
+								}
+							},
+							"runAfter": {
+								"Initialize_messageCount": [
+									"Succeeded"
+								]
+							},
+							"expression": "@greater(variables('messageCount'), rand(1, body('Parse_Config_Settings')?['numberOfMessages']))",
+							"limit": {
+								"count": 60,
+								"timeout": "PT1H"
+							},
+							"type": "Until"
+						}
+					},
+					"outputs": {}
+				},
+				"parameters": {
+					"$connections": {
+                        "value": {
+                            "eventhubs": {
+                                "connectionId": "[resourceId('Microsoft.Web/connections',variables('ADPEventHubConnectionName'))]",
+                                "connectionName": "[variables('ADPEventHubConnectionName')]",
+                                "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/eventhubs')]"
+                            }
+                        }
+                    }
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Logic/integrationAccounts', variables('ADPIntegrationAccountName'))]",
+				"[resourceId('Microsoft.Web/connections', variables('ADPEventHubConnectionName'))]"
+			]
+		},
+		{
+            "type": "Microsoft.Web/connections",
+            "apiVersion": "2016-06-01",
+            "name": "[variables('ADPEventHubConnectionName')]",
             "location": "[resourceGroup().location]",
-            "tags": {},
-            "scale": null,
             "properties": {
-                "state": "Enabled",
-                "definition": {
-                    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
-                    "contentVersion": "1.0.0.0",
-                    "parameters": {},
-                    "triggers": {},
-                    "actions": {},
-                    "outputs": {}
+                "displayName": "[variables('ADPEventHubConnectionName')]",
+                "customParameterValues": {},
+                "api": {
+                    "id": "[concat('/subscriptions/', subscription().subscriptionId ,'/providers/Microsoft.Web/locations/',resourceGroup().location,'/managedApis/eventhubs')]"
                 },
-                "parameters": {}
-            },
-            "dependsOn": []
+				"parameterValues":{
+					"connectionString": "[listkeys(variables('ADPEventHubAuthPolicyID'), '2017-04-01').primaryConnectionString]"
+				}
+            }
         },
         {
             "type": "Microsoft.DocumentDB/databaseAccounts",
             "kind": "GlobalDocumentDB",
-            "name": "[variables('MDWCosmosDBAccountName')]",
+            "name": "[variables('ADPCosmosDBAccountName')]",
             "apiVersion": "2015-04-08",
             "location": "[resourceGroup().location]",
             "tags": {
