@@ -192,6 +192,7 @@ In this section you will configure your Stream Analytics job to join hot and col
     from [NYC].[NYSE_StockTickerLookup]
     ```
     This reference table contains static data about the companies:
+    
     ![](./Media/Lab5-Image59.png)
 
     ![](./Media/Lab5-Image57.png)
