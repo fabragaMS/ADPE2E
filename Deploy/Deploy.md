@@ -60,7 +60,7 @@ In this section you will use the Azure Portal to create a Resource Group that wi
 
     **IMPORTANT**: If you are deploying this workshop to multiple students using the same subscription then add the student alias to the resources group name so they can identify their own set of resources and avoid confusion during the labs. Example: "ADPE2E-Lab-*Student01*"
 
-    **IMPORTANT**: The name of the resource group chosen is *not* relevant to the successful completion of the labs. If you choose to use a different name, then please proceed with the rest of the lab using your unique name for the resource group.
+    **IMPORTANT**: The name of the resource group chosen is ***not*** relevant to the successful completion of the labs. If you choose to use a different name, then please proceed with the rest of the lab using your unique name for the resource group.
 
     ![](./Media/Lab0-Image04.png)
 
