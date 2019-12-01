@@ -299,7 +299,7 @@
             "tags": {},
             "scale": null,
             "properties": {
-                "isHnsEnabled": true,
+                "isHnsEnabled": false,
                 "networkAcls": {
                     "bypass": "AzureServices",
                     "virtualNetworkRules": [],
