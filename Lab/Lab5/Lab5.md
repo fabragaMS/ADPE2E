@@ -258,6 +258,7 @@ GROUP BY Company.CompanyName, HoppingWindow(second, 30, 5)
 SELECT
     sum(Trade.Quantity * Trade.Price) as TotalTradedAmount
     , count(*) as TotalTradeCount
+    , System.Timestamp as WindowDateTime
 INTO
     [StockTradeTotals]
 FROM
