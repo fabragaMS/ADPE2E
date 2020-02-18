@@ -39,7 +39,7 @@ synapsedatalake*suffix*	     |Storage Account
 ADPDatabricks-*suffix*	     |Databricks Workspace
 
 ## Create NYCImages and NYCImageMetadata Containers in Azure Blob Storage
-In this section you will create a container in your SynapseDataLake that will be used as a repository for the NYC image files. You will copy 30 files from the MDWResources Storage Account into your NYCTaxiData container. 
+In this section you will create a container in your SynapseDataLake that will be used as a repository for the NYC image files. You will copy 30 files from the MDWResources Storage Account into your NYCImages container.
 
 ![](./Media/Lab4-Image02.png)
 
@@ -574,6 +574,8 @@ In this section you will create an Azure Data Factory pipeline to copy New York 
 21.	Select the Copy Data activity and enter the following details:
     <br>- **General > Name**: ServeImageMetadata
     <br>- **Source > Source dataset**: SynapseDataLake_NYCImageMetadata_JSON
+    <br>- **Source > File path type**: Wildcard file path
+    <br>- **Source > Wildcard file name**: *.json
     <br>- **Sink > Sink dataset**: ADPCosmosDB_NYCImageMetadata
 
 22.	Leave remaining fields with default values.
