@@ -1,6 +1,6 @@
 # Azure Data Platform End2End (V2)
 
-In this workshop you will learn about the main concepts related to advanced analytics and Big Data processing and how Azure Data Services can be used to implement a modern data warehouse architecture. You will understand what Azure services you can leverage to establish a solid data platform to quickly ingest, process and visualise data from a large variety of data sources. The reference architecture you will build as part of this exercise has been proven to give you the flexibility and scalability to grow and handle large volumes of data and keep an optimal level of performance.
+In this workshop you will learn about the main concepts related to advanced analytics and Big Data processing and how Azure Data Services can be used to implement a modern data warehouse architecture. You will learn what Azure services you can leverage to establish a solid data platform to quickly ingest, process and visualise data from a large variety of data sources. The reference architecture you will build as part of this exercise has been proven to give you the flexibility and scalability to grow and handle large volumes of data and keep an optimal level of performance.
 
 In the exercises in this lab you will build data pipelines using data related to New York City. The workshop was designed to progressively implement an extended modern data platform architecture starting from a traditional relational data pipeline. Then we introduce big data scenarios with large data files and distributed computing. We add non-structured data and AI into the mix and finish off with real-time stream analytics. You will have done all of that by the end of the workshop.
 
@@ -8,15 +8,15 @@ In the exercises in this lab you will build data pipelines using data related to
 
 * The reference architecture proposed in this workshop aims to explain just enough of the role of each of the Azure Data Services included in the overall modern data platform architecture. This workshop does not replace the need of in-depth training on each Azure service covered.
 
-* The services covered in this course are only a subset of a much larger family of Azure services. Similar outcomes can be achieved by leveraging other services and/or features not covered by this workshop. Specific business requirements may also ask for the use of different services or features not included in this workshop.
+* The services covered in this course are only a subset of a much larger family of Azure services. Similar outcomes can be achieved by leveraging other services and/or features not covered by this workshop. Specific business requirements may require the use of different services or features not included in this workshop.
 
-* Some concepts presented in this course can be quite complex and you may need to seek for more information from different sources to compliment your understanding of the Azure services covered.
+* Some concepts presented in this course can be quite complex and you may need to seek more information from different sources to compliment your understanding of the Azure services covered.
 
 ![](./Media/ModernDataPlatformReferenceArchitecture.jpg)
 
 ### Azure Synapse Analytics
 
-Microsoft recently announced Azure Synapse Analytics as the evolution of Azure SQL Data Warehouse blending big data, data warehousing, and data integration into a single service for end-to-end analytics at cloud scale. This reference architecture and workshop content will be updated as annouced features in the roadmap become publicly available. For more information please visit: https://azure.microsoft.com/en-au/services/synapse-analytics/
+Microsoft recently announced Azure Synapse Analytics as the evolution of Azure SQL Data Warehouse, blending big data, data warehousing, and data integration into a single service for end-to-end analytics at cloud scale. This reference architecture and workshop content will be updated as announced features in the roadmap become publicly available. For more information please visit: https://azure.microsoft.com/en-au/services/synapse-analytics/
 
 ![](./Media/AzureSynapse.png)
 
@@ -25,7 +25,7 @@ This document contains detailed step-by-step instructions on how to implement a 
 
 You will see the label **IMPORTANT** whenever a there is a critical step to the lab. Please pay close attention to the instructions given.
 
-You will also see the label **IMPORTANT** at the beginning of each lab section. As some instructions need to be execute on your host computer while others need to be executed in a remote desktop connection (RDP), this **IMPORTANT** label states where you should execute the lab section. See example below:
+You will also see the label **IMPORTANT** at the beginning of each lab section. As some instructions need to be executed on your host computer while others need to be executed in a remote desktop connection (RDP), this **IMPORTANT** label states where you should execute the lab section. See example below:
 
 **IMPORTANT**|
 -------------|
@@ -57,11 +57,11 @@ The following prerequisites must be completed before you start these labs:
 
 Throughout a series of 5 labs you will progressively implement a modern data platform architecture using datasets from New York City. 
 
-You will start ingesting relational data about motorvehicle collisions in Manhattan hosted in an Azure SQL Database into your Azure Synapse Analytics data warehouse. Then we will introduce the concepts of data lake and  big data challenges and you will put then to practice by ingesting and processing over 50 million yellow taxi ride records stored as large data files stored in your data lake.
+You will start ingesting relational data about motorvehicle collisions in Manhattan hosted in an Azure SQL Database into your Azure Synapse Analytics data warehouse. Then we will introduce the concepts of data lake and  big data challenges and you will put these into practice by ingesting and processing over 50 million yellow taxi ride records stored as large data files stored in your data lake.
 
-You will then have use Databricks and the power of Spark clusters to explore big data files. Then you will incorporate AI into your data pipeline by invoking Cognitive Services Computer Vision API to automatically generate metadata for New York City street photographies and store them in a Cosmos DB database. Finally, you will use a LogicApp to simmulate high-frequency stock purchase transactions as a source of streaming events that you will capture, store and process in real time with Event Hubs, Stream Analytics and Power BI.
+You will then use Databricks and the power of Spark clusters to explore big data files. Then you will incorporate AI into your data pipeline by invoking the Cognitive Services Computer Vision API to automatically generate metadata for New York City street photographs and store the metadata in a Cosmos DB database. Finally, you will use a LogicApp to simulate high-frequency stock purchase transactions as a source of streaming events that you will capture, store and process in real time with Event Hubs, Stream Analytics and Power BI.
 
-By the end of the workshop you will have implementd the lab architecture referenced below:
+By the end of the workshop you will have implemented the lab architecture referenced below:
 
 ![](./Media/LabArchitecture.jpg)
 
@@ -79,7 +79,7 @@ The estimated time to complete this lab is: **30 minutes**.
 
 ### [Lab 1: Load Data into Azure Synapse Analytics using Azure Data Factory Pipelines](./Lab/Lab1/Lab1.md)
 
-In this lab you will configure the Azure environment to allow relational data to be transferred from a Azure SQL Database to an Azure Synapse Analytics database using Azure Data Factory. The dataset you will use contains data about motor vehicle collisions that happened in New York City from 2012 to 2019. You will use Power BI to visualise collision data loaded from Azure Synapse Analytics.
+In this lab you will configure the Azure environment to allow relational data to be transferred from an Azure SQL Database to an Azure Synapse Analytics database using Azure Data Factory. The dataset you will use contains data about motor vehicle collisions that happened in New York City from 2012 to 2019. You will use Power BI to visualise collision data loaded from Azure Synapse Analytics.
 
 The estimated time to complete this lab is: **45 minutes**.
 
@@ -136,14 +136,14 @@ Step     | Description
 ![](./Lab/Lab4/Media/Lab4-Image70.png)
 
 ### [Lab 5: Ingest and Analyse real-time data with Event Hubs and Stream Analytics](./Lab/Lab5/Lab5.md)
-In this lab you will use an Azure Logic App to simmulate a NYSE stream of stock purchase transactions. The logic app will then send the messages to Event Hubs. You will then use Stream Analytics to receive and process the stream and perform aggregations to calculate the number of transactions and amound traded in the last 10 seconds. Stream Analytics will send the results to a real-time dataset in Power BI.
+In this lab you will use an Azure Logic App to simulate a NYSE stream of stock purchase transactions. The logic app will then send the messages to Event Hubs. You will then use Stream Analytics to receive and process the stream and perform aggregations to calculate the number of transactions and amount traded in the last 10 seconds. Stream Analytics will send the results to a real-time dataset in Power BI.
 
 The estimated time to complete this lab is: **45 minutes**.
 
 Step     | Description
 -------- | -----
 ![](./Media/Orange1.png) | Review the Azure Logic App logic that simmulates the NYSE transaction stream sent to EventHubs
-![](./Media/Orange2.png) | Save simmulated NYSE stock transaction messages into your data lake for future analysis (cold path)
+![](./Media/Orange2.png) | Save simulated NYSE stock transaction messages into your data lake for future analysis (cold path)
 ![](./Media/Orange3.png) | Send stream of NYSE stock transaction messages to Stream Analytics for real-time analytics (hot path)
 ![](./Media/Orange4.png) | Incorporate Stock Company reference data into your stream processing logic
 ![](./Media/Orange5.png) | Visualize real-time data generated by Stream Analytics with Power BI
