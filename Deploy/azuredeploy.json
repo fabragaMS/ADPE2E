@@ -1,7 +1,22 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
-    "parameters": {},
+    "parameters": {
+        "ADPAdminUserName": {
+            "type": "string",
+            "defaultValue": "adpadmin",
+            "metadata": {
+                "description": "Admin user name to connect to all services during the workshop."
+            }   
+        },
+        "ADPAdminPassword": {
+            "type": "string",
+            "defaultValue": "P@ssw0rd123!",
+            "metadata": {
+                "description": "Admin password used to connect to all services during the workshop."
+            }   
+        }
+    },
     "variables": {
         "ADPAdminUserName":"adpadmin",
         "ADPAdminPassword":"P@ssw0rd123!",
@@ -224,8 +239,8 @@
                 },
                 "osProfile": {
                     "computerName": "[variables('ADPDesktopName')]",
-                    "adminUsername": "[variables('ADPAdminUserName')]",
-                    "adminPassword": "[variables('ADPAdminPassword')]",
+                    "adminUsername": "[parameters('ADPAdminUserName')]",
+                    "adminPassword": "[parameters('ADPAdminPassword')]",
                     "windowsConfiguration": {
                         "provisionVMAgent": true,
                         "enableAutomaticUpdates": true
@@ -299,7 +314,7 @@
             "tags": {},
             "scale": null,
             "properties": {
-                "isHnsEnabled": false,
+                "isHnsEnabled": true,
                 "networkAcls": {
                     "bypass": "AzureServices",
                     "virtualNetworkRules": [],
@@ -323,6 +338,115 @@
             "dependsOn": []
         },
         {
+            "type": "Microsoft.Storage/storageAccounts/blobServices",
+            "apiVersion": "2019-06-01",
+            "name": "[concat(variables('ADPDataLakeStorageName'), '/default')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts', variables('ADPDataLakeStorageName'))]"
+            ],
+            "sku": {
+                "name": "Standard_RAGRS",
+                "tier": "Standard"
+            },
+            "properties": {
+                "cors": {
+                    "corsRules": []
+                },
+                "deleteRetentionPolicy": {
+                    "enabled": false
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts/fileServices",
+            "apiVersion": "2019-06-01",
+            "name": "[concat(variables('ADPDataLakeStorageName'), '/default')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts', variables('ADPDataLakeStorageName'))]"
+            ],
+            "sku": {
+                "name": "Standard_RAGRS",
+                "tier": "Standard"
+            },
+            "properties": {
+                "cors": {
+                    "corsRules": []
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
+            "apiVersion": "2019-06-01",
+            "name": "[concat(variables('ADPDataLakeStorageName'), '/default/nycimagemetadata')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts/blobServices', variables('ADPDataLakeStorageName'), 'default')]",
+                "[resourceId('Microsoft.Storage/storageAccounts', variables('ADPDataLakeStorageName'))]"
+            ],
+            "properties": {
+                "publicAccess": "None"
+            }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
+            "apiVersion": "2019-06-01",
+            "name": "[concat(variables('ADPDataLakeStorageName'), '/default/nycimages')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts/blobServices', variables('ADPDataLakeStorageName'), 'default')]",
+                "[resourceId('Microsoft.Storage/storageAccounts', variables('ADPDataLakeStorageName'))]"
+            ],
+            "properties": {
+                "publicAccess": "Blob"
+            }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
+            "apiVersion": "2019-06-01",
+            "name": "[concat(variables('ADPDataLakeStorageName'), '/default/nyctaxidata-curated')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts/blobServices', variables('ADPDataLakeStorageName'), 'default')]",
+                "[resourceId('Microsoft.Storage/storageAccounts', variables('ADPDataLakeStorageName'))]"
+            ],
+            "properties": {
+                "publicAccess": "None"
+            }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
+            "apiVersion": "2019-06-01",
+            "name": "[concat(variables('ADPDataLakeStorageName'), '/default/nyctaxidata-raw')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts/blobServices', variables('ADPDataLakeStorageName'), 'default')]",
+                "[resourceId('Microsoft.Storage/storageAccounts', variables('ADPDataLakeStorageName'))]"
+            ],
+            "properties": {
+                "publicAccess": "None"
+            }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
+            "apiVersion": "2019-06-01",
+            "name": "[concat(variables('ADPDataLakeStorageName'), '/default/nysestocktrade')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts/blobServices', variables('ADPDataLakeStorageName'), 'default')]",
+                "[resourceId('Microsoft.Storage/storageAccounts', variables('ADPDataLakeStorageName'))]"
+            ],
+            "properties": {
+                "publicAccess": "None"
+            }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
+            "apiVersion": "2019-06-01",
+            "name": "[concat(variables('ADPDataLakeStorageName'), '/default/polybase')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts/blobServices', variables('ADPDataLakeStorageName'), 'default')]",
+                "[resourceId('Microsoft.Storage/storageAccounts', variables('ADPDataLakeStorageName'))]"
+            ],
+            "properties": {
+                "publicAccess": "None"
+            }
+        },
+        {
             "type": "Microsoft.Sql/servers",
             "kind": "v12.0",
             "name": "[variables('ADPSynapseSQLEndpoint')]",
@@ -330,8 +454,8 @@
             "location": "[resourceGroup().location]",
             "scale": null,
             "properties": {
-                "administratorLogin": "[variables('ADPAdminUserName')]",
-                "administratorLoginPassword": "[variables('ADPAdminPassword')]",
+                "administratorLogin": "[parameters('ADPAdminUserName')]",
+                "administratorLoginPassword": "[parameters('ADPAdminPassword')]",
                 "version": "12.0"
             },
             "dependsOn": [],
@@ -359,8 +483,8 @@
             "location": "[resourceGroup().location]",
             "scale": null,
             "properties": {
-                "administratorLogin": "[variables('ADPAdminUserName')]",
-                "administratorLoginPassword": "[variables('ADPAdminPassword')]",
+                "administratorLogin": "[parameters('ADPAdminUserName')]",
+                "administratorLoginPassword": "[parameters('ADPAdminPassword')]",
                 "version": "12.0"
             },
             "dependsOn": [],
@@ -448,8 +572,8 @@
 						"storageKeyType": "SharedAccessKey",
 						"storageKey": "?sv=2018-03-28&ss=b&srt=sco&sp=rwl&se=2050-12-30T17:25:52Z&st=2019-04-05T09:25:52Z&spr=https&sig=4qrD8NmhaSmRFu2gKja67ayohfIDEQH3LdVMa2Utykc%3D",
 						"storageUri": "https://mdwresources.blob.core.windows.net/nycdatasets/NYCDataSets.bacpac",
-						"administratorLogin": "[variables('ADPAdminUserName')]",
-						"administratorLoginPassword": "[variables('ADPAdminPassword')]",
+						"administratorLogin": "[parameters('ADPAdminUserName')]",
+						"administratorLoginPassword": "[parameters('ADPAdminPassword')]",
 						"operationMode": "Import"
 					}
 				}

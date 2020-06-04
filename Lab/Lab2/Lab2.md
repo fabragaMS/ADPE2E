@@ -99,29 +99,6 @@ In this section you will connect to Azure Synapse Analytics to create the data w
     go
     ```
 
-
-## Create the NYCTaxiData-Raw Container on Azure Data Lake Storage Gen2
-In this section you will create a container in your SynapseDataLake that will be used as a repository for the NYC Taxi Data files. You will copy 6 files from the MDWResources Storage Account into your NYCTaxiData-Raw container. These files contain data for all Yellow Taxi rides in the first half of 2019, one file for each month of the year.
-
-![](./Media/Lab2-Image05.jpg)
-
-**IMPORTANT**|
--------------|
-**Execute these steps on your host computer**|
-
-1.	In the Azure Portal, go to the lab resource group and locate the Azure Storage account **synapsedatalake*suffix***. 
-2.	On the **Overview** panel, click **Containers**.
-
-    ![](./Media/Lab2-Image06.png)
-
-3.	On the **synapsedatalake*suffix* – Countainers** blade, click **+ Container**. On the New container blade, enter the following details:
-    <br>- **Name**: nyctaxidata-raw
-    <br>- **Public access level**: Private (no anonymous access)
-
-4.	Click **OK** to create the new container.
-
-    ![](./Media/Lab2-Image08.png)
-
 ## Create Linked Service connection to MDWResources
 In this section you will create a linked service connection to a shared storage accounnt called MDWResources hosted in an external Azure subscription. This storage account hosts the NYC Taxi data files you will copy to your data lake. As this storage account sits in an external subscription you will connect to it using a SAS URL token.
 
@@ -229,7 +206,7 @@ Dataset |Role           | Description
 
     ![](./Media/Lab2-Image42.png)
 
-    Click **Continue**.    
+    Click **Continue**.
 
     Alternatively you can copy and paste the Dataset JSON definition below:
 
@@ -383,8 +360,7 @@ Dataset |Role           | Description
         }
     }
     ```
-
-15.	Repeat the process to create an Azure SQL Database dataset. It references the NYC.TaxiLocationLookup table in the NYCDataSets database. 
+15.	Repeat the process to create an Azure SQL Database dataset. It references the NYC.TaxiLocationLookup table in the NYCDataSets database.
 
 16.	Type “Azure SQL Database" in the search box and select **Azure SQL Database**. Click **Continue**.
 
@@ -626,9 +602,9 @@ In this section you are going to create a Mapping Data Flow that will transform 
 
     ![](./Media/Lab2-Image50.png)
 
-2. In the **New Data Flow** blade, select **Mapping Data Flow** and click **OK**. 
+2. In the **New Data Flow** blade, select **Mapping Data Flow** and click **OK**.
 
-    Note that a new tab will be open wiht the design surface for the Mapping Data Flow.
+    Note that a new tab will be open with the design surface for the Mapping Data Flow.
 
     ![](./Media/Lab2-Image48.png)
 
@@ -679,39 +655,56 @@ In this section you are going to create a Mapping Data Flow that will transform 
 
     Repeat the process to create the following derived columns using the names and expressions below:
 
-    * **PickUpDate**
-    ```
-    toDate(tpep_pickup_datetime,'yyyy-MM-dd')
-    ```
+    |Column Name |Expression|
+    | -----| ----- |
+    |PickUpDate | ```toDate(tpep_pickup_datetime,'yyyy-MM-dd')``` |
+    |PickUpLocationID|```toInteger(PULocationID)```|
+    |PassengerCount|```toInteger(passenger_count)```|
+    |DistanceTravelled|```toDecimal(trip_distance)```|
+    |TipAmount|```toDecimal(tip_amount)```|
+    |FareAmount|```toDecimal(fare_amount)```|
+    |TotalAmount|```toDecimal(total_amount)```|
 
-    * **PickUpLocationID**
-    ```
-    toInteger(PULocationID)
-    ``` 
+    Alternatively you can copy the code below and paste it into the DerivedColumn script window:
 
-    * **PassengerCount**
-    ```
-    toInteger(passenger_count)
-    ```
+    ![](./Media/Lab2-Image77.png)
 
-    * **DistanceTravelled**
     ```
-    toDecimal(trip_distance)
-    ```
-
-    * **TipAmount**
-    ```
-    toDecimal(tip_amount)
-    ```
-
-    * **FareAmount**
-    ```
-    toDecimal(fare_amount)
-    ```
-
-    * **TotalAmount**
-    ```
-    toDecimal(total_amount)
+    source(output(
+        VendorID as string,
+        tpep_pickup_datetime as string,
+        tpep_dropoff_datetime as string,
+        passenger_count as string,
+        trip_distance as string,
+        RatecodeID as string,
+        store_and_fwd_flag as string,
+        PULocationID as string,
+        DOLocationID as string,
+        payment_type as string,
+        fare_amount as string,
+        extra as string,
+        mta_tax as string,
+        tip_amount as string,
+        tolls_amount as string,
+        improvement_surcharge as string,
+        total_amount as string,
+        congestion_surcharge as string
+    ),
+    allowSchemaDrift: true,
+    validateSchema: false) ~> TaxiDataFiles
+    TaxiDataFiles derive(PaymentType = case (payment_type == '1', 'Credit card'
+        , payment_type == '2', 'Cash'
+        , payment_type == '3', 'No charge'
+        , payment_type == '4', 'Dispute'
+        , payment_type == '5', 'Unknown'
+        , payment_type == '6', 'Voided trip'),
+    PickUpDate = toDate(tpep_pickup_datetime,'yyyy-MM-dd'),
+    PickUpLocationID = toInteger(PULocationID),
+    PassengerCount = toInteger(passenger_count),
+    DistanceTravelled = toDecimal(trip_distance),
+    TipAmount = toDecimal(tip_amount),
+    FareAmount = toDecimal(fare_amount),
+    TotalAmount = toDecimal(total_amount)) ~> TransformColumns
     ```
 
     Your full list of derived columns should look like this:
@@ -746,34 +739,14 @@ In this section you are going to create a Mapping Data Flow that will transform 
 
     <br>- **Aggregate Settings > Aggregates**: Add the following columns and expressions:
 
-    * **TotalTripCount**
-    ```
-    count()
-    ```
-    * **TotalPassengerCount**
-    ```
-    sum(PassengerCount)
-    ```
-
-    * **TotalDistanceTravelled**
-    ```
-    sum(DistanceTravelled)
-    ```
-
-    * **TotalTipAmount**
-    ```
-    sum(TipAmount)
-    ```
-    
-    * **TotalFareAmount**
-    ```
-    sum(FareAmount)
-    ```
-
-    * **TotalTripAmount**
-    ```
-    sum(TotalAmount)
-    ```
+    |Column Name |Expression|
+    | -----| ----- |
+    |TotalTripCount | ```count()``` |
+    |TotalPassengerCount |```sum(PassengerCount)```|
+    |TotalDistanceTravelled|```sum(DistanceTravelled)```|
+    |TotalTipAmount|```sum(TipAmount)```|
+    |TotalFareAmount|```sum(FareAmount)```|
+    |TotalTripAmount|```sum(TotalAmount)```|
     
     Your full list of aggregates should look like this:
 

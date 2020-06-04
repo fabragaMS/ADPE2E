@@ -40,9 +40,11 @@ In this section you are going to establish a Remote Desktop Connection to ADPDes
 -------------|
 **Execute these steps on your host computer**|
 
+**IMPORTANT**: If you are executing the lab in a Spektra Labs environment, use the link provided in the Lab Environment tab to connect to the virtual machine. Once connected you can skip to the next section **Install required software onto ADPDesktop**.
+
 1.	In the Azure Portal, navigate to the lab resource group and click the **ADPDesktop** virtual machine.
 
-2.	On the ADPDesktop blade, from the Overview menu, click the Connect button. 
+2.	On the ADPDesktop blade, from the Overview menu, click the Connect button.
 
     ![](./Media/Lab1-Image02.png)
 
@@ -50,10 +52,9 @@ In this section you are going to establish a Remote Desktop Connection to ADPDes
 
     ![](./Media/Lab1-Image03.png)
 
-4. If you have issues connecting via Remote Desktop Protocol (RDP), you can then connect via Azure Bastion by clicking the **Bastion** tab and providing the credentials indicated in the next section. This will open a new browser tab with the remote connection via SSL and HTML5.
+4. If connected successfully using RDP, skip this step and go to the next section. If you faced any connectivity issues connecting via Remote Desktop Protocol (RDP), you can try connect via Azure Bastion by clicking the **Bastion** tab and providing the credentials indicated in the next section. This will open a new browser tab with the remote connection via SSL and HTML5.
 
     ![](./Media/Lab1-Image54.png)
-
 
 ## Install required software onto ADPDesktop
 In this section you are going to install Power BI Desktop and Azure Data Studio on ADPDesktop.
@@ -157,29 +158,6 @@ create table [NYC].[NYPD_MotorVehicleCollisions](
 with (distribution = round_robin)
 go
 ```
-
-## Create Staging Container on Azure Data Lake Storage Gen2
-In this section you create a staging container in your data lake account that will be used as a staging environment for Polybase before data can be copied to Azure Synapse Analytics.
-
-![](./Media/Lab1-Image24.jpg)
-
-**IMPORTANT**|
--------------|
-**Execute these steps on your host computer**|
-
-1.	In the Azure Portal, go to the lab resource group and locate the Azure Storage account **synapsedatalake*suffix***. 
-
-2.	On the **Overview** panel, click **Containers**.
-
-    ![](./Media/Lab1-Image25.png)
-
-3.	On the **synapsedatalake*suffix* – Containers** blade, click **+ Container**. On the **New container** blade, enter the following details:
-    <br>- **Name**: polybase
-    <br>- **Public access level**: Private (no anynymous access)
-
-4.	Click **OK** to create the new container.
-
-    ![](./Media/Lab1-Image27.png)
 
 ## Create Azure Data Factory Pipeline to Copy Relational Data
 In this section you will build an Azure Data Factory pipeline to copy a table from NYCDataSets database to Azure Synapse Analytics data warehouse.

@@ -36,29 +36,6 @@ synapsedatalake*suffix*	         |Storage Account
 ADPEventHubs-*suffix*	     |Event Hubs Namespace
 SynapseStreamAnalytics-*suffix*	 |Stream Analytics job
 
-# Create NYCStockTrades Container in Azure Data Lake Gen2
-In this section you will create the NYCStockTrades container in your SynapseDataLake that will be used as a repository for the NYSE stock transactions. You will use the EventHubs Capture feature to save the incoming stream of transactions in your data lake.
-
-![](./Media/Lab5-Image02.png)
-
-**IMPORTANT**|
--------------|
-**Execute these steps on your host computer**|
-
-1.	In the Azure Portal, go to the lab resource group, and then locate and click the Azure Storage account **synapsedatalake*suffix***. 
-
-2.	On the **Overview** panel, click **Containers**.
-
-    ![](./Media/Lab5-Image03.png)
-
-3.	On the **synapsedatalake*suffix* – Containers** blade, click **+ Container**. On the New container blade, enter the following details:
-    <br>- **Name**: nysestocktrades
-    <br>- **Public access level**: Private (no anonymous access)
-
-    ![](./Media/Lab5-Image04.png)
-
-4.	Click **OK** to create the new container.
-
 ## Review the Azure LogicApp implementation
 
 In this section you will review the implementation of the LogicApp used to simmulate high-frequency stock purchase transactions. These transactions will be formatted as JSON messages and sent to Event Hubs for processing. All steps required to generate the stock transaction messages have alreay been done for you and no further changes are required in this section.
@@ -69,7 +46,7 @@ In this section you will review the implementation of the LogicApp used to simmu
 -------------|
 **Execute these steps on your host computer**|
 
-1.	In the Azure Portal, go to the lab resource group and locate the Logic App resource **ADPLogicApp**. 
+1.	In the Azure Portal, go to the lab resource group and locate the Logic App resource **ADPLogicApp**.
 
 2.	On the **ADPLogicApp** menu, click **Logic app designer** to open the design panel.
 
@@ -87,7 +64,7 @@ In this section you will review the implementation of the LogicApp used to simmu
 
     ![](./Media/Lab5-Image14.jpg)
 
-6.	In the **Until numberOfMessages is achieved** loop a piece of JavaScript is executed to generate the stock purchase transaction message. The message is then sent to the **nysestocktrade** Event Hub. The loop repeats its execution generatating a random number of messages between 1 and 10 for every execution of the LogicApp.
+6.	In the **Until numberOfMessages is achieved** loop a piece of JavaScript is executed to generate the stock purchase transaction message. The message is then sent to the **nysestocktrade** Event Hub. The loop repeats its execution generating a random number of messages between 1 and 10 for every execution of the LogicApp.
 
     ![](./Media/Lab5-Image15.png)
 
@@ -131,7 +108,7 @@ In this section you will prepare Event Hubs to ingest NYSE stock trade messages 
     <br>- **Time window (minutes)**: 1
     <br>- **Do not emit empty files when no events occur during the capture time window**: Checked.
     <br>- **Capture Provider**: Azure Storage
-    <br>- **Azure Storage Container**: [select the **nysestocktrades** container in your **synapsedatalake*suffix*** storage account]
+    <br>- **Azure Storage Container**: [select the **nysestocktrade** container in your **synapsedatalake*suffix*** storage account]
 7.	Leave remaining fields with their default values.
 8.	Click **Save Changes**.
 
@@ -164,7 +141,9 @@ In this section you will configure your Stream Analytics job to join hot and col
 3.	On the **Event Hub New input** blade enter the following details:
     <br>- **Input alias**: NYSEStockTrades
     <br>- **Event Hub namespace**: ADPEventHubs-suffix
-    <br>- **Event hub name > Use existing**: nysestocktrade
+    <br>- **Event Hub name > Use existing**: nysestocktrade
+    <br>- **Event Hub policy name > Use existing**: RootManageSharedAccessKey
+    <br>- **Event Hub consumer group > Use existing**: $Default
 
 4.	Leave remaining fields with their default values.
 
