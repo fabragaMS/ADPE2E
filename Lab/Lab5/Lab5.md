@@ -177,7 +177,7 @@ In this section you will configure your Stream Analytics job to join hot and col
 
 7. Click **Save** to save your reference input stream and return to the Inputs panel.
 
-8.	Not click on the **Outputs** panel on the left-hand side menu. Once it is loaded, click **+ Add** button and select **Power BI** to create a new output stream.
+8.	Click on the **Outputs** panel on the left-hand side menu. Once it is loaded, click **+ Add** button and select **Power BI** to create a new output stream.
 
     ![](./Media/Lab5-Image31.png)
 
