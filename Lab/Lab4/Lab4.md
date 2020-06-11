@@ -166,13 +166,13 @@ In this section you will create a Databricks linked service in Azure Data Factor
 
     ![](./Media/Lab4-Image27.png)
 
-7.	Open the **Azure Data Factory portal** and click the **Author *(pencil icon)*** option on the left-hand side panel. Under **Connections** tab, click **Linked Services** and then click **+ New** to create a new linked service connection.
+7.	Open the **Azure Data Factory portal** and click the **Manage *(toolcase icon)*** option on the left-hand side panel. Under **Liked services** menu item, click **Linked Services** and then click **+ New** to create a new linked service connection.
 
     ![](./Media/Lab4-Image28.png)
 
 8.	On the **New Linked Service** blade, click the **Compute** tab. 
 
-9.	Type “Azure Databricks” in the search box to find the **Azure Databricks** linked service. 
+9.	Type “Azure Databricks” in the search box to find the **Azure Databricks** linked service.
 
 10.	Click **Continue**.
 
@@ -205,13 +205,13 @@ In this section you will create a CosmosDB linked service in Azure Data Factory.
 -------------|
 **Execute these steps on your host computer**|
 
-1.	Open the Azure Data Factory portal and click the **Author *(pencil icon)*** option on the left-hand side panel. Under **Connections** tab, click **Linked Services** and then click **+ New** to create a new linked service connection.
+1.	Open the Azure Data Factory portal and click the **Manage *(toolcase icon)*** option on the left-hand side panel. Under **Linked services** menu item, click **+ New** to create a new linked service connection.
 
     ![](./Media/Lab4-Image28.png)
 
 2.	On the **New Linked Service** blade, click the **Data Store** tab. 
 
-3.	Type “Cosmos DB” in the search box to find the **Azure Cosmos DB (SQL API)** linked service. 
+3.	Type “Cosmos DB” in the search box to find the **Azure Cosmos DB (SQL API)** linked service.
 
 4.	Click **Continue**.
 

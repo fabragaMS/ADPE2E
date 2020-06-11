@@ -177,7 +177,7 @@ In this section you will build an Azure Data Factory pipeline to copy a table fr
     ![](./Media/Lab1-Image55.png)
 
 
-3. In the **Azure Data Factory** portal and click the **Author *(pencil icon)*** option on the left-hand side panel. Under **Connections** tab, click **Linked Services** and then click **+ New** to create a new linked service connection.
+3. In the **Azure Data Factory** portal and click the **Manage *(toolcase icon)*** option on the left-hand side panel. Under **Linked services** menu item, click **+ New** to create a new linked service connection.
 
     ![](./Media/Lab1-Image29.png)
 
@@ -336,7 +336,7 @@ In this section you will build an Azure Data Factory pipeline to copy a table fr
 -------------|
 **Execute these steps on your host computer**|
 
-1.	Open the **Azure Data Factory** portal and click the **Author *(pencil icon)*** option on the left-hand side panel. Under **Factory Resources** tab, click the ellipsis **(…)** next to **Pipelines** and then click **Add Pipeline** to create a new pipeline.
+1.	Open the **Azure Data Factory** portal and click the **Author *(pencil icon)*** option on the left-hand side panel. Under **Factory Resources** tab, click the ellipsis **(…)** next to **Pipelines** and then click **New Pipeline** to create a new pipeline.
 2.	On the **New Pipeline** tab, enter the following details:
     <br>- **General > Name**: Lab1 - Copy Collision Data
 3.	Leave remaining fields with default values.
