@@ -36,11 +36,11 @@ operationalsql-*suffix* |SQL server
 ## Connect to ADPDesktop
 In this section you are going to establish a Remote Desktop Connection to ADPDesktop virtual machine.
 
+**IMPORTANT**: If you are executing the lab in a Spektra CloudLabs environment, you will be automatically connected to the ADPDesktop VM and there is no need to execute the steps below. You can skip to the next section **Install required software onto ADPDesktop**.
+
 **IMPORTANT**|
 -------------|
 **Execute these steps on your host computer**|
-
-**IMPORTANT**: If you are executing the lab in a Spektra Labs environment, use the link provided in the Lab Environment tab to connect to the virtual machine. Once connected you can skip to the next section **Install required software onto ADPDesktop**.
 
 1.	In the Azure Portal, navigate to the lab resource group and click the **ADPDesktop** virtual machine.
 
@@ -52,7 +52,13 @@ In this section you are going to establish a Remote Desktop Connection to ADPDes
 
     ![](./Media/Lab1-Image03.png)
 
-4. If connected successfully using RDP, skip this step and go to the next section. If you faced any connectivity issues connecting via Remote Desktop Protocol (RDP), you can try connect via Azure Bastion by clicking the **Bastion** tab and providing the credentials indicated in the next section. This will open a new browser tab with the remote connection via SSL and HTML5.
+4.	Once the RDP file is downloaded, click on it to establish an RDP connection with ADPDesktop
+
+5.	User the following credentials to authenticate:
+    <br>- **User Name**: ADPAdmin
+    <br>- **Password**: P@ssw0rd123!
+
+6. If you connected successfully using RDP, skip this step and go to the next section. If you faced any connectivity issues connecting via Remote Desktop Protocol (RDP), you can try connect via Azure Bastion by clicking the **Bastion** tab and providing the credentials indicated in the next section. This will open a new browser tab with the remote connection via SSL and HTML5.
 
     ![](./Media/Lab1-Image54.png)
 
@@ -65,11 +71,6 @@ In this section you are going to install Power BI Desktop and Azure Data Studio 
 -------------|
 **Execute these steps inside the ADPDesktop remote desktop connection**|
 
-1.	Once the RDP file is downloaded, click on it to establish an RDP connection with ADPDesktop
-
-2.	User the following credentials to authenticate:
-    <br>- **User Name**: ADPAdmin
-    <br>- **Password**: P@ssw0rd123!
 3.	Once logged in, accept the default privacy settings.
 
 4.	Using the browser, download and install the latest version of following software. During the setup, accept all default settings:
