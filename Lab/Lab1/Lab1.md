@@ -371,7 +371,7 @@ In this section you will build an Azure Data Factory pipeline to copy a table fr
 10.	To monitor the execution of your pipeline, click on the **Monitor** menu on the left-hand side panel.
 11.	You should be able to see the Status of your pipeline execution on the right-hand side panel.
 
-    ![](./Media/Lab1-Image49.png)
+    ![](./Media/Lab1-Image49updated.png)
 
 ## Visualize Data with Power BI
 In this section you are going to use Power BI to visualize data from Azure Synapse Analytics. The Power BI report will use an Import connection to query Azure Synapse Analytics and visualise Motor Vehicle Collision data from the table you loaded in the previous exercise.
