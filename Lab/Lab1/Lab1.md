@@ -1,5 +1,6 @@
 # Lab 1: Load Data into Azure Synapse Analytics using Azure Data Factory Pipelines
-In this lab you will configure the Azure environment to allow relational data to be transferred from an Azure SQL Database to an Azure Synapse Analytics data warehouse using Azure Data Factory. The dataset you will use contains data about motor vehicle collisions that happened in New Your City from 2012 to 2019. You will use Power BI to visualise collision data loaded from your Azure Synapse Analytics data warehouse.
+
+In this lab, the dataset you will use contains data about motor vehicle collisions that happened in New Your City from 2012 to 2019 stored in a relational database. You will configure the Azure environment to allow relational data to be transferred from an Azure SQL Database to an Azure Synapse Analytics data warehouse using Azure Data Factory also staging to Azure Data Lake storage. You will use Power BI to visualise collision data loaded from your Azure Synapse data warehouse.
 
 The estimated time to complete this lab is: **45 minutes**.
 
@@ -63,7 +64,7 @@ In this section you are going to establish a Remote Desktop Connection to ADPDes
     ![](./Media/Lab1-Image54.png)
 
 ## Install required software onto ADPDesktop
-In this section you are going to install Power BI Desktop and Azure Data Studio on ADPDesktop.
+In this section you are going to install Azure Data Studio and Power BI Desktop on ADPDesktop.
 
 ![](./Media/Lab1-Image04.jpg)
 
