@@ -4,6 +4,63 @@ In this workshop you will learn about the main concepts related to advanced anal
 
 In the exercises in this lab you will build data pipelines using data related to New York City. The workshop was designed to progressively implement an extended modern data platform architecture starting from a traditional relational data pipeline. Then we introduce big data scenarios with large data files and distributed computing. We add non-structured data and AI into the mix and finish off with real-time stream analytics. You will have done all of that by the end of the workshop.
 
+
+## Workshop Proposed Agenda
+The workshop can be completed on your own pace depending on your previous experince with the Azure DP tools. Supporting slides are available for each format.
+
+### **1-Day Format**
+
+#### Slides: [Azure Data Platform End2End - 1 Day](Slides/Azure%20Data%20Platform%20End2End%20-%201Day.pptx)
+
+Activity | Duration
+-------- | ---------
+Workshop Overview | 15 minutes
+Modern Data Platform Concepts: Part I | 15 minutes
+**Modern Data Warehousing** |
+Lab 1: Load Data into Azure Synapse Analytics using Azure Data Factory Pipelines    | 45 minutes
+Modern Data Platform Concepts: Part II | 15 minutes
+Lab 2: Transform Big Data using Azure Data Factory Mapping Data Flows    | 60 minutes
+**Advanced Analytics** |
+Modern Data Platform Concepts: Part III | 15 minutes
+Lab 3: Explore Big Data using Azure Databricks    | 45 minutes
+Modern Data Platform Concepts: Part IV | 15 minutes
+Lab 4: Add AI to your Big Data Pipeline with Cognitive Services    | 75 minutes
+**Real-time Analytics** |
+Modern Data Platform Concepts: Part V | 15 minutes
+Lab 5: Ingest and Analyse real-time data with Event Hubs and Stream Analytics   | 45 minutes
+
+### **2-Day Format**
+
+The workshop content will be delivered over the course of two days with the following agenda:
+
+#### Slides: [Azure Data Platform End2End - 2 Day](./Slides/Azure%20Data%20Platform%20End2End%20-%202Day.pptx)
+
+### **Day 1**
+
+Activity | Duration
+-------- | ---------
+Workshop Overview | 45 minutes
+Lab 0: Deploy Azure Data Platform End2End to your subscription | 30 minutes
+Modern Data Platform Concepts: Part I | 90 minutes
+**Modern Data Warehousing** |
+Lab 1: Load Data into Azure Synapse Analytics using Azure Data Factory Pipelines    | 45 minutes
+Modern Data Platform Concepts: Part II | 90 minutes
+Lab 2: Transform Big Data using Azure Data Factory and Azure Synapse Analytics    | 60 minutes
+
+### **Day 2**
+
+Activity | Duration
+-------- | ---------
+**Advanced Analytics** |
+Modern Data Platform Concepts: Part III | 60 minutes
+Lab 3: Explore Big Data using Azure Databricks    | 45 minutes
+Modern Data Platform Concepts: Part IV | 60 minutes
+Lab 4: Add AI to your Big Data Pipeline with Cognitive Services    | 75 minutes
+**Real-time Analytics** |
+Modern Data Platform Concepts: Part V | 60 minutes
+Lab 5: Ingest and Analyse real-time data with Event Hubs and Stream Analytics   | 45 minutes
+
+
 **IMPORTANT**:
 
 * The reference architecture proposed in this workshop aims to explain just enough of the role of each of the Azure Data Services included in the overall modern data platform architecture. This workshop does not replace the need of in-depth training on each Azure service covered.
@@ -43,7 +100,7 @@ The following prerequisites must be completed before you start these labs:
 
 * Use either Edge or Chrome when executing the labs. Internet Explorer may have issues when rendering the UI for specific Azure services.
 
-* You must have a Pay-As-You-Go Azure account with administrator- or contributor-level access to your subscription. If you don’t have an account, you can sign up for an account following the instructions here: https://azure.microsoft.com/en-au/pricing/purchase-options/pay-as-you-go/. 
+* You must have a Pay-As-You-Go Azure account with administrator- or contributor-level access to your subscription. If you don’t have an account, you can sign up for an account following the instructions here: https://azure.microsoft.com/en-au/pricing/purchase-options/pay-as-you-go/.
 
     <br>**IMPORTANT**: Azure free subscriptions have quota restrictions that prevent the workshop resources from being deployed successfully. Please use a Pay-As-You-Go subscription instead.
 
@@ -79,7 +136,7 @@ The estimated time to complete this lab is: **30 minutes**.
 
 ### [Lab 1: Load Data into Azure Synapse Analytics using Azure Data Factory Pipelines](./Lab/Lab1/Lab1.md)
 
-In this lab you will configure the Azure environment to allow relational data to be transferred from an Azure SQL Database to an Azure Synapse Analytics database using Azure Data Factory. The dataset you will use contains data about motor vehicle collisions that happened in New York City from 2012 to 2019. You will use Power BI to visualise collision data loaded from Azure Synapse Analytics.
+In this lab, the dataset you will use contains data about motor vehicle collisions that happened in New Your City from 2012 to 2019 stored in a relational database. You will configure the Azure environment to allow relational data to be transferred from an Azure SQL Database to an Azure Synapse Analytics data warehouse using Azure Data Factory also staging to Azure Data Lake storage. You will use Power BI to visualise collision data loaded from your Azure Synapse data warehouse.
 
 The estimated time to complete this lab is: **45 minutes**.
 
@@ -93,7 +150,7 @@ Step     | Description
 ![](./Lab/Lab1/Media/Lab1-Image51.png)
 
 ### [Lab 2: Transform Big Data using Azure Data Factory Mapping Data Flows](./Lab/Lab2/Lab2.md)
-In this lab you will use Azure Data Factory to download large data files into your data lake and use an Azure Synapse Analytics stored procedure to generate a summary dataset and store it in the final table. The dataset you will use contains detailed New York City Yellow Taxi rides for the first half of 2019. You will generate a daily aggregated summary of all rides using Mapping Data Flows and save the resulting dataset into your Azure Synapse Analytics data warehouse. You will then use Power BI to visualise summarised data. 
+In this lab the dataset you will use contains detailed New York City Yellow Taxi rides for the first half of 2019. You will use Azure Data Factory to download large data files to your data lake. You will generate a daily aggregated summary of all rides from data lake using Mapping Data Flows and save the resulting dataset in your Azure Synapse Analytics. You will use Power BI to visualise summarised taxi ride data.
 
 The estimated time to complete this lab is: **60 minutes**.
 
@@ -108,7 +165,7 @@ Step     | Description
 ![](./Lab/Lab2/Media/Lab2-Image40.png)
 
 ### [Lab 3: Explore Big Data using Azure Databricks](./Lab/Lab3/Lab3.md)
-In this lab you will use Azure Databricks to explore the New York Taxi data files you saved in your data lake in Lab 2. Using a Databricks notebook you will connect to the data lake and query taxi ride details. 
+In this lab you will use Azure Databricks to explore the New York Taxi data files you saved in your data lake in Lab 2. Using a Databricks notebook you will connect to the data lake and query taxi ride details for data cleasning and to apply standard column definitions for the resulting dataset. At the completion,  The resulting dataset should be saved in a Spark table using Parquet files sitting in the NYCTaxiData-Curated container in your SynapseDataLake storage account.
 
 The estimated time to complete this lab is: **45 minutes**.
 
@@ -149,53 +206,3 @@ Step     | Description
 ![](./Media/Orange5.png) | Visualize real-time data generated by Stream Analytics with Power BI
 
 ![](./Lab/Lab5/Media/Lab5-Image66.png)
-
-## Workshop Proposed Agenda
-
-### **1-Day Format**
-
-Activity | Duration
--------- | ---------
-Workshop Overview | 15 minutes
-Modern Data Platform Concepts: Part I | 15 minutes
-**Modern Data Warehousing** |
-Lab 1: Load Data into Azure Synapse Analytics using Azure Data Factory Pipelines    | 45 minutes
-Modern Data Platform Concepts: Part II | 15 minutes
-Lab 2: Transform Big Data using Azure Data Factory Mapping Data Flows    | 60 minutes
-**Advanced Analytics** |
-Modern Data Platform Concepts: Part III | 15 minutes
-Lab 3: Explore Big Data using Azure Databricks    | 45 minutes
-Modern Data Platform Concepts: Part IV | 15 minutes
-Lab 4: Add AI to your Big Data Pipeline with Cognitive Services    | 75 minutes
-**Real-time Analytics** |
-Modern Data Platform Concepts: Part V | 15 minutes
-Lab 5: Ingest and Analyse real-time data with Event Hubs and Stream Analytics   | 45 minutes
-
-### **2-Day Format**
-
-The workshop content will be delivered over the course of two days with the following agenda:
-
-### **Day 1**
-
-Activity | Duration
--------- | ---------
-Workshop Overview | 45 minutes
-Lab 0: Deploy Azure Data Platform End2End to your subscription | 30 minutes
-Modern Data Platform Concepts: Part I | 90 minutes
-**Modern Data Warehousing** |
-Lab 1: Load Data into Azure Synapse Analytics using Azure Data Factory Pipelines    | 45 minutes
-Modern Data Platform Concepts: Part II | 90 minutes
-Lab 2: Transform Big Data using Azure Data Factory and Azure Synapse Analytics    | 60 minutes
-
-### **Day 2**
-
-Activity | Duration
--------- | ---------
-**Advanced Analytics** |
-Modern Data Platform Concepts: Part III | 60 minutes
-Lab 3: Explore Big Data using Azure Databricks    | 45 minutes
-Modern Data Platform Concepts: Part IV | 60 minutes
-Lab 4: Add AI to your Big Data Pipeline with Cognitive Services    | 75 minutes
-**Real-time Analytics** |
-Modern Data Platform Concepts: Part V | 60 minutes
-Lab 5: Ingest and Analyse real-time data with Event Hubs and Stream Analytics   | 45 minutes
