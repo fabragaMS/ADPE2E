@@ -1,5 +1,5 @@
 # Lab 5: Ingest and Analyse real-time data with Event Hubs and Stream Analytics
-In this lab you will use an Azure Logic App to simmulate high-frequency stock market of the NYSE. Every second the LogicApp generates a random number of stock purchase transactions with variable amounts for 5 of the biggest tech companies in the world. The LogicApp then sends stock transaction messages to Event Hubs. You will use Stream Analytics queries to join hot and cold data streams to process the high volume of transactions and generate aggregate calculations. The results will be sent to a real-time dataset in Power BI.
+In this lab you will use an Azure Logic App to simulate high-frequency stock market of the NYSE. Every second the LogicApp generates a random number of stock purchase transactions with variable amounts for 5 of the biggest tech companies in the world. The LogicApp then sends stock transaction messages to Event Hubs. You will use Stream Analytics queries to join hot and cold data streams to process the high volume of transactions and generate aggregate calculations. The results will be sent to a real-time dataset in Power BI.
 
 **IMPORTANT**: This lab requires you have a valid Power BI account. If you don’t have one you can register for a 60-day trial here: https://powerbi.microsoft.com/en-us/power-bi-pro/
 
