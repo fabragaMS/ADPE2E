@@ -1,5 +1,5 @@
 # Lab 2: Transform Big Data using Azure Data Factory Mapping Data Flows
-In this lab you will use Azure Data Factory to download large data files to your data lake and use Mapping Dataflows to generate a summary dataset and store it. The dataset you will use contains detailed New York City Yellow Taxi rides for the first half of 2019. You will generate a daily aggregated summary of all rides using Mapping Data Flows and save the resulting dataset in your Azure Synapse Analytics. You will use Power BI to visualise summarised taxi ride data.
+In this lab the dataset you will use contains detailed New York City Yellow Taxi rides for the first half of 2019. You will use Azure Data Factory to download large data files to your data lake. You will generate a daily aggregated summary of all rides from data lake using Mapping Data Flows and save the resulting dataset in your Azure Synapse Analytics. You will use Power BI to visualise summarised taxi ride data.
 
 The estimated time to complete this lab is: **60 minutes**.
 
@@ -18,7 +18,7 @@ Azure Synapse Analytics | [Implement a Data Warehouse with Azure Synapse Analyti
 
 Step     | Description
 -------- | -----
-![](./Media/Green1.png) | Build an Azure Data Factory Pipeline to copy big data files from shared Azure Storage
+![](./Media/Green1.png) | Build an Azure Data Factory Pipeline to copy big data files (NYC Taxi rides) from shared Azure Storage
 ![](./Media/Green2.png) | Ingest data files into your data lake
 ![](./Media/Green3.png) | Use Mapping Data Flows to generate a aggregated daily summary and save the resulting dataset into your Azure Synapse Analytics data warehouse.
 ![](./Media/Green4.png) | Visualize data from your Azure Synapse Analytics using Power BI
