@@ -89,7 +89,7 @@ https://github.com/fabragaMS/ADPE2E/raw/master/Lab/Lab4/NYCImageMetadata-Lab.dbc
 
     ![](./Media/Lab4-Image12.png)
 
-7.	From the Azure Portal, retrieve the MDWComputerVision subscription key and base endpoint URL.
+7.	From the Azure Portal, retrieve the ADPComputerVision subscription key and base endpoint URL.
 
     ![](./Media/Lab4-Image13.jpg)
     ![](./Media/Lab4-Image14.png)
