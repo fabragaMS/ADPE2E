@@ -222,7 +222,7 @@
                     "imageReference": {
                         "publisher": "MicrosoftWindowsDesktop",
                         "offer": "Windows-10",
-                        "sku": "rs5-pro",
+                        "sku": "21h1-pro",
                         "version": "latest"
                     },
                     "osDisk": {
