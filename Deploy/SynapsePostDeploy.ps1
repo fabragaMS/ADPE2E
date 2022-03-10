@@ -14,6 +14,7 @@ param(
   [string] $CuratedDataLakeAccountName,
   [string] $CuratedDataLakeAccountID,
   [string] $UAMIIdentityID,
+  [Parameter(Mandatory=$false)]
   [bool] $CtrlDeployAI,
   [AllowEmptyString()]
   [Parameter(Mandatory=$false)]
@@ -39,6 +40,8 @@ param(
   [AllowEmptyString()]
   [Parameter(Mandatory=$false)]
   [string] $AnomalyDetectorEndpoint,
+  [Parameter(Mandatory=$false)]
+  [bool] $CtrlDeployCosmosDB,
   [AllowEmptyString()]
   [Parameter(Mandatory=$false)]
   [string] $CosmosDBAccountID,
