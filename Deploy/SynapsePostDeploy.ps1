@@ -237,9 +237,9 @@ for ($i = 0; $i -lt $dataLakeAccountNames.Length ; $i++ ) {
 #------------------------------------------------------------------------------------------------------------
 # DATA PLANE OPERATION: CREATE AZURE ML LINKED SERVICE
 #------------------------------------------------------------------------------------------------------------
-#-AzMLWorkspaceName paramater will be passed blank if AI workloadis not deployed.
+#-AzMLWorkspaceName paramater will be passed blank if AI workload is not deployed.
 
-if (-not ([string]::IsNullOrEmpty($AzMLWorkspaceName))) {
+if ($CtrlDeployAI) {
   $body = "{
     name: ""$AzMLWorkspaceName"",
     properties: {
@@ -266,7 +266,7 @@ if (-not ([string]::IsNullOrEmpty($AzMLWorkspaceName))) {
 #------------------------------------------------------------------------------------------------------------
 #-CosmosDBAccountName paramater will be passed blank if CosmosDB workload is not deployed.
 
-if (-not ([string]::IsNullOrEmpty($CosmosDBAccountName))) {
+if ($CtrlDeployCosmosDB) {
   $body = "{
   name: ""$CosmosDBAccountName"",
   properties: {
