@@ -354,9 +354,9 @@ if ($NetworkIsolationMode -eq "vNet") {
 
   #If CosmosDB operational workload is deployed then add CosmosDB SQL and Analytical subsystems to the list of managed endpoints.
   if ($CtrlDeployCosmosDB) {
-      [string[]] $cosmosDBPrivateEndpointNames = $CosmosDBAccountName
-      [string[]] $cosmosDBPrivateEndpointIDs = $CosmosDBAccountID
-      [string[]] $cosmosDBPrivateEndpointGroups = 'Analytical'
+      [string[]] $cosmosDBPrivateEndpointNames = $CosmosDBAccountName, $CosmosDBAccountName
+      [string[]] $cosmosDBPrivateEndpointIDs = $CosmosDBAccountID, $CosmosDBAccountID
+      [string[]] $cosmosDBPrivateEndpointGroups = 'Analytical', 'Sql'
     
       $managedPrivateEndpointNames += $cosmosDBPrivateEndpointNames
       $managedPrivateEndpointIDs += $cosmosDBPrivateEndpointIDs
@@ -365,7 +365,7 @@ if ($NetworkIsolationMode -eq "vNet") {
 
   for($i = 0; $i -le ($managedPrivateEndpointNames.Length - 1); $i += 1)
   {
-    $managedPrivateEndpointName = $managedPrivateEndpointNames[$i]
+    $managedPrivateEndpointName = [System.String]::Concat($managedPrivateEndpointNames[$i],"-",$managedPrivateEndpointGroups[$i])
     $managedPrivateEndpointID = $managedPrivateEndpointIDs[$i]
     $managedPrivateEndpointGroup = $managedPrivateEndpointGroups[$i] 
 
