@@ -277,7 +277,15 @@ if ($CtrlDeployCosmosDB) {
     type: ""CosmosDb"",
     typeProperties: {
       accountEndpoint: ""https://$CosmosDBAccountName.documents.azure.com:443/"",
-      database: ""$CosmosDBDatabaseName""
+      database: ""$CosmosDBDatabaseName"",
+      ""accountKey"": {
+        ""type"": ""AzureKeyVaultSecret"",
+        ""store"": {
+            ""referenceName"": ""$KeyVaultName"",
+            ""type"": ""LinkedServiceReference""
+        },
+        ""secretName"": ""$CosmosDBAccountName-Key""
+      }
     },
     connectVia: {
       referenceName: ""AutoResolveIntegrationRuntime"",
