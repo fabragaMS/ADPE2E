@@ -278,13 +278,13 @@ if ($CtrlDeployCosmosDB) {
     typeProperties: {
       accountEndpoint: ""https://$CosmosDBAccountName.documents.azure.com:443/"",
       database: ""$CosmosDBDatabaseName"",
-      ""accountKey"": {
-        ""type"": ""AzureKeyVaultSecret"",
-        ""store"": {
-            ""referenceName"": ""$KeyVaultName"",
-            ""type"": ""LinkedServiceReference""
+      accountKey: {
+        type: ""AzureKeyVaultSecret"",
+        store: {
+            referenceName: ""$KeyVaultName"",
+            type: ""LinkedServiceReference""
         },
-        ""secretName"": ""$CosmosDBAccountName-Key""
+        secretName: ""$CosmosDBAccountName-Key""
       }
     },
     connectVia: {
