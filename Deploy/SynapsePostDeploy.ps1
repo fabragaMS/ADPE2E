@@ -276,9 +276,7 @@ if ($CtrlDeployCosmosDB) {
     annotations: [],
     type: ""CosmosDb"",
     typeProperties: {
-      accountEndpoint: ""https://$CosmosDBAccountName.documents.azure.com:443/"",
-      database: ""$CosmosDBDatabaseName"",
-      accountKey: {
+      connectionString: {
         type: ""AzureKeyVaultSecret"",
         store: {
             referenceName: ""$KeyVaultName"",
