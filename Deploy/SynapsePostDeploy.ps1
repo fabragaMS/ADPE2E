@@ -284,7 +284,7 @@ if ($CtrlDeployCosmosDB) {
             referenceName: ""$KeyVaultName"",
             type: ""LinkedServiceReference""
         },
-        secretName: ""$CosmosDBAccountName-Key""
+        secretName: ""$CosmosDBAccountName-ConnString""
       }
     },
     connectVia: {
