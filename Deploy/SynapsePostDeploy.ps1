@@ -276,13 +276,14 @@ if ($CtrlDeployCosmosDB) {
     annotations: [],
     type: ""CosmosDb"",
     typeProperties: {
-      connectionString: {
+      connectionString: ""AccountEndpoint=https://$CosmosDBAccountName.documents.azure.com:443/;Database=OperationalDB"",
+      accountKey: {
         type: ""AzureKeyVaultSecret"",
         store: {
-            referenceName: ""$KeyVaultName"",
-            type: ""LinkedServiceReference""
+          referenceName: ""$KeyVaultName"",
+          type: ""LinkedServiceReference""
         },
-        secretName: ""$CosmosDBAccountName-ConnString""
+        secretName: ""$CosmosDBAccountName-Key""
       }
     },
     connectVia: {
