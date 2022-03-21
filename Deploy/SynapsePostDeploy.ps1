@@ -423,7 +423,7 @@ if ($NetworkIsolationMode -eq "vNet") {
     
     while (-not $completed) {
       try {
-        $managedPrivateEndpointName = $managedPrivateEndpointNames[$i]
+        $managedPrivateEndpointName = [System.String]::Concat($managedPrivateEndpointNames[$i],"-",$managedPrivateEndpointGroups[$i])
         $managedPrivateEndpointID = $managedPrivateEndpointIDs[$i]
         # Approve KeyVault Private Endpoint
         $privateEndpoints = Get-AzPrivateEndpointConnection -PrivateLinkResourceId $managedPrivateEndpointID -ErrorAction Stop | where-object{$_.PrivateEndpoint.Id -match ($SynapseWorkspaceName + "." + $managedPrivateEndpointName)} | select-object Id, ProvisioningState, PrivateLinkServiceConnectionState
